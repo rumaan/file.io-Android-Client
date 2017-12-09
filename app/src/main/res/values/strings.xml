@@ -6,6 +6,9 @@
     <string name="file_icon">File Icon</string>
     <string name="choose_file">Choose a file</string>
     <string name="upload">Upload</string>
-    <string name="app_wont_work">App Can\'t work without the permission.</string>
+    <string name="permission_deny">App requires certain permissions to function properly.</string>
+    <string name="app_wont_work">App Can\'t work without the permission. You have to manually enable those permissions from App settings.</string>
     <string name="cancel_file_choose_msg">Action canceled by the user.</string>
+    <string name="storage_permission_rationale_title">Storage Permission</string>
+    <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access files.</string>
 </resources>
