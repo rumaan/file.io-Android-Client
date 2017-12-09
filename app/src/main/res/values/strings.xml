@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">File.io</string>
+    <string name="link_here">Link Here</string>
+    <string name="file_io">File.io</string>
+    <string name="upload_a_file_and_get_a_sharable_link_for_that_file">Upload a file and get a sharable link for that file.</string>
+    <string name="file_icon">File Icon</string>
+    <string name="choose_file">Choose a file</string>
+    <string name="upload">Upload</string>
+    <string name="app_wont_work">App Can\'t work without the permission.</string>
+    <string name="cancel_file_choose_msg">Action canceled by the user.</string>
+</resources>
