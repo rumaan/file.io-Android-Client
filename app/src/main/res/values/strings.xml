@@ -11,4 +11,5 @@
     <string name="cancel_file_choose_msg">Action canceled by the user.</string>
     <string name="storage_permission_rationale_title">Storage Permission</string>
     <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access files.</string>
+    <string name="link_copy">Link Copied to Clipboard!</string>
 </resources>

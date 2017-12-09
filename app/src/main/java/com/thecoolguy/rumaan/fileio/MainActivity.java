@@ -2,6 +2,8 @@ package com.thecoolguy.rumaan.fileio;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onActivityResult: " + filePath.getPath());
                     MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
                 } else {
+                    //TODO: show a delightful dialog to the user
                     Log.e(TAG, "onActivityResult: ERROR", new NullPointerException("File path URI is null"));
                     Toast.makeText(this, "Some Error Occurred.", Toast.LENGTH_SHORT).show();
                 }
@@ -81,12 +85,22 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Observer<JSONObject>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //TODO: Do something with this disposable object
                     }
 
                     @Override
                     public void onNext(JSONObject jsonObject) {
                         Log.d(TAG, "onNext: Response -> " + jsonObject.toString());
+                        try {
+                            if (jsonObject.getBoolean("success")) {
+                                String link = jsonObject.getString("link");
+                                Log.i(TAG, "Link: " + link);
+                                updateLinkText(link);
+                            }
+                            // TODO: handle failure in JSON
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
@@ -99,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    void updateLinkText(String link) {
+        linkTextView.setText(link);
+        linkTextView.setVisibility(View.VISIBLE);
     }
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
@@ -131,7 +150,13 @@ public class MainActivity extends AppCompatActivity {
         linkTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: link");
+                // Copy the content of the link text to Clipboard
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("link", linkTextView.getText());
+                if (clipboardManager != null) {
+                    clipboardManager.setPrimaryClip(clipData);
+                    Toast.makeText(MainActivity.this, getString(R.string.link_copy), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -155,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MainActivityPermissionsDispatcher.onRequestPermissionsResult(MainActivity.this, requestCode, grantResults);
     }
+
 
     /* Opens App info screen in settings */
     void showAppDetailsSettings() {
