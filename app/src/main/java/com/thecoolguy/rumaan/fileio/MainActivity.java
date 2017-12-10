@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button uploadButton;
     private TextView linkTextView;
+    private ConstraintLayout rootView;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -66,17 +69,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    @NeedsPermission(Manifest.permission.INTERNET)
+    @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void uploadFile(@NonNull Uri fileUri) {
         File file = FileUtils.getFile(this, fileUri);
+
         Rx2AndroidNetworking.upload(URL)
                 .addMultipartFile("file", file)
                 .build()
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
                     public void onProgress(long bytesUploaded, long totalBytes) {
-
+                        //TODO: update progress
                     }
                 })
                 .getJSONObjectObservable()
@@ -110,13 +113,14 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-
+                        Toast.makeText(MainActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     void updateLinkText(String link) {
         linkTextView.setText(link);
+        TransitionManager.beginDelayedTransition(rootView);
         linkTextView.setVisibility(View.VISIBLE);
     }
 
@@ -133,12 +137,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         uploadButton = findViewById(R.id.btn_upload);
         linkTextView = findViewById(R.id.link);
+        rootView = findViewById(R.id.root_view);
 
         AndroidNetworking.initialize(getApplicationContext());
+
+        /* Handle incoming intent content */
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        // FIXME: Google photos URI
+        if (type != null) {
+            Log.d(TAG, "Receive Type: " + type);
+            Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            Log.d(TAG, "\nURI: " + fileUri);
+            if (Intent.ACTION_SEND.equals(action) && fileUri != null) {
+                MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
+            }
+        }
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
