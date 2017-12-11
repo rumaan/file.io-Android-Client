@@ -1,6 +1,6 @@
 # File.io Android App
 This simple app allows you to upload any file and get a _sharable_ link with a set expiration time.
-This app is made with the help of [file.io](https://file.io) which is an **_Anonymous_, _Secure_** by [Humbly](http://humbly.com/) file sharing platform.
+This app is made with the help of [file.io](https://file.io) which is an **_Anonymous_, _Secure_** file sharing platform by [Humbly](http://humbly.com/).
 
 ## Screenshots
 <p float="left">
