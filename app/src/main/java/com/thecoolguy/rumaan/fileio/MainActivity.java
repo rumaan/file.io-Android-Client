@@ -1,20 +1,28 @@
 package com.thecoolguy.rumaan.fileio;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +35,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -44,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String PACKAGE = "com.thecoolguy.rumaan.fileio";
 
     public static final int INTENT_FILE_REQUEST = 42;
-
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.header_text)
+    TextView headerText;
+    @BindView(R.id.header_content)
+    TextView headerContent;
+    Animator animator;
     private Button uploadButton;
     private TextView linkTextView;
     private ConstraintLayout rootView;
@@ -68,6 +84,44 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void showUploadingView(boolean show) {
+        final FrameLayout frameLayout = findViewById(R.id.root_view_upload);
+
+
+        // Mask view animations
+        int cx = frameLayout.getWidth();
+        int cy = frameLayout.getHeight();
+        float finalRadius = (float) Math.hypot(frameLayout.getWidth(), frameLayout.getHeight());
+
+        if (show) {
+            animator = ViewAnimationUtils.createCircularReveal(frameLayout, cx, cy, 0, finalRadius);
+            animator.setDuration(600);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+
+            frameLayout.setVisibility(View.VISIBLE);
+
+            animator.start();
+
+        } else {
+            Animator animator = ViewAnimationUtils.createCircularReveal(frameLayout, cx, cy, finalRadius, 0);
+            animator.setDuration(600);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    frameLayout.setVisibility(View.INVISIBLE);
+                }
+            });
+
+
+            animator.start();
+        }
+
+    }
+
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void uploadFile(@NonNull Uri fileUri) {
@@ -99,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                                 String link = jsonObject.getString("link");
                                 Log.i(TAG, "Link: " + link);
                                 updateLinkText(link);
+                            } else {
+                                Log.i(TAG, "Invalid JSON response!");
                             }
                             // TODO: handle failure in JSON
                         } catch (JSONException e) {
@@ -120,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
 
     void updateLinkText(String link) {
         linkTextView.setText(link);
+
         TransitionManager.beginDelayedTransition(rootView);
         linkTextView.setVisibility(View.VISIBLE);
     }
@@ -130,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Show an file intent picker
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        // Set MIME type
         intent.setType("*/*");
         startActivityForResult(intent, INTENT_FILE_REQUEST);
     }
@@ -140,9 +198,19 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         uploadButton = findViewById(R.id.btn_upload);
         linkTextView = findViewById(R.id.link);
         rootView = findViewById(R.id.root_view);
+
+        Button back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUploadingView(false);
+            }
+        });
 
         AndroidNetworking.initialize(getApplicationContext());
 
@@ -163,7 +231,9 @@ public class MainActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
+
+                showUploadingView(true);
+                //  MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
             }
         });
 
@@ -181,14 +251,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    void showNeverAskForStorage() {
-        Toast.makeText(this, getString(R.string.app_wont_work), Toast.LENGTH_LONG).show();
-
-        //TODO: show a generic dialog for why the permission is denied
-        showAppDetailsSettings();
-    }
-
     @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showPermissionDeniedForStorage() {
         Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_SHORT).show();
@@ -201,9 +263,11 @@ public class MainActivity extends AppCompatActivity {
         MainActivityPermissionsDispatcher.onRequestPermissionsResult(MainActivity.this, requestCode, grantResults);
     }
 
-
     /* Opens App info screen in settings */
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showAppDetailsSettings() {
+        //TODO: show a generic dialog for why the permission is denied
+        Toast.makeText(this, getString(R.string.app_wont_work), Toast.LENGTH_LONG).show();
         try {
             Intent intent;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
