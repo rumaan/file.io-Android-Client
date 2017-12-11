@@ -3,9 +3,9 @@ This simple app allows you to upload any file and get a _sharable_ link with a s
 This app is made with the help of [file.io](https://file.io) lead by [Humbly](http://humbly.com/) which is an **_Anonymous_, _Secure_** file sharing platform.
 
 ## Screenshots
-![Home Screen](https://github.com/rumaan/file.io-app/blob/master/screenshots/home_screen_framed.png "Home Screen") 
-![File Upload Link](https://github.com/rumaan/file.io-app/blob/master/screenshots/upload_file_link.png "Sharable Link")
-
+<p float="left">
+<img src="/screenshots/home_screen_framed.png" alt="Home Screen"  height="800"/> <img src="/screenshots/upload_file_link.png" alt="Sharable Link" height="800" />
+  </p>
 ## Libraries Used
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
