@@ -7,7 +7,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,7 +18,6 @@ import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -61,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.header_content)
     TextView headerContent;
     Animator animator;
+    @BindView(R.id.progress)
+    TextView progressText;
     private Button uploadButton;
     private TextView linkTextView;
     private ConstraintLayout rootView;
@@ -88,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
     public void showUploadingView(boolean show) {
         final FrameLayout frameLayout = findViewById(R.id.root_view_upload);
 
-
         // Mask view animations
-        int cx = frameLayout.getWidth();
+        int cx = 0;
         int cy = frameLayout.getHeight();
         float finalRadius = (float) Math.hypot(frameLayout.getWidth(), frameLayout.getHeight());
 
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             animator.start();
 
         } else {
-            Animator animator = ViewAnimationUtils.createCircularReveal(frameLayout, cx, cy, finalRadius, 0);
+            animator = ViewAnimationUtils.createCircularReveal(frameLayout, cx, cy, finalRadius, 0);
             animator.setDuration(600);
             animator.setInterpolator(new FastOutSlowInInterpolator());
 
@@ -116,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
             animator.start();
         }
 
+        animator = null;
     }
 
 
@@ -127,13 +126,16 @@ public class MainActivity extends AppCompatActivity {
     public void uploadFile(@NonNull Uri fileUri) {
         File file = FileUtils.getFile(this, fileUri);
 
+        // Show progress dialog
+        showUploadingView(true);
+
         Rx2AndroidNetworking.upload(URL)
                 .addMultipartFile("file", file)
                 .build()
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
                     public void onProgress(long bytesUploaded, long totalBytes) {
-                        //TODO: update progress
+
                     }
                 })
                 .getJSONObjectObservable()
@@ -152,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                             if (jsonObject.getBoolean("success")) {
                                 String link = jsonObject.getString("link");
                                 Log.i(TAG, "Link: " + link);
+                                showUploadingView(false);
                                 updateLinkText(link);
                             } else {
                                 Log.i(TAG, "Invalid JSON response!");
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError: Some Error Occurred", e);
+                        showUploadingView(false);
                     }
 
                     @Override
@@ -204,13 +208,7 @@ public class MainActivity extends AppCompatActivity {
         linkTextView = findViewById(R.id.link);
         rootView = findViewById(R.id.root_view);
 
-        Button back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showUploadingView(false);
-            }
-        });
+        MaterialIn.animate(rootView);
 
         AndroidNetworking.initialize(getApplicationContext());
 
@@ -231,9 +229,7 @@ public class MainActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                showUploadingView(true);
-                //  MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
+                MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
             }
         });
 
