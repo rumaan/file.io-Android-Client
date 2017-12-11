@@ -20,3 +20,4 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [ ] restructure App with **MVP** or **MVVM**
 - [ ] UI Testing
 - [ ] Support for *Multiple* File Upload (Create a List)
+- [ ] App Icon
