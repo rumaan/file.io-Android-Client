@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 26
@@ -29,8 +30,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-
-   // implementation 'com.amitshekhar.android:android-networking:1.0.0'
+    // implementation 'com.amitshekhar.android:android-networking:1.0.0'
     implementation 'com.amitshekhar.android:rx2-android-networking:1.0.0'
 
     implementation("com.github.hotchemi:permissionsdispatcher:3.0.1") {
@@ -41,4 +41,13 @@ dependencies {
 
 
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+
+    // Firebase Crashlytics
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true
+    }
+    compile 'com.google.firebase:firebase-core:11.6.2'
 }
+
+
+apply plugin: 'com.google.gms.google-services'
