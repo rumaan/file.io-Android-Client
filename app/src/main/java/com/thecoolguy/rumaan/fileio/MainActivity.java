@@ -165,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
                     public void onProgress(long bytesUploaded, long totalBytes) {
-                        int p = (int) (100 * (bytesUploaded / totalBytes));
+                        int p = (int) (((float) bytesUploaded / totalBytes) * 100);
+                        Log.i(TAG, "onProgress: " + (p));
                         progressBar.setProgress(p);
                     }
                 })
