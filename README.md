@@ -12,6 +12,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [ButterKnife](http://jakewharton.github.io/butterknife/)
 - [FastAndroidNetworkingWithRxJava](https://github.com/amitshekhariitbhu/Fast-Android-Networking)
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
+- [FirebaseCrashReporting](https://firebase.google.com/docs/crash/android)
 - [FileUtils.java](https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
