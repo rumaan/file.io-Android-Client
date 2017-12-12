@@ -9,6 +9,7 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -28,8 +29,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
@@ -50,7 +53,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback {
 
     public static final String TAG = "MainActivity";
     public static final String URL = "http://file.io";
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri filePath = data.getData();
                 if (filePath != null) {
                     Log.d(TAG, "onActivityResult: " + filePath.getPath());
-                    MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
+                  //  MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
                 } else {
                     //TODO: show a delightful dialog to the user
                     Log.e(TAG, "onActivityResult: ERROR", new NullPointerException("File path URI is null"));
@@ -150,14 +153,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void uploadFile(@NonNull Uri fileUri) {
+    public void uploadFile(@NonNull File file) {
 
         // Show progress dialog
         showUploadingView(true);
-
-
-        File file = FileUtils.getFile(this, fileUri);
-
 
         Rx2AndroidNetworking.upload(URL)
                 .addMultipartFile("file", file)
@@ -185,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             if (jsonObject.getBoolean("success")) {
                                 String link = jsonObject.getString("link");
+                                Crashlytics.log("Generated Link: " + link);
                                 Log.i(TAG, "Link: " + link);
                                 showUploadingView(false);
                                 updateLinkText(link);
@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError: Some Error Occurred", e);
+                        Crashlytics.logException(e);
                         showUploadingView(false);
                     }
 
@@ -223,13 +224,18 @@ public class MainActivity extends AppCompatActivity {
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void chooseFile() {
-        Log.i(TAG, "Read file permissions granted.");
-
-        // Show an file intent picker
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        // Set MIME type
-        intent.setType("*/*");
-        startActivityForResult(intent, INTENT_FILE_REQUEST);
+//        Log.i(TAG, "Read file permissions granted.");
+//
+//        // Show an file intent picker
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        // Set MIME type
+//        intent.setType("*/*");
+//        startActivityForResult(intent, INTENT_FILE_REQUEST);
+        new FileChooserDialog.Builder(this)
+                .initialPath(Environment.getExternalStorageDirectory().getPath())
+                .goUpLabel("Up")
+                .mimeType("*/*")
+                .show(this);
     }
 
     @Override
@@ -258,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
             Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             Log.d(TAG, "\nURI: " + fileUri);
             if (Intent.ACTION_SEND.equals(action) && fileUri != null) {
-                MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
+             //   MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
             }
         }
 
@@ -317,5 +323,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
+        MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, file);
+    }
+
+    @Override
+    public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
     }
 }
