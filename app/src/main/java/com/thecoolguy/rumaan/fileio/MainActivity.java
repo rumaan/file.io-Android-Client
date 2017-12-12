@@ -14,18 +14,23 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.AutoTransition;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interfaces.UploadProgressListener;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 
 import org.json.JSONException;
@@ -59,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.header_content)
     TextView headerContent;
     Animator animator;
-    @BindView(R.id.progress)
-    TextView progressText;
+    @BindView(R.id.uploading_text)
+    TextView uploadingText;
+    @BindView(R.id.upload_progress)
+    NumberProgressBar progressBar;
     private Button uploadButton;
     private TextView linkTextView;
     private ConstraintLayout rootView;
@@ -86,32 +93,52 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showUploadingView(boolean show) {
-        final FrameLayout frameLayout = findViewById(R.id.root_view_upload);
+        final RelativeLayout uploadLayoutView = findViewById(R.id.root_view_upload);
 
         // Mask view animations
         int cx = 0;
-        int cy = frameLayout.getHeight();
-        float finalRadius = (float) Math.hypot(frameLayout.getWidth(), frameLayout.getHeight());
+        int cy = uploadLayoutView.getHeight();
+        float finalRadius = (float) Math.hypot(uploadLayoutView.getWidth(), uploadLayoutView.getHeight());
 
         if (show) {
-            animator = ViewAnimationUtils.createCircularReveal(frameLayout, cx, cy, 0, finalRadius);
+            animator = ViewAnimationUtils.createCircularReveal(uploadLayoutView, cx, cy, 0, finalRadius);
             animator.setDuration(600);
             animator.setInterpolator(new FastOutSlowInInterpolator());
 
-            frameLayout.setVisibility(View.VISIBLE);
-
-            animator.start();
-
-        } else {
-            animator = ViewAnimationUtils.createCircularReveal(frameLayout, cx, cy, finalRadius, 0);
-            animator.setDuration(600);
-            animator.setInterpolator(new FastOutSlowInInterpolator());
+            uploadLayoutView.setVisibility(View.VISIBLE);
 
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    frameLayout.setVisibility(View.INVISIBLE);
+                    uploadingText.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    MaterialIn.animate(uploadingText, Gravity.TOP, Gravity.TOP);
+                    MaterialIn.animate(progressBar);
+                }
+            });
+
+            animator.start();
+
+        } else {
+            animator = ViewAnimationUtils.createCircularReveal(uploadLayoutView, cx, cy, finalRadius, 0);
+            animator.setDuration(600);
+            animator.setInterpolator(new FastOutSlowInInterpolator());
+
+            animator.addListener(new AnimatorListenerAdapter() {
+
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    uploadingText.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+
+                    uploadLayoutView.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -124,10 +151,13 @@ public class MainActivity extends AppCompatActivity {
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void uploadFile(@NonNull Uri fileUri) {
-        File file = FileUtils.getFile(this, fileUri);
 
         // Show progress dialog
         showUploadingView(true);
+
+
+        File file = FileUtils.getFile(this, fileUri);
+
 
         Rx2AndroidNetworking.upload(URL)
                 .addMultipartFile("file", file)
@@ -135,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
                 .setUploadProgressListener(new UploadProgressListener() {
                     @Override
                     public void onProgress(long bytesUploaded, long totalBytes) {
-
+                        int p = (int) (100 * (bytesUploaded / totalBytes));
+                        progressBar.setProgress(p);
                     }
                 })
                 .getJSONObjectObservable()
@@ -173,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onComplete() {
-                        Toast.makeText(MainActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -181,7 +212,11 @@ public class MainActivity extends AppCompatActivity {
     void updateLinkText(String link) {
         linkTextView.setText(link);
 
-        TransitionManager.beginDelayedTransition(rootView);
+        Transition transition = new AutoTransition()
+                .setDuration(500)
+                .setStartDelay(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator());
+        TransitionManager.beginDelayedTransition(rootView, transition);
         linkTextView.setVisibility(View.VISIBLE);
     }
 

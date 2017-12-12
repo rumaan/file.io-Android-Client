@@ -104,7 +104,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline"
         tools:visibility="visible" />
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/root_view_upload"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -115,16 +115,36 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible">
+        tools:visibility="visible">
 
         <TextView
-            android:id="@+id/progress"
+            android:id="@+id/uploading_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@id/upload_progress"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:text="Progress: " />
+            android:layout_margin="4dp"
+            android:visibility="invisible"
+            android:fontFamily="@font/capriola"
+            android:text="Uploading.."
+            android:textAppearance="?android:textAppearanceLarge" />
+
+        <com.daimajia.numberprogressbar.NumberProgressBar
+            android:id="@+id/upload_progress"
+            style="@style/NumberProgressBar_Default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:visibility="invisible"
+            app:progress_max="100"
+            app:progress_text_offset="2dp"
+            app:progress_text_size="16sp"
+            app:progress_text_visibility="visible" />
 
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
