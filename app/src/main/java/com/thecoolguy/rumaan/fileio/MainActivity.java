@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 //        startActivityForResult(intent, INTENT_FILE_REQUEST);
         new FileChooserDialog.Builder(this)
                 .initialPath(Environment.getExternalStorageDirectory().getPath())
-                .goUpLabel("Up")
+                .goUpLabel("Up a folder..")
                 .mimeType("*/*")
                 .show(this);
     }
