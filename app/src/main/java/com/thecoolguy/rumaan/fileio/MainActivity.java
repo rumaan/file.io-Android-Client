@@ -31,10 +31,13 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.thecoolguy.rumaan.fileio.uitls.FileUtils;
+import com.thecoolguy.rumaan.fileio.uitls.MaterialIn;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -287,13 +290,13 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                 }
             }
         });
+
     }
 
     @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showPermissionDeniedForStorage() {
         Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

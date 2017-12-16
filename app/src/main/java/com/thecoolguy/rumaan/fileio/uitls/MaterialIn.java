@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.uitls;
 
 
 import android.animation.Animator;
@@ -13,6 +13,8 @@ import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+
+import com.thecoolguy.rumaan.fileio.R;
 
 public class MaterialIn {
 
