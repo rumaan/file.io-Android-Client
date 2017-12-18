@@ -2,9 +2,10 @@ package com.thecoolguy.rumaan.fileio;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -26,7 +27,12 @@ public class UploadHistoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.list);
         final UploadHistoryListAdapter uploadHistoryListAdapter = new UploadHistoryListAdapter(this);
         recyclerView.setAdapter(uploadHistoryListAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
         uploadItemViewModel.getUploadHistoryList().observe(this, new Observer<List<UploadItem>>() {
@@ -35,7 +41,6 @@ public class UploadHistoryActivity extends AppCompatActivity {
                 uploadHistoryListAdapter.setUploadItemList(uploadItems);
             }
         });
-
 
         // TODO: insert
         uploadItemViewModel.insert(new UploadItem("test", "http://test.com"));

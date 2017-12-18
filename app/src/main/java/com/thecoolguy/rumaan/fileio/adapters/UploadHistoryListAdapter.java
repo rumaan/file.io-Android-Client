@@ -55,7 +55,7 @@ public class UploadHistoryListAdapter extends RecyclerView.Adapter<UploadHistory
             super(itemView);
 
             fileName = itemView.findViewById(R.id.file_name);
-            fileUrl = itemView.findViewById(R.id.url);
+            fileUrl = itemView.findViewById(R.id.file_url);
         }
     }
 }

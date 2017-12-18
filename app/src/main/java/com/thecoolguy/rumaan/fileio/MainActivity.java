@@ -48,6 +48,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -79,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     private Button uploadButton;
     private TextView linkTextView;
     private ConstraintLayout rootView;
+
+    @OnClick(R.id.history)
+    void history() {
+        startActivity(new Intent(this, UploadHistoryActivity.class));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -156,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         animator = null;
     }
-
 
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
