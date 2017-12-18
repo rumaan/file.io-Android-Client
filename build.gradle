@@ -1,5 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+ext {
+    roomVersion = '1.0.0'
+    archLifecycleVersion = '1.0.0'
+}
+
 buildscript {
     
     repositories {

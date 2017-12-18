@@ -6,12 +6,16 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
@@ -31,12 +35,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
-import com.thecoolguy.rumaan.fileio.uitls.FileUtils;
 import com.thecoolguy.rumaan.fileio.uitls.MaterialIn;
 
 import org.json.JSONException;
@@ -86,11 +88,12 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                 Uri filePath = data.getData();
                 if (filePath != null) {
                     Log.d(TAG, "onActivityResult: " + filePath.getPath());
-                  //  MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
+                    //  MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
                 } else {
                     //TODO: show a delightful dialog to the user
                     Log.e(TAG, "onActivityResult: ERROR", new NullPointerException("File path URI is null"));
-                    Toast.makeText(this, "Some Error Occurred.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(
+                            this, "Some Error Occurred.", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
@@ -153,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         animator = null;
     }
+
 
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
@@ -234,11 +238,19 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 //        // Set MIME type
 //        intent.setType("*/*");
 //        startActivityForResult(intent, INTENT_FILE_REQUEST);
-        new FileChooserDialog.Builder(this)
-                .initialPath(Environment.getExternalStorageDirectory().getPath())
-                .goUpLabel("Up a folder..")
-                .mimeType("*/*")
-                .show(this);
+
+        // TODO: save the file path in BG and add other step to upload by showing the file name or path in the textview
+        if (isConnectedToActiveNetwork(this)) {
+
+            new FileChooserDialog.Builder(this)
+                    .initialPath(Environment.getExternalStorageDirectory().getPath())
+                    .goUpLabel("Up a folder..")
+                    .mimeType("*/*")
+                    .show(this);
+        } else {
+            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -267,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
             Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             Log.d(TAG, "\nURI: " + fileUri);
             if (Intent.ACTION_SEND.equals(action) && fileUri != null) {
-             //   MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
+                //   MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
             }
         }
 
@@ -335,5 +347,16 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @Override
     public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
+
     }
+
+
+    /* Check for current network state */
+    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
+    boolean isConnectedToActiveNetwork(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
 }
