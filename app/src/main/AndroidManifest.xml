@@ -42,7 +42,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".UploadHistoryActivity" android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".UploadHistoryActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".AboutActivity" android:theme="@style/NoActionBarTheme"></activity>
     </application>
 
 </manifest>

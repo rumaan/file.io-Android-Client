@@ -52,7 +52,6 @@ dependencies {
     }
     implementation 'com.google.firebase:firebase-core:11.6.2'
 
-
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"

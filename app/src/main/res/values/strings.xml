@@ -13,4 +13,5 @@
     <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access files.</string>
     <string name="link_copy">Link Copied to Clipboard!</string>
     <string name="no_internet">No internet connection!. Please try again.</string>
+    <string name="upload_history_title">Upload History</string>
 </resources>

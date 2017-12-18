@@ -86,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         startActivity(new Intent(this, UploadHistoryActivity.class));
     }
 
+    @OnClick(R.id.about)
+    void about() {
+        startActivity(new Intent(this, AboutActivity.class));
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

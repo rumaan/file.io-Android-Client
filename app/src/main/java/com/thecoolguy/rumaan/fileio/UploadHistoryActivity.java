@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,11 @@ public class UploadHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_history);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.upload_history_title));
+        }
+
         RecyclerView recyclerView = findViewById(R.id.list);
         final UploadHistoryListAdapter uploadHistoryListAdapter = new UploadHistoryListAdapter(this);
         recyclerView.setAdapter(uploadHistoryListAdapter);
@@ -43,6 +49,6 @@ public class UploadHistoryActivity extends AppCompatActivity {
         });
 
         // TODO: insert
-        uploadItemViewModel.insert(new UploadItem("test", "http://test.com"));
+       // uploadItemViewModel.insert(new UploadItem("test", "http://test.com"));
     }
 }
