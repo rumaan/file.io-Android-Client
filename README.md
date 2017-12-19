@@ -19,7 +19,7 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 
 ## TODO List:
 - [ ] Set Expiration Time
-- [ ] Handle Different File Types and Different File Managers (**BUG!!**)
+- [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
 - [ ] restructure App with **MVP** or **MVVM**
 - [ ] UI Testing
