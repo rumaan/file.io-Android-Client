@@ -14,6 +14,9 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
 - [FileUtils.java](https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java)
+- [Room](https://developer.android.com/topic/libraries/architecture/room.html)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
 
