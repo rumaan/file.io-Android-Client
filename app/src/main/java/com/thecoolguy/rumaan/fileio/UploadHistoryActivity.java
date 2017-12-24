@@ -3,11 +3,9 @@ package com.thecoolguy.rumaan.fileio;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.AnimationUtils;
@@ -46,12 +44,14 @@ public class UploadHistoryActivity extends AppCompatActivity {
         recyclerView.setLayoutAnimation(layoutAnimationController);
 
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
-        uploadItemViewModel.getUploadHistoryList().observe(this, new Observer<List<UploadItem>>() {
-            @Override
-            public void onChanged(@Nullable List<UploadItem> uploadItems) {
-                uploadHistoryListAdapter.setUploadItemList(uploadItems);
-            }
-        });
+        uploadItemViewModel
+                .getUploadHistoryList()
+                .observe(this, new Observer<List<UploadItem>>() {
+                    @Override
+                    public void onChanged(@Nullable List<UploadItem> uploadItems) {
+                        uploadHistoryListAdapter.setUploadItemList(uploadItems);
+                    }
+                });
 
     }
 }

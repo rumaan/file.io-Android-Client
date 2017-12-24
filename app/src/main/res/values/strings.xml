@@ -17,4 +17,5 @@
     <string name="upload_history">Upload History</string>
     <string name="about">About</string>
     <string name="options">options</string>
+    <string name="error_description">Looks like something bad happened. We are taking a look at what really happened. Meanwhile, you can restart the app.</string>
 </resources>

@@ -72,7 +72,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/btn_upload_ripple"
+        android:background="@drawable/btn_upload_ripple_white"
         android:fontFamily="@font/capriola"
         android:padding="16dp"
         android:text="@string/choose_file"
@@ -137,7 +137,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:visibility="invisible">
+        tools:visibility="gone">
 
         <TextView
             android:id="@+id/uploading_text"

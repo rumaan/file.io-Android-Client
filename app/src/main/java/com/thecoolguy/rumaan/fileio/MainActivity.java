@@ -25,7 +25,6 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -92,11 +91,12 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
-        PopupMenu popupMenu = new PopupMenu(this, view);
+        throw new RuntimeException("Test");
+        /*PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater menuInflater = popupMenu.getMenuInflater();
         menuInflater.inflate(R.menu.options, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.show();
+        popupMenu.show();*/
     }
 
 
@@ -264,13 +264,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void chooseFile() {
-//        Log.i(TAG, "Read file permissions granted.");
-//
-//        // Show an file intent picker
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        // Set MIME type
-//        intent.setType("*/*");
-//        startActivityForResult(intent, INTENT_FILE_REQUEST);
 
         // TODO: save the file path in BG and add other step to upload by showing the file name or path in the textview
         if (isConnectedToActiveNetwork(this)) {
@@ -314,6 +307,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
             Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             Log.d(TAG, "\nURI: " + fileUri);
             if (Intent.ACTION_SEND.equals(action) && fileUri != null) {
+                // TODO: look here
                 //   MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
             }
         }
