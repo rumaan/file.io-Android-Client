@@ -44,8 +44,12 @@
 
         <activity
             android:name=".UploadHistoryActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".AboutActivity" android:theme="@style/NoActionBarTheme"></activity>
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/NoActionBarTheme" />
     </application>
 
 </manifest>

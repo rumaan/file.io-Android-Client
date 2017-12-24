@@ -14,4 +14,7 @@
     <string name="link_copy">Link Copied to Clipboard!</string>
     <string name="no_internet">No internet connection!. Please try again.</string>
     <string name="upload_history_title">Upload History</string>
+    <string name="upload_history">Upload History</string>
+    <string name="about">About</string>
+    <string name="options">options</string>
 </resources>

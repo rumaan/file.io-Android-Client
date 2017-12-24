@@ -24,11 +24,14 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +62,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback {
+public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback, PopupMenu.OnMenuItemClickListener {
 
     public static final String TAG = "MainActivity";
     public static final String URL = "http://file.io";
@@ -81,13 +84,21 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     private TextView linkTextView;
     private ConstraintLayout rootView;
 
-    @OnClick(R.id.history)
-    void history() {
+    @OnClick(R.id.menu)
+    void onMenuOptionClick(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater menuInflater = popupMenu.getMenuInflater();
+        menuInflater.inflate(R.menu.options, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.show();
+    }
+
+
+    void showHistory() {
         startActivity(new Intent(this, UploadHistoryActivity.class));
     }
 
-    @OnClick(R.id.about)
-    void about() {
+    void showAbout() {
         startActivity(new Intent(this, AboutActivity.class));
     }
 
@@ -369,4 +380,16 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.menu_about:
+                showAbout();
+                return true;
+            case R.id.menu_history:
+                showHistory();
+                return true;
+        }
+        return false;
+    }
 }

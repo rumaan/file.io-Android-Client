@@ -28,6 +28,7 @@ public class UploadHistoryActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.upload_history_title));
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         RecyclerView recyclerView = findViewById(R.id.list);

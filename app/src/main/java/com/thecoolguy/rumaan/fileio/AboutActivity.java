@@ -5,21 +5,16 @@ import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.AutoTransition;
 import android.transition.ChangeBounds;
-import android.transition.ChangeClipBounds;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 public class AboutActivity extends AppCompatActivity {
@@ -33,6 +28,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_initial);
 
         ButterKnife.bind(this);
+
 
         final ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(this, R.layout.activity_about);
@@ -48,7 +44,6 @@ public class AboutActivity extends AppCompatActivity {
         viewPagerTransition.setInterpolator(new OvershootInterpolator());
         viewPagerTransition.addTarget(R.id.viewpager_root);
         viewPagerTransition.setDuration(300);
-
 
         final TransitionSet transitionSet = new TransitionSet();
         transitionSet.addTransition(viewPagerTransition);
