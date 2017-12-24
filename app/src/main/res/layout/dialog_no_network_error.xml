@@ -11,9 +11,9 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp"
+        app:cardUseCompatPadding="true"
         app:contentPadding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
@@ -23,16 +23,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:padding="4dp"
-                android:src="@drawable/ic_sad" />
+                android:src="@drawable/ic_no_wifi"
+                android:tint="@color/colorPrimary" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,22 +42,33 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/capriola"
                 android:padding="4dp"
-                android:text="Oops! Some Error Occurred!"
+                android:text="@string/no_internet_connection"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="18sp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:fontFamily="@font/capriola"
+                android:padding="4dp"
+                android:text="@string/no_internet_description"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_margin="14dp"
+            android:layout_marginEnd="14dp"
+            android:id="@+id/btn_ok"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/btn_blue_ripple_white"
             android:fontFamily="@font/capriola"
-            android:text="OKay cool!"
+            android:text="@string/okay"
             android:textColor="@color/white" />
-
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.thecoolguy.rumaan.fileio;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -25,6 +26,7 @@ import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -64,7 +66,8 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback, PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback,
+        PopupMenu.OnMenuItemClickListener, NoNetworkDialogFragment.NoNetworkDialogListener {
 
     public static final String TAG = "MainActivity";
     public static final String URL = "http://file.io";
@@ -91,12 +94,11 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
-        throw new RuntimeException("Test");
-        /*PopupMenu popupMenu = new PopupMenu(this, view);
+        PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater menuInflater = popupMenu.getMenuInflater();
         menuInflater.inflate(R.menu.options, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.show();*/
+        popupMenu.show();
     }
 
 
@@ -274,7 +276,9 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                     .mimeType("*/*")
                     .show(this);
         } else {
-            Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            NoNetworkDialogFragment noNetworkDialogFragment = new NoNetworkDialogFragment();
+            noNetworkDialogFragment.show(getSupportFragmentManager(), "no_net_dialog");
         }
 
     }
@@ -399,5 +403,12 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onDialogPositiveClick(Dialog dialog) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 }
