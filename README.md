@@ -25,7 +25,7 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [ ] Set Expiration Time
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
-- [X} Custom Error Dialog
+- [X] Custom Error Dialog
 - [ ] restructure App with **MVP** or **MVVM**
 - [ ] UI Testing
 - [ ] Support for *Multiple* File Upload (Create a List)
