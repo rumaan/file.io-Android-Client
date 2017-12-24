@@ -17,6 +17,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
+- [CustomActivityOnCrash](https://github.com/Ereza/CustomActivityOnCrash)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
 
@@ -24,6 +25,7 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [ ] Set Expiration Time
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
+- [X} Custom Error Dialog
 - [ ] restructure App with **MVP** or **MVVM**
 - [ ] UI Testing
 - [ ] Support for *Multiple* File Upload (Create a List)
