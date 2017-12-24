@@ -3,6 +3,8 @@ package com.thecoolguy.rumaan.fileio;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -42,6 +44,9 @@ import com.androidnetworking.interfaces.UploadProgressListener;
 import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
+import com.thecoolguy.rumaan.fileio.data.UploadItem;
+import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
+import com.thecoolguy.rumaan.fileio.data.UploadRepository;
 import com.thecoolguy.rumaan.fileio.uitls.MaterialIn;
 
 import org.json.JSONException;
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     private Button uploadButton;
     private TextView linkTextView;
     private ConstraintLayout rootView;
+
+    UploadItemViewModel viewModel;
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
@@ -289,6 +296,8 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         MaterialIn.animate(rootView);
 
         AndroidNetworking.initialize(getApplicationContext());
+
+        viewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
 
         /* Handle incoming intent content */
         Intent intent = getIntent();
