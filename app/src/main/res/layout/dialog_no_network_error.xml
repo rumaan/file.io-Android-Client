@@ -65,6 +65,7 @@
             android:id="@+id/btn_ok"
             android:layout_marginStart="14dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/btn_blue_ripple_white"
             android:fontFamily="@font/capriola"
             android:text="@string/okay"
