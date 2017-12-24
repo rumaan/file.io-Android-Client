@@ -24,8 +24,28 @@ public class UploadRepository {
         return mUploadHistoryList;
     }
 
+    void deleteAllItems() {
+        // Delete Items Async
+        new deleteAllAsyncUploadItems(mUploadDao).execute();
+    }
+
     public void insert(UploadItem uploadItem) {
         new insertAsyncUploadItem(mUploadDao).execute(uploadItem);
+    }
+
+    private static class deleteAllAsyncUploadItems extends AsyncTask<Void, Void, Void> {
+
+        private UploadItemDao mItemDao;
+
+        public deleteAllAsyncUploadItems(UploadItemDao mItemDao) {
+            this.mItemDao = mItemDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mItemDao.deleteAll();
+            return null;
+        }
     }
 
     private static class insertAsyncUploadItem extends AsyncTask<UploadItem, Void, Void> {

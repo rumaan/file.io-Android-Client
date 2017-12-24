@@ -3,7 +3,6 @@ package com.thecoolguy.rumaan.fileio;
 import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -46,7 +45,6 @@ import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.thecoolguy.rumaan.fileio.data.UploadItem;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
-import com.thecoolguy.rumaan.fileio.data.UploadRepository;
 import com.thecoolguy.rumaan.fileio.uitls.MaterialIn;
 
 import org.json.JSONException;
@@ -85,11 +83,12 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     TextView uploadingText;
     @BindView(R.id.upload_progress)
     NumberProgressBar progressBar;
+    UploadItemViewModel uploadItemViewModel;
     private Button uploadButton;
     private TextView linkTextView;
     private ConstraintLayout rootView;
 
-    UploadItemViewModel viewModel;
+    private String link;
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
@@ -188,10 +187,11 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void uploadFile(@NonNull File file) {
+    public void uploadFile(@NonNull final File file) {
 
         // Show progress dialog
         showUploadingView(true);
+
 
         Rx2AndroidNetworking.upload(URL)
                 .addMultipartFile("file", file)
@@ -218,10 +218,15 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                         Log.d(TAG, "onNext: Response -> " + jsonObject.toString());
                         try {
                             if (jsonObject.getBoolean("success")) {
-                                String link = jsonObject.getString("link");
+                                link = jsonObject.getString("link");
                                 Crashlytics.log("Generated Link: " + link);
                                 Log.i(TAG, "Link: " + link);
                                 showUploadingView(false);
+
+                                // Add the upload item to the database
+                                UploadItem uploadItem = new UploadItem(file.getName(), link);
+                                uploadItemViewModel.insert(uploadItem);
+
                                 updateLinkText(link);
                             } else {
                                 Log.i(TAG, "Invalid JSON response!");
@@ -241,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
                     @Override
                     public void onComplete() {
-                        // Toast.makeText(MainActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }
@@ -295,9 +300,9 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         MaterialIn.animate(rootView);
 
-        AndroidNetworking.initialize(getApplicationContext());
+        uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
 
-        viewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
+        AndroidNetworking.initialize(getApplicationContext());
 
         /* Handle incoming intent content */
         Intent intent = getIntent();

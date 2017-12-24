@@ -7,7 +7,7 @@ import android.arch.lifecycle.LiveData;
 import java.util.List;
 
 /**
- * Created by rumaankhalander on 18/12/17.
+ * Abstraction for Repository with Lifecycle aware stuffs
  */
 
 public class UploadItemViewModel extends AndroidViewModel {
@@ -26,5 +26,9 @@ public class UploadItemViewModel extends AndroidViewModel {
 
     public void insert(UploadItem uploadItem) {
         mRepository.insert(uploadItem);
+    }
+
+    public void deleteAll() {
+        mRepository.deleteAllItems();
     }
 }

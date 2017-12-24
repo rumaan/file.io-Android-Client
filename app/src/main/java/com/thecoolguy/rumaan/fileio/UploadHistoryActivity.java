@@ -41,8 +41,6 @@ public class UploadHistoryActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
 
         LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_fall_down);
         recyclerView.setLayoutAnimation(layoutAnimationController);
