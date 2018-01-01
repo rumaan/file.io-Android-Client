@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -18,6 +19,10 @@ public class UploadItemViewModel extends AndroidViewModel {
         super(application);
         mRepository = new UploadRepository(application);
         mUploadHistory = mRepository.getUploadHistoryList();
+    }
+
+    public void uploadFile(File file) {
+        mRepository.uploadFile(file);
     }
 
     public LiveData<List<UploadItem>> getUploadHistoryList() {

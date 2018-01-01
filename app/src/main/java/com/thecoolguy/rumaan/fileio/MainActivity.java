@@ -40,26 +40,15 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.interfaces.UploadProgressListener;
-import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.rx2androidnetworking.Rx2AndroidNetworking;
-import com.thecoolguy.rumaan.fileio.data.UploadItem;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.uitls.MaterialIn;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -191,11 +180,14 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void uploadFile(@NonNull final File file) {
 
+        uploadItemViewModel.uploadFile(file);
+
         // Show progress dialog
-        showUploadingView(true);
+       // showUploadingView(true);
 
 
-        Rx2AndroidNetworking.upload(URL)
+
+        /*Rx2AndroidNetworking.upload(URL)
                 .addMultipartFile("file", file)
                 .build()
                 .setUploadProgressListener(new UploadProgressListener() {
@@ -250,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                     public void onComplete() {
 
                     }
-                });
+                });*/
     }
 
     void updateLinkText(String link) {
