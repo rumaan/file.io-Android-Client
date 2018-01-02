@@ -10,10 +10,10 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
 - [ButterKnife](http://jakewharton.github.io/butterknife/)
-- [FastAndroidNetworkingWithRxJava](https://github.com/amitshekhariitbhu/Fast-Android-Networking)
+- [Fuel](https://github.com/kittinunf/Fuel)
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
-- [FileUtils.java](https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java)
+- [MaterialDialogFileChooser](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
 - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
@@ -26,7 +26,7 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
 - [X] Custom Error Dialog
-- [ ] restructure App with **MVP** or **MVVM**
+- [X] restructure App with **MVVM** (kinda maybe!)
 - [ ] UI Testing
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon
