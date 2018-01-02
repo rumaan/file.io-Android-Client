@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
@@ -14,10 +15,14 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function2;
 
@@ -51,7 +56,10 @@ public class UploadRepository {
         new insertAsyncUploadItem(mUploadDao).execute(uploadItem);
     }
 
-    public void uploadFile(final File file) {
+    public void uploadFile(final File file, final Upload resultCallback) {
+        final UploadItem uploadItem = new UploadItem();
+        uploadItem.setFileName(file.getName());
+
         Fuel.upload("https://file.io/")
                 .source(new Function2<Request, URL, File>() {
                     @Override
@@ -65,17 +73,44 @@ public class UploadRepository {
                         return "file";
                     }
                 })
+                .progress(new Function2<Long, Long, Unit>() {
+                    @Override
+                    public Unit invoke(Long bytesUploaded, Long totalBytes) {
+                        int p = (int) (((float) bytesUploaded / totalBytes) * 100);
+                        resultCallback.progress(p);
+                        return null;
+                    }
+                })
                 .responseString(new Handler<String>() {
                     @Override
                     public void success(Request request, Response response, String s) {
-                        Log.d(TAG, "success: " + response.getResponseMessage() + "\n" + s);
+                        String url = deserializeJSON(s);
+                        if (url != null) {
+                            resultCallback.onUpload(url);
+                        } else {
+                            failure(request, response, new FuelError(new NullPointerException("URL formed from JSON was null."), null, response));
+                        }
                     }
 
                     @Override
                     public void failure(Request request, Response response, FuelError fuelError) {
+                        Crashlytics.logException(fuelError);
                         Log.e(TAG, "failure: " + fuelError.getMessage(), fuelError.getException());
+                        resultCallback.onError(fuelError);
                     }
                 });
+    }
+
+    private String deserializeJSON(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            return jsonObject.getString("link");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private static class deleteAllAsyncUploadItems extends AsyncTask<Void, Void, Void> {

@@ -40,6 +40,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
 
@@ -55,7 +57,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback,
-        PopupMenu.OnMenuItemClickListener, NoNetworkDialogFragment.NoNetworkDialogListener {
+        PopupMenu.OnMenuItemClickListener, NoNetworkDialogFragment.NoNetworkDialogListener, Upload {
 
     public static final String TAG = "MainActivity";
     public static final String URL = "http://file.io";
@@ -179,10 +181,10 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void uploadFile(@NonNull final File file) {
 
-        uploadItemViewModel.uploadFile(file);
-
         // Show progress dialog
-        // showUploadingView(true);
+        showUploadingView(true);
+
+        uploadItemViewModel.uploadFile(file, this);
 
 
 
@@ -399,5 +401,26 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    @Override
+    public void onUpload(String result) {
+        showUploadingView(false);
+
+        // update the text view
+        Log.d(TAG, "onUpload: " + result);
+        updateLinkText(result);
+    }
+
+    @Override
+    public void progress(int progress) {
+        // uploading progress
+        progressBar.setProgress(progress);
+
+    }
+
+    @Override
+    public void onError(FuelError error) {
+        // upload error callback
     }
 }

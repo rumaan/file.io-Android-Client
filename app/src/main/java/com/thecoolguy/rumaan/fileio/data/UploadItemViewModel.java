@@ -23,8 +23,8 @@ public class UploadItemViewModel extends AndroidViewModel {
         mUploadHistory = mRepository.getUploadHistoryList();
     }
 
-    public void uploadFile(File file) {
-        mRepository.uploadFile(file);
+    public void uploadFile(File file, Upload callback) {
+        mRepository.uploadFile(file, callback);
     }
 
     public LiveData<List<UploadItem>> getUploadHistoryList() {
