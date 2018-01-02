@@ -2,11 +2,13 @@
 This simple app allows you to upload any file and get a _sharable_ link with a set expiration time.
 This app is made with the help of [file.io](https://file.io) which is an **_Anonymous_, _Secure_** file sharing platform by [Humbly](http://humbly.com/).
 
-## Screenshots
+## Screenshots 📸
 <p float="left">
-<img src="/screenshots/home_screen_framed.png" alt="Home Screen"  height="500"/><img src="/screenshots/file_upload.png" alt="Sharable Link" height="500" /> <img src="/screenshots/upload_file_link.png" alt="Sharable Link" height="500" /></p>
+<img src="/screenshots/home_screen_framed.png" alt="Home Screen"  height="500"/><img src="/screenshots/file_upload.png" alt="Sharable Link" height="500" /> <img src="/screenshots/upload_file_link.png" alt="Sharable Link" height="500" />
+<img src="/screenshots/file_chooser.png" alt="Sharable Link" height="500" />
+<img src="/screenshots/upload_history.png" alt="Sharable Link" height="500" /></p>
 
-## Libraries Used
+## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
 - [ButterKnife](http://jakewharton.github.io/butterknife/)
@@ -21,7 +23,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
 
-## TODO List:
+## TODO List ✅:
 - [ ] Set Expiration Time
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
