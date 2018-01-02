@@ -49,6 +49,7 @@ public class AboutActivity extends AppCompatActivity {
         transitionSet.addTransition(viewPagerTransition);
         transitionSet.addTransition(imageTransition);
 
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

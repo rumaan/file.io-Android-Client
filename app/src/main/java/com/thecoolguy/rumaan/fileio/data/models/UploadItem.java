@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio.data;
+package com.thecoolguy.rumaan.fileio.data.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

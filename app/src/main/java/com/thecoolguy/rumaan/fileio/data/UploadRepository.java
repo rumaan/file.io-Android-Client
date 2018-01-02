@@ -5,6 +5,9 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
+import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
+import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 import com.thecoolguy.rumaan.fileio.data.network.UploadService;
 
 import java.io.File;
@@ -48,12 +51,12 @@ public class UploadRepository {
     }
 
     public void uploadFile(File file) {
+
         // TODO: move this code somewhere else
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://file.io/")
                 .build();
-
 
         MultipartBody.Part part = MultipartBody.Part.createFormData(
                 "file",

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
+
 import java.io.File;
 import java.util.List;
 

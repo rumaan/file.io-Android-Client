@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio.uitls;
+package com.thecoolguy.rumaan.fileio.utils;
 
 
 import android.animation.Animator;

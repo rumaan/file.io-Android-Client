@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.data.UploadItem;
+import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
 import java.util.List;
 

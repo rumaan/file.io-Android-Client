@@ -23,4 +23,6 @@
     <string name="no_internet_connection">No Internet connection!</string>
     <string name="okay">OKay!</string>
     <string name="no_internet_description">Looks like you aren\'t connected to the network. Please check you connection and try again!</string>
+    <string name="no_uploads">It seems like you haven\'t uploaded any files yet. Upload a file and check in here again.</string>
+    <string name="no_uploads_sad_face_image">No uploads sad face image.</string>
 </resources>

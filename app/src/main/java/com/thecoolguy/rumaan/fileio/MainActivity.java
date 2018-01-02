@@ -42,7 +42,7 @@ import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.androidnetworking.AndroidNetworking;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
-import com.thecoolguy.rumaan.fileio.uitls.MaterialIn;
+import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
 
 import java.io.File;
 

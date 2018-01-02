@@ -1,9 +1,11 @@
-package com.thecoolguy.rumaan.fileio.data;
+package com.thecoolguy.rumaan.fileio.data.db;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+
+import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
 
 @Database(entities = {UploadItem.class}, version = 1)
