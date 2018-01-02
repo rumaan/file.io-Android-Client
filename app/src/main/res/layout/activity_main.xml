@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:theme="@style/NoActionBarTheme"
-    tools:context="com.thecoolguy.rumaan.fileio.MainActivity">
+    tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
 
     <TextView
         android:id="@+id/header_text"

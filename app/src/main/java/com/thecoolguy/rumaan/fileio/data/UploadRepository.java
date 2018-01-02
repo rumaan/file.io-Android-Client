@@ -86,6 +86,8 @@ public class UploadRepository {
                     public void success(Request request, Response response, String s) {
                         String url = deserializeJSON(s);
                         if (url != null) {
+                            uploadItem.setUrl(url);
+                            insert(uploadItem);
                             resultCallback.onUpload(url);
                         } else {
                             failure(request, response, new FuelError(new NullPointerException("URL formed from JSON was null."), null, response));

@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +13,8 @@ import android.transition.TransitionInflater;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.view.animation.OvershootInterpolator;
+
+import com.thecoolguy.rumaan.fileio.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

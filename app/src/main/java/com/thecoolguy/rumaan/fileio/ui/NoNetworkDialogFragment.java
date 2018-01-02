@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.ui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+
+import com.thecoolguy.rumaan.fileio.R;
 
 
 public class NoNetworkDialogFragment extends DialogFragment implements View.OnClickListener {

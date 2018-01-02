@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".FileioApplication"
+        android:name=".ui.FileioApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,15 +43,15 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".UploadHistoryActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".ui.UploadHistoryActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".AboutActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".ui.AboutActivity"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".ErrorActivity"
+            android:name=".ui.ErrorActivity"
             android:process=":error_activity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>

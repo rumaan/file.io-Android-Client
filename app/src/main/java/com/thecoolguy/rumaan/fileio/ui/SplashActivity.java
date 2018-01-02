@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -19,7 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import static com.thecoolguy.rumaan.fileio.BuildConfig.DEBUG;
-import static com.thecoolguy.rumaan.fileio.MainActivity.TAG;
+import static com.thecoolguy.rumaan.fileio.ui.MainActivity.TAG;
 
 public class FileUtils {
     /**

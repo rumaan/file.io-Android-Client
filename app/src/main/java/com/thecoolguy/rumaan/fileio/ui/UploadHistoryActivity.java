@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.ui;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.adapters.UploadHistoryListAdapter;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;

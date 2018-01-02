@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.thecoolguy.rumaan.fileio.AboutActivity">
+    tools:context="com.thecoolguy.rumaan.fileio.ui.AboutActivity">
 
 
     <de.hdodenhof.circleimageview.CircleImageView

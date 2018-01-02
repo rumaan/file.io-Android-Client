@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.ui;
 
 import android.Manifest;
 import android.animation.Animator;
@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.kittinunf.fuel.core.FuelError;
+import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
@@ -413,10 +414,14 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     }
 
     @Override
-    public void progress(int progress) {
+    public void progress(final int progress) {
         // uploading progress
-        progressBar.setProgress(progress);
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setProgress(progress);
+            }
+        });
     }
 
     @Override
