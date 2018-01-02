@@ -5,25 +5,26 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.github.kittinunf.fuel.Fuel;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Request;
+import com.github.kittinunf.fuel.core.Response;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
-import com.thecoolguy.rumaan.fileio.data.network.UploadService;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function2;
 
 /**
- * Created by rumaankhalander on 18/12/17.
+ * Handles the data part of the application
+ * - network
+ * - database
  */
 
 public class UploadRepository {
@@ -50,33 +51,31 @@ public class UploadRepository {
         new insertAsyncUploadItem(mUploadDao).execute(uploadItem);
     }
 
-    public void uploadFile(File file) {
+    public void uploadFile(final File file) {
+        Fuel.upload("https://file.io/")
+                .source(new Function2<Request, URL, File>() {
+                    @Override
+                    public File invoke(Request request, URL url) {
+                        return file;
+                    }
+                })
+                .name(new Function0<String>() {
+                    @Override
+                    public String invoke() {
+                        return "file";
+                    }
+                })
+                .responseString(new Handler<String>() {
+                    @Override
+                    public void success(Request request, Response response, String s) {
+                        Log.d(TAG, "success: " + response.getResponseMessage() + "\n" + s);
+                    }
 
-        // TODO: move this code somewhere else
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://file.io/")
-                .build();
-
-        MultipartBody.Part part = MultipartBody.Part.createFormData(
-                "file",
-                file.getName(),
-                RequestBody.create(MediaType.parse("*/*"), file)
-        );
-
-        UploadService uploadService = retrofit.create(UploadService.class);
-        Call<ResponseBody> call = uploadService.uploadFile(part);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "onResponse: " + response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+                    @Override
+                    public void failure(Request request, Response response, FuelError fuelError) {
+                        Log.e(TAG, "failure: " + fuelError.getMessage(), fuelError.getException());
+                    }
+                });
     }
 
     private static class deleteAllAsyncUploadItems extends AsyncTask<Void, Void, Void> {

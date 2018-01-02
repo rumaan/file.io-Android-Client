@@ -39,7 +39,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
-import com.androidnetworking.AndroidNetworking;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
@@ -183,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         uploadItemViewModel.uploadFile(file);
 
         // Show progress dialog
-       // showUploadingView(true);
+        // showUploadingView(true);
 
 
 
@@ -290,8 +289,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         MaterialIn.animate(rootView);
 
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
-
-        AndroidNetworking.initialize(getApplicationContext());
 
         /* Handle incoming intent content */
         Intent intent = getIntent();

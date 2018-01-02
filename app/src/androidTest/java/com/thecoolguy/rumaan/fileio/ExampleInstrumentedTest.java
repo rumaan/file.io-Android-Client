@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 /**
- * Instrumented test, which will execute on an Android device.
+ * Instrumented TEst, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
@@ -27,7 +27,7 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
+        // Context of the app under TEst.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.thecoolguy.rumaan.fileio", appContext.getPackageName());

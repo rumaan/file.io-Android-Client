@@ -9,7 +9,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.TEst.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -27,12 +27,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    // implementation 'com.amitshekhar.android:android-networking:1.0.0'
-    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+
     implementation('com.github.hotchemi:permissionsdispatcher:3.0.1') {
         // if you don't use android.app.Fragment you can exclude support for them
         exclude module: "support-v13"
@@ -40,6 +38,7 @@ dependencies {
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+
     // Firebase Crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
@@ -56,9 +55,11 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.0.2'
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
 
+    compile "io.reactivex.rxjava2:rxjava:2.1.8"
 
-    // retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    // new library for network
+    implementation 'com.github.kittinunf.fuel:fuel-rxjava:1.12.0'
 }
 
 

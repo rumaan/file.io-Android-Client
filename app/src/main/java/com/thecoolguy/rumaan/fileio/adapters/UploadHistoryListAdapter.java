@@ -19,6 +19,7 @@ public class UploadHistoryListAdapter extends RecyclerView.Adapter<UploadHistory
 
     public UploadHistoryListAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
+
     }
 
 
