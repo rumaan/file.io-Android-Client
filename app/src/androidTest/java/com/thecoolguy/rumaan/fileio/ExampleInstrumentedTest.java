@@ -24,8 +24,7 @@ import static org.junit.Assert.*;
 public class ExampleInstrumentedTest {
 
     @Rule
-    ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
-
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void useAppContext() throws Exception {
@@ -33,7 +32,6 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.thecoolguy.rumaan.fileio", appContext.getPackageName());
-
 
     }
 }

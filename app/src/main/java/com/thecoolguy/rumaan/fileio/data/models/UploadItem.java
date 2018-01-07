@@ -2,6 +2,7 @@ package com.thecoolguy.rumaan.fileio.data.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -17,6 +18,7 @@ public class UploadItem {
     @ColumnInfo(name = "url")
     private String url;
 
+    @Ignore
     public UploadItem() {
     }
 

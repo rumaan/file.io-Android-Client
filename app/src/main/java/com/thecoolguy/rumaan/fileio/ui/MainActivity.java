@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.kittinunf.fuel.core.FuelError;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
@@ -187,64 +188,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         uploadItemViewModel.uploadFile(file, this);
 
-
-
-        /*Rx2AndroidNetworking.upload(URL)
-                .addMultipartFile("file", file)
-                .build()
-                .setUploadProgressListener(new UploadProgressListener() {
-                    @Override
-                    public void onProgress(long bytesUploaded, long totalBytes) {
-                        int p = (int) (((float) bytesUploaded / totalBytes) * 100);
-                        Log.i(TAG, "onProgress: " + (p));
-                        progressBar.setProgress(p);
-                    }
-                })
-                .getJSONObjectObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JSONObject>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        //TODO: Do something with this disposable object
-                    }
-
-                    @Override
-                    public void onNext(JSONObject jsonObject) {
-                        Log.d(TAG, "onNext: Response -> " + jsonObject.toString());
-                        try {
-                            if (jsonObject.getBoolean("success")) {
-                                link = jsonObject.getString("link");
-                                Crashlytics.log("Generated Link: " + link);
-                                Log.i(TAG, "Link: " + link);
-                                showUploadingView(false);
-
-                                // Add the upload item to the database
-                                UploadItem uploadItem = new UploadItem(file.getName(), link);
-                                uploadItemViewModel.insert(uploadItem);
-
-                                updateLinkText(link);
-                            } else {
-                                Log.i(TAG, "Invalid JSON response!");
-                            }
-                            // TODO: handle failure in JSON
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "onError: Some Error Occurred", e);
-                        Crashlytics.logException(e);
-                        showUploadingView(false);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });*/
     }
 
     void updateLinkText(String link) {
@@ -272,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         } else {
             //   Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             NoNetworkDialogFragment noNetworkDialogFragment = new NoNetworkDialogFragment();
-            noNetworkDialogFragment.show(getSupportFragmentManager(), "no_net_dialog");
+            noNetworkDialogFragment.show(getSupportFragmentManager(), getString(R.string.no_net_dialog_fragment_tag));
         }
 
     }
@@ -293,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
 
-        /* Handle incoming intent content */
+        /* Handle sincoming intent content */
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -407,9 +350,8 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     @Override
     public void onUpload(String result) {
         showUploadingView(false);
-
-        // update the text view
         Log.d(TAG, "onUpload: " + result);
+        // update the text view
         updateLinkText(result);
     }
 
@@ -426,6 +368,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @Override
     public void onError(FuelError error) {
-        // upload error callback
+        //TODO: upload error callback
     }
 }

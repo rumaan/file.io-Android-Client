@@ -22,6 +22,13 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function2;
@@ -31,13 +38,13 @@ import kotlin.jvm.functions.Function2;
  * - network
  * - database
  */
+class UploadRepository {
 
-public class UploadRepository {
     private static final String TAG = "UploadRepository";
     private UploadItemDao mUploadDao;
     private LiveData<List<UploadItem>> mUploadHistoryList;
 
-    public UploadRepository(Application application) {
+    UploadRepository(Application application) {
         UploadHistoryRoomDatabase uploadHistoryRoomDatabase = UploadHistoryRoomDatabase.getInstance(application);
         mUploadDao = uploadHistoryRoomDatabase.uploadItemDao();
         mUploadHistoryList = mUploadDao.getAllUploads();
@@ -52,11 +59,12 @@ public class UploadRepository {
         new deleteAllAsyncUploadItems(mUploadDao).execute();
     }
 
-    public void insert(UploadItem uploadItem) {
+    void insert(UploadItem uploadItem) {
         new insertAsyncUploadItem(mUploadDao).execute(uploadItem);
     }
 
-    public void uploadFile(final File file, final Upload resultCallback) {
+
+    void uploadFile(final File file, final Upload resultCallback) {
         final UploadItem uploadItem = new UploadItem();
         uploadItem.setFileName(file.getName());
 
