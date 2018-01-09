@@ -17,7 +17,9 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,8 +48,33 @@ public class MainActivityTest {
 
 
     @Test
+    public void check_handleMenus() {
+
+    }
+
+    @Test
+    public void check_ClickOpensUploadHistory() {
+        // Click overflow button
+        onView(withId(R.id.menu))
+                .perform(click());
+
+        // Click upload history option
+        onView(withText("Upload History"))
+                .perform(click());
+    }
+
+    @Test
+    public void check_ClickOpensAbout() {
+        onView(withId(R.id.menu))
+                .perform(click());
+        onView(withText("About"))
+                .perform(click());
+    }
+
+
+    @Test
     public void handle_NoNetwork() {
-        // Turn off the network access
+        // BEFORE: Turn off the network access
 
         onView(withId(R.id.btn_upload))
                 .perform(click());

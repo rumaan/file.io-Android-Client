@@ -17,7 +17,10 @@ import java.util.List;
 public interface UploadItemDao {
 
     @Insert
-    void insert(UploadItem uploadItem);
+    long insert(UploadItem uploadItem);
+
+    @Query("SELECT DISTINCT * FROM upload_history where id = :id")
+    UploadItem getItem(long id);
 
     @Delete
     void delete(UploadItem uploadItem);
