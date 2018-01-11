@@ -21,13 +21,15 @@ import org.json.JSONObject;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
@@ -60,7 +62,8 @@ class UploadRepository {
     }
 
     void insert(UploadItem uploadItem) {
-        new insertAsyncUploadItem(mUploadDao).execute(uploadItem);
+        //new insertAsyncUploadItem(mUploadDao).execute(uploadItem);
+        insertUploadItem(uploadItem);
     }
 
 
@@ -123,6 +126,34 @@ class UploadRepository {
         return null;
     }
 
+    private void insertUploadItem(UploadItem uploadItem) {
+        // Overkill!!
+        Observable.just(uploadItem)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Observer<UploadItem>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(UploadItem uploadItem) {
+                        mUploadDao.insert(uploadItem);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.i(TAG, "onComplete: " + "Inserted into db.");
+                    }
+                });
+    }
+
     private static class deleteAllAsyncUploadItems extends AsyncTask<Void, Void, Void> {
 
         private UploadItemDao mItemDao;
@@ -138,19 +169,4 @@ class UploadRepository {
         }
     }
 
-    private static class insertAsyncUploadItem extends AsyncTask<UploadItem, Void, Void> {
-        private UploadItemDao mUploadDao;
-
-        insertAsyncUploadItem(UploadItemDao uploadItemDao) {
-            mUploadDao = uploadItemDao;
-        }
-
-        @Override
-        protected Void doInBackground(UploadItem... uploadItems) {
-            mUploadDao.insert(uploadItems[0]);
-            return null;
-        }
-
-
-    }
 }
