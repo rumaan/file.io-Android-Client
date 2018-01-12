@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
 
-        /* Handle sincoming intent content */
+        /* Handle incoming intent content */
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
@@ -369,5 +369,10 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     @Override
     public void onError(FuelError error) {
         //TODO: upload error callback
+    }
+
+    @Override
+    public void onDelete() {
+        // on upload item delete
     }
 }

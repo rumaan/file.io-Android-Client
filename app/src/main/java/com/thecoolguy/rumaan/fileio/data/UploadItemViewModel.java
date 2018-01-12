@@ -35,6 +35,8 @@ public class UploadItemViewModel extends AndroidViewModel {
         mRepository.insert(uploadItem);
     }
 
+    public void delete(UploadItem uploadItem, Upload callback) { mRepository.delete(uploadItem, callback);}
+
     public void deleteAll() {
         mRepository.deleteAllItems();
     }

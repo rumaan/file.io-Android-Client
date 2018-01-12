@@ -10,4 +10,5 @@ public interface Upload {
     void onUpload(String result);
     void progress(int progress);
     void onError(FuelError error);
+    void onDelete();
 }

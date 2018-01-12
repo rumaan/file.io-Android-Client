@@ -23,7 +23,7 @@ public interface UploadItemDao {
     UploadItem getItem(long id);
 
     @Delete
-    void delete(UploadItem uploadItem);
+    void delete(UploadItem... uploadItem);
 
     @Query("DELETE FROM upload_history")
     void deleteAll();
