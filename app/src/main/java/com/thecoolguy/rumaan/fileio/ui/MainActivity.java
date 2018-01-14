@@ -38,13 +38,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.kittinunf.fuel.core.FuelError;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
+import com.thecoolguy.rumaan.fileio.data.models.FileModel;
+import com.thecoolguy.rumaan.fileio.utils.Consts;
 import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
 
 import java.io.File;
@@ -58,7 +59,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback,
+public class MainActivity extends AppCompatActivity implements
         PopupMenu.OnMenuItemClickListener, DialogClickListener, Upload {
 
     public static final String TAG = "MainActivity";
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     private TextView linkTextView;
     private ConstraintLayout rootView;
 
-
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.show();
     }
-
 
     void showHistory() {
         startActivity(new Intent(this, UploadHistoryActivity.class));
@@ -110,9 +109,8 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                 if (fileUri != null) {
                     Log.d(TAG, "onActivityResult: " + fileUri.toString());
 
-                    // TODO: get the file object
-                    ChooseExpireDaysFragment chooseExpireDaysFragment = new ChooseExpireDaysFragment();
-                    chooseExpireDaysFragment.show(getSupportFragmentManager(), "choose_expire_days");
+                    handleFileUri(fileUri);
+
 
                     // get the content uri of the file
                     //  MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
@@ -125,6 +123,21 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
             } else {
                 Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void showExpireDaysFragment() {
+        ChooseExpireDaysFragment chooseExpireDaysFragment = new ChooseExpireDaysFragment();
+        chooseExpireDaysFragment.show(getSupportFragmentManager(), "choose_expire_days");
+    }
+
+    private void handleFileUri(Uri uri) {
+        //  File file = getFile(uri);
+        File file = com.thecoolguy.rumaan.fileio.utils.FileUtils.getFile(this, uri);
+
+        if (file != null) {
+            uploadItemViewModel.setFileModel(new FileModel(file, Consts.DEFAULT_EXPIRE_WEEKS + "w"));
+            showExpireDaysFragment();
         }
     }
 
@@ -184,14 +197,12 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         animator = null;
     }
 
-
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void uploadFile(@NonNull final File file) {
+    public void uploadFile() {
         // Show progress dialog
         showUploadingView(true);
 
-        uploadItemViewModel.uploadFile(file, this);
-
+        uploadItemViewModel.uploadFile(this);
     }
 
     void updateLinkText(String link) {
@@ -211,7 +222,8 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         // TODO: save the file path in BG and add other step to upload by showing the file name or path in the textview
         if (isConnectedToActiveNetwork(this)) {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            // Use systems file browser
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
             intent.setType("*/*");
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."), INTENT_FILE_REQUEST);
@@ -273,7 +285,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                 }
             }
         });
-
     }
 
     @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
@@ -284,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MainActivityPermissionsDispatcher.onRequestPermissionsResult(MainActivity.this, requestCode, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     /* Opens App info screen in settings */
@@ -308,19 +319,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
             startActivity(intent);
             e.printStackTrace();
         }
-
     }
-
-    @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
-        MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, file);
-    }
-
-    @Override
-    public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
-
-    }
-
 
     /* Check for current network state */
     @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
@@ -393,6 +392,12 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
             int value = ((ChooseExpireDaysFragment) fragment).getNumberPickerValue();
             Log.d(TAG, "Number Picker Value: " + value);
             dismissDialog(dialog);
+
+            // update the selected days to expire in the view model
+            uploadItemViewModel.getFileModel().setDaysToExpire(value + "w");
+
+            // upload the file
+            MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this);
         }
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.thecoolguy.rumaan.fileio.data.models.FileModel;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UploadItemViewModel extends AndroidViewModel {
     private UploadRepository mRepository;
     private LiveData<List<UploadItem>> mUploadHistory;
+    private FileModel fileModel;
 
     public UploadItemViewModel(Application application) {
         super(application);
@@ -23,8 +25,16 @@ public class UploadItemViewModel extends AndroidViewModel {
         mUploadHistory = mRepository.getUploadHistoryList();
     }
 
-    public void uploadFile(File file, Upload callback) {
-        mRepository.uploadFile(file, callback);
+    public FileModel getFileModel() {
+        return fileModel;
+    }
+
+    public void setFileModel(FileModel fileModel) {
+        this.fileModel = fileModel;
+    }
+
+    public void uploadFile(Upload callback) {
+        mRepository.uploadFile(fileModel, callback);
     }
 
     public LiveData<List<UploadItem>> getUploadHistoryList() {
@@ -35,7 +45,9 @@ public class UploadItemViewModel extends AndroidViewModel {
         mRepository.insert(uploadItem);
     }
 
-    public void delete(UploadItem uploadItem, Upload callback) { mRepository.delete(uploadItem, callback);}
+    public void delete(UploadItem uploadItem, Upload callback) {
+        mRepository.delete(uploadItem, callback);
+    }
 
     public void deleteAll() {
         mRepository.deleteAllItems();

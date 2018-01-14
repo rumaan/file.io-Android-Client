@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
-            android:text="Choose the expire time of the file."
+            android:text="@string/choose_the_expire_time_of_the_file"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -48,7 +48,7 @@
                 android:layout_marginTop="16dp"
                 app:np_dividerColor="@color/colorPrimary"
                 app:np_dividerDistance="65dp"
-                app:np_max="25"
+                app:np_max="7"
                 app:np_min="1"
                 app:np_selectedTextColor="@color/colorPrimary"
                 app:np_selectedTextSize="48sp"
@@ -61,7 +61,7 @@
                 android:layout_marginStart="24dp"
                 android:fontFamily="@font/capriola"
                 android:gravity="center"
-                android:text="Days"
+                android:text="@string/weeks"
                 android:textAlignment="center"
                 android:textSize="38sp"
                 android:textStyle="bold" />
@@ -78,7 +78,7 @@
             android:layout_marginEnd="34dp"
             android:layout_marginStart="34dp"
             android:background="@drawable/btn_blue_ripple_white"
-            android:text="Select"
+            android:text="@string/select"
             android:textColor="@color/white" />
 
 

@@ -9,10 +9,12 @@ import com.crashlytics.android.Crashlytics;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Method;
 import com.github.kittinunf.fuel.core.Request;
 import com.github.kittinunf.fuel.core.Response;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
+import com.thecoolguy.rumaan.fileio.data.models.FileModel;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
 import org.json.JSONException;
@@ -20,8 +22,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
+import kotlin.Pair;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function2;
@@ -59,11 +63,22 @@ class UploadRepository {
         new insertAsyncUploadItems(mUploadItemDao).execute(uploadItem);
     }
 
-    void uploadFile(final File file, final Upload resultCallback) {
+    void uploadFile(final FileModel fileModel, final Upload resultCallback) {
+        final File file = fileModel.getFile();
+
+        Log.d(TAG, "Weeks: " + fileModel.getDaysToExpire());
+
+        // create an upload item from the file model
         final UploadItem uploadItem = new UploadItem();
         uploadItem.setFileName(file.getName());
 
-        Fuel.upload("https://file.io/")
+        // Query Parameters
+        List<Pair<String, String>> queryParams = new ArrayList<>();
+        Pair<String, String> expiresParam = new Pair<>("expires", fileModel.getDaysToExpire());
+        queryParams.add(expiresParam);
+
+        //TODO: change the file object to InputStream
+        Fuel.upload("https://file.io/", Method.POST, queryParams)
                 .source(new Function2<Request, URL, File>() {
                     @Override
                     public File invoke(Request request, URL url) {
@@ -107,6 +122,7 @@ class UploadRepository {
     }
 
     private String deserializeJSON(String json) {
+        Log.d(TAG, "JSON: " + json);
         try {
             JSONObject jsonObject = new JSONObject(json);
             return jsonObject.getString("link");
