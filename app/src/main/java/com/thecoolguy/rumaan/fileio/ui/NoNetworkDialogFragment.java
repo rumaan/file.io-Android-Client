@@ -57,7 +57,7 @@ public class NoNetworkDialogFragment extends DialogFragment implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        mListener.onDialogPositiveClick(getDialog());
+        mListener.onDialogPositiveClick(getDialog(), this);
     }
 
 }

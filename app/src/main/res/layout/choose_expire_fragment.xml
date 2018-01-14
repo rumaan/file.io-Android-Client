@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@android:color/transparent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@android:color/transparent">
 
 
     <android.support.v7.widget.CardView
@@ -14,10 +14,73 @@
         app:cardCornerRadius="6dp"
         app:cardElevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintDimensionRatio="1:1.01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="Choose the expire time of the file."
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/numberpicker"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_dividerDistance="65dp"
+                app:np_max="25"
+                app:np_min="1"
+                app:np_selectedTextColor="@color/colorPrimary"
+                app:np_selectedTextSize="48sp"
+                app:np_textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/capriola"
+                android:gravity="center"
+                android:text="Days"
+                android:textAlignment="center"
+                android:textSize="38sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_select_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="34dp"
+            android:layout_marginStart="34dp"
+            android:background="@drawable/btn_blue_ripple_white"
+            android:text="Select"
+            android:textColor="@color/white" />
+
 
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

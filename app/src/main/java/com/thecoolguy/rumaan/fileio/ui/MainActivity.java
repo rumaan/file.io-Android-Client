@@ -18,6 +18,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.AutoTransition;
@@ -32,7 +33,6 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -374,10 +374,25 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         // on upload item delete
     }
 
-    @Override
-    public void onDialogPositiveClick(Dialog dialog) {
+    private void dismissDialog(Dialog dialog) {
+        if (dialog == null)
+            return;
+
         if (dialog.isShowing()) {
             dialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onDialogPositiveClick(Dialog dialog, Fragment fragment) {
+        if (fragment instanceof NoNetworkDialogFragment) {
+            dismissDialog(dialog);
+        }
+
+        if (fragment instanceof ChooseExpireDaysFragment) {
+            int value = ((ChooseExpireDaysFragment) fragment).getNumberPickerValue();
+            Log.d(TAG, "Number Picker Value: " + value);
+            dismissDialog(dialog);
         }
     }
 }
