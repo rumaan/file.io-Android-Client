@@ -14,7 +14,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
@@ -33,15 +32,16 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
+import com.crashlytics.android.Crashlytics;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.kittinunf.fuel.core.FuelError;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
@@ -59,7 +59,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements FileChooserDialog.FileCallback,
-        PopupMenu.OnMenuItemClickListener, NoNetworkDialogFragment.NoNetworkDialogListener, Upload {
+        PopupMenu.OnMenuItemClickListener, DialogClickListener, Upload {
 
     public static final String TAG = "MainActivity";
     public static final String URL = "http://file.io";
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
     private TextView linkTextView;
     private ConstraintLayout rootView;
 
-    private String link;
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
@@ -107,9 +106,15 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_FILE_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Uri filePath = data.getData();
-                if (filePath != null) {
-                    Log.d(TAG, "onActivityResult: " + filePath.getPath());
+                Uri fileUri = data.getData();
+                if (fileUri != null) {
+                    Log.d(TAG, "onActivityResult: " + fileUri.toString());
+
+                    // TODO: get the file object
+                    ChooseExpireDaysFragment chooseExpireDaysFragment = new ChooseExpireDaysFragment();
+                    chooseExpireDaysFragment.show(getSupportFragmentManager(), "choose_expire_days");
+
+                    // get the content uri of the file
                     //  MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
                 } else {
                     //TODO: show a delightful dialog to the user
@@ -182,7 +187,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @NeedsPermission({Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void uploadFile(@NonNull final File file) {
-
         // Show progress dialog
         showUploadingView(true);
 
@@ -198,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
                 .setStartDelay(300)
                 .setInterpolator(new AccelerateDecelerateInterpolator());
         TransitionManager.beginDelayedTransition(rootView, transition);
+
         linkTextView.setVisibility(View.VISIBLE);
     }
 
@@ -206,12 +211,10 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
         // TODO: save the file path in BG and add other step to upload by showing the file name or path in the textview
         if (isConnectedToActiveNetwork(this)) {
-
-            new FileChooserDialog.Builder(this)
-                    .initialPath(Environment.getExternalStorageDirectory().getPath())
-                    .goUpLabel("Up a folder..")
-                    .mimeType("*/*")
-                    .show(this);
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."), INTENT_FILE_REQUEST);
         } else {
             //   Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             NoNetworkDialogFragment noNetworkDialogFragment = new NoNetworkDialogFragment();
@@ -340,12 +343,6 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
         return false;
     }
 
-    @Override
-    public void onDialogPositiveClick(Dialog dialog) {
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
-    }
 
     @Override
     public void onUpload(String result) {
@@ -368,11 +365,19 @@ public class MainActivity extends AppCompatActivity implements FileChooserDialog
 
     @Override
     public void onError(FuelError error) {
-        //TODO: upload error callback
+        error.getException().printStackTrace();
+        Crashlytics.logException(error.getException());
     }
 
     @Override
     public void onDelete() {
         // on upload item delete
+    }
+
+    @Override
+    public void onDialogPositiveClick(Dialog dialog) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 }

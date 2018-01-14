@@ -15,7 +15,6 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.github.kittinunf.fuel.core.FuelError;
-import com.thecoolguy.rumaan.fileio.OnUploadItemLongClickListener;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.adapters.UploadHistoryListAdapter;
 import com.thecoolguy.rumaan.fileio.data.Upload;

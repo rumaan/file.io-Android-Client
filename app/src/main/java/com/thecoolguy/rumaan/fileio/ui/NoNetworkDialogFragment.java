@@ -15,7 +15,7 @@ import com.thecoolguy.rumaan.fileio.R;
 
 
 public class NoNetworkDialogFragment extends DialogFragment implements View.OnClickListener {
-    private NoNetworkDialogListener mListener;
+    private DialogClickListener mListener;
 
     public NoNetworkDialogFragment() {
     }
@@ -26,7 +26,7 @@ public class NoNetworkDialogFragment extends DialogFragment implements View.OnCl
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            mListener = (NoNetworkDialogListener) getActivity();
+            mListener = (DialogClickListener) getActivity();
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(getActivity().toString()
@@ -60,7 +60,4 @@ public class NoNetworkDialogFragment extends DialogFragment implements View.OnCl
         mListener.onDialogPositiveClick(getDialog());
     }
 
-    public interface NoNetworkDialogListener {
-        void onDialogPositiveClick(Dialog dialog);
-    }
 }

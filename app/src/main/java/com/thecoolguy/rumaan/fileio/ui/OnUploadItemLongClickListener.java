@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio;
+package com.thecoolguy.rumaan.fileio.ui;
 
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
@@ -8,5 +8,6 @@ import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
 
 public interface OnUploadItemLongClickListener {
+
     void onUploadItemLongClick(UploadItem uploadItem);
 }

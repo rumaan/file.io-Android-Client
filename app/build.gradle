@@ -44,6 +44,7 @@ dependencies {
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+    implementation 'com.shawnlin:number-picker:2.4.4'
 
     // Firebase Crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
