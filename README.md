@@ -26,6 +26,7 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 
 ## TODO List ✅:
 - [ ] Set Expiration Time
+- [ ] Handle different use cases for storage on the device.
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
 - [X] Custom Error Dialog
