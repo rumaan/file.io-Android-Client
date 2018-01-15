@@ -24,7 +24,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 Vector Images from [FlatIcon](https://www.flaticon.com/).
 
 ## TODO List ✅:
-- [ ] Set Expiration Time
+- [X] Set Expiration Time
 - [ ] Handle different use cases for storage on the device.
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
