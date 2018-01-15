@@ -48,7 +48,7 @@
                 android:layout_marginTop="16dp"
                 app:np_dividerColor="@color/colorPrimary"
                 app:np_dividerDistance="65dp"
-                app:np_max="7"
+                app:np_max="10"
                 app:np_min="1"
                 app:np_selectedTextColor="@color/colorPrimary"
                 app:np_selectedTextSize="48sp"

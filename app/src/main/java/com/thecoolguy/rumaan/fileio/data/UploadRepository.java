@@ -9,7 +9,6 @@ import com.crashlytics.android.Crashlytics;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
-import com.github.kittinunf.fuel.core.Method;
 import com.github.kittinunf.fuel.core.Request;
 import com.github.kittinunf.fuel.core.Response;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
@@ -22,7 +21,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import kotlin.Pair;
@@ -66,19 +64,18 @@ class UploadRepository {
     void uploadFile(final FileModel fileModel, final Upload resultCallback) {
         final File file = fileModel.getFile();
 
-        Log.d(TAG, "Weeks: " + fileModel.getDaysToExpire());
-
         // create an upload item from the file model
         final UploadItem uploadItem = new UploadItem();
         uploadItem.setFileName(file.getName());
 
-        // Query Parameters
-        List<Pair<String, String>> queryParams = new ArrayList<>();
-        Pair<String, String> expiresParam = new Pair<>("expires", fileModel.getDaysToExpire());
-        queryParams.add(expiresParam);
+        // set up query parameters
+        // NOTE: here getDaysToExpire() actually returns the number of weeks selected by the user.
+        String link = "https://file.io/?expires=" + fileModel.getDaysToExpire();
+
+        Log.i(TAG, "Request Link: " + link);
 
         //TODO: change the file object to InputStream
-        Fuel.upload("https://file.io/", Method.POST, queryParams)
+        Fuel.upload(link)
                 .source(new Function2<Request, URL, File>() {
                     @Override
                     public File invoke(Request request, URL url) {
@@ -101,14 +98,19 @@ class UploadRepository {
                 })
                 .responseString(new Handler<String>() {
                     @Override
-                    public void success(Request request, Response response, String s) {
-                        String url = deserializeJSON(s);
-                        if (url != null) {
-                            uploadItem.setUrl(url);
+                    public void success(Request request, Response response, String res) {
+                        // Parse the JSON from the response.
+                        Pair<String, Integer> parsedResults = getParsedResults(res);
+                        if (parsedResults != null) {
+                            // Set the URL
+                            uploadItem.setUrl(parsedResults.getFirst());
+                            // Set the Days after which the link will expire
+                            uploadItem.setDaysToExpire(parsedResults.getSecond());
+                            // Insert the Object intro the Database
                             insert(uploadItem);
-                            resultCallback.onUpload(url);
+                            resultCallback.onUpload(parsedResults.getFirst());
                         } else {
-                            failure(request, response, new FuelError(new NullPointerException("URL formed from JSON was null."), null, response));
+                            failure(request, response, new FuelError(new NullPointerException("Data formed from JSON maybe was null."), null, response));
                         }
                     }
 
@@ -121,20 +123,30 @@ class UploadRepository {
                 });
     }
 
-    private String deserializeJSON(String json) {
-        Log.d(TAG, "JSON: " + json);
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            return jsonObject.getString("link");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private Pair<String, Integer> getParsedResults(String response) {
+        if (response != null) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String link = jsonObject.getString("link");
+                String expiry = jsonObject.getString("expiry");
+                Integer days = getDays(expiry);
+                return new Pair<>(link, days);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-
         return null;
     }
 
-    public void delete(UploadItem uploadItem, Upload callback) {
+    private Integer getDays(String expiry) {
+        // FIXME: look out for months and years, if you seek to implement them in the future.
+        // Split on spaces
+        return Integer.parseInt(expiry.split(" ")[0]);
+    }
+
+
+
+    void delete(UploadItem uploadItem, Upload callback) {
         new deleteAsyncUploadItem(mUploadItemDao, callback).execute(uploadItem);
     }
 
@@ -142,7 +154,7 @@ class UploadRepository {
         private UploadItemDao uploadItemDao;
         private Upload callback;
 
-        public deleteAsyncUploadItem(UploadItemDao uploadItemDao, Upload callback) {
+        deleteAsyncUploadItem(UploadItemDao uploadItemDao, Upload callback) {
             this.uploadItemDao = uploadItemDao;
             this.callback = callback;
         }

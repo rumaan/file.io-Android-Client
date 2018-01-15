@@ -17,14 +17,26 @@ public class UploadItem {
     @NonNull
     @ColumnInfo(name = "url")
     private String url;
+    /* Default Days the link will expire is 14 Days */
+    @ColumnInfo(name = "days_to_expire")
+    private int daysToExpire = 14;
 
     @Ignore
     public UploadItem() {
     }
 
-    public UploadItem(@NonNull String fileName, @NonNull String url) {
+    public UploadItem(@NonNull String fileName, @NonNull String url, int daysToExpire) {
         this.fileName = fileName;
         this.url = url;
+        this.daysToExpire = daysToExpire;
+    }
+
+    public int getDaysToExpire() {
+        return daysToExpire;
+    }
+
+    public void setDaysToExpire(int daysToExpire) {
+        this.daysToExpire = daysToExpire;
     }
 
     public int getId() {

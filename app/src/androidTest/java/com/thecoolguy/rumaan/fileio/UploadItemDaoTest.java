@@ -40,7 +40,7 @@ public class UploadItemDaoTest {
 
     @Test
     public void check_InsertUploadItemSaves() {
-        UploadItem uploadItem = new UploadItem("test", "test");
+        UploadItem uploadItem = new UploadItem("test", "test", 2);
 
         // check for nulls in the upload item object
         assertNotNull(uploadItem);

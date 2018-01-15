@@ -46,6 +46,7 @@ import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.data.models.FileModel;
 import com.thecoolguy.rumaan.fileio.utils.Consts;
+import com.thecoolguy.rumaan.fileio.utils.FileUtils;
 import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
 
 import java.io.File;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void handleFileUri(Uri uri) {
         //  File file = getFile(uri);
-        File file = com.thecoolguy.rumaan.fileio.utils.FileUtils.getFile(this, uri);
+        File file = FileUtils.getFile(this, uri);
 
         if (file != null) {
             uploadItemViewModel.setFileModel(new FileModel(file, Consts.DEFAULT_EXPIRE_WEEKS + "w"));
@@ -341,7 +342,6 @@ public class MainActivity extends AppCompatActivity implements
         }
         return false;
     }
-
 
     @Override
     public void onUpload(String result) {

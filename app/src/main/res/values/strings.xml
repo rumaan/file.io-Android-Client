@@ -29,4 +29,5 @@
     <string name="weeks">Weeks</string>
     <string name="select">Select</string>
     <string name="choose_the_expire_time_of_the_file">Choose the expire time of the file.</string>
+    <string name="days">Days</string>
 </resources>
