@@ -16,7 +16,6 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [Fuel](https://github.com/kittinunf/Fuel)
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
-- [MaterialDialogFileChooser](https://github.com/afollestad/material-dialogs#folder-selector-dialogs)
 - [Room](https://developer.android.com/topic/libraries/architecture/room.html)
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata.html)
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel.html)
