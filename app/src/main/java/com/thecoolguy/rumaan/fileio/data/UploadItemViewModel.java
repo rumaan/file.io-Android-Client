@@ -49,7 +49,4 @@ public class UploadItemViewModel extends AndroidViewModel {
         mRepository.delete(uploadItem, callback);
     }
 
-    public void deleteAll() {
-        mRepository.deleteAllItems();
-    }
 }

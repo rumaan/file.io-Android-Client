@@ -39,7 +39,6 @@ class UploadRepository {
     private UploadItemDao mUploadItemDao;
     private LiveData<List<UploadItem>> mUploadHistoryList;
 
-
     UploadRepository(Application application) {
         UploadHistoryRoomDatabase uploadHistoryRoomDatabase = UploadHistoryRoomDatabase.getInstance(application);
         mUploadItemDao = uploadHistoryRoomDatabase.uploadItemDao();
@@ -50,16 +49,6 @@ class UploadRepository {
         return mUploadHistoryList;
     }
 
-
-    void deleteAllItems() {
-        // Delete Items Async
-        new deleteAllAsyncUploadItems(mUploadItemDao).execute();
-    }
-
-
-    void insert(UploadItem uploadItem) {
-        new insertAsyncUploadItems(mUploadItemDao).execute(uploadItem);
-    }
 
     void uploadFile(final FileModel fileModel, final Upload resultCallback) {
         final File file = fileModel.getFile();
@@ -123,6 +112,12 @@ class UploadRepository {
                 });
     }
 
+    /**
+     * Parse the JSON received.
+     *
+     * @param response JSON String.
+     * @return Pair object of Received Link and Expiry Days.
+     */
     private Pair<String, Integer> getParsedResults(String response) {
         if (response != null) {
             try {
@@ -138,68 +133,66 @@ class UploadRepository {
         return null;
     }
 
+    /* Returns Days from the string.
+     * ex: "242 Days" ->  returns 242
+     * */
     private Integer getDays(String expiry) {
         // FIXME: look out for months and years, if you seek to implement them in the future.
         // Split on spaces
         return Integer.parseInt(expiry.split(" ")[0]);
     }
 
-
-
-    void delete(UploadItem uploadItem, Upload callback) {
-        new deleteAsyncUploadItem(mUploadItemDao, callback).execute(uploadItem);
+    void insert(UploadItem uploadItem) {
+        new AsyncActionsUploadItem(ACTION.INSERT, mUploadItemDao).execute(uploadItem);
     }
 
-    private static class deleteAsyncUploadItem extends AsyncTask<UploadItem, Void, Void> {
+    void delete(UploadItem uploadItem, Upload callback) {
+        new AsyncActionsUploadItem(ACTION.DELETE, mUploadItemDao, callback).execute(uploadItem);
+    }
+
+    private enum ACTION {INSERT, DELETE}
+
+    /**
+     * Asynchronously do DB operations.
+     * Operations are categorised by enum ACTION.
+     * Creates an Async Task for each action.
+     */
+    private static class AsyncActionsUploadItem extends AsyncTask<UploadItem, Void, Void> {
+
+        private ACTION action;
         private UploadItemDao uploadItemDao;
         private Upload callback;
 
-        deleteAsyncUploadItem(UploadItemDao uploadItemDao, Upload callback) {
+        AsyncActionsUploadItem(ACTION action, UploadItemDao uploadItemDao) {
+            this.action = action;
+            this.uploadItemDao = uploadItemDao;
+        }
+
+        AsyncActionsUploadItem(ACTION action, UploadItemDao uploadItemDao, Upload callback) {
+            this.action = action;
             this.uploadItemDao = uploadItemDao;
             this.callback = callback;
         }
 
         @Override
         protected Void doInBackground(UploadItem... uploadItems) {
-            uploadItemDao.delete(uploadItems);
+            switch (action) {
+                case DELETE:
+                    uploadItemDao.delete(uploadItems);
+                    return null;
+                case INSERT:
+                    uploadItemDao.insert(uploadItems[0]);
+                    return null;
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            callback.onDelete();
-        }
-    }
-
-
-    private static class insertAsyncUploadItems extends AsyncTask<UploadItem, Void, Void> {
-        private UploadItemDao mDao;
-
-        insertAsyncUploadItems(UploadItemDao dao) {
-            this.mDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(UploadItem... uploadItems) {
-            mDao.insert(uploadItems[0]);
-
-            return null;
-        }
-    }
-
-    private static class deleteAllAsyncUploadItems extends AsyncTask<Void, Void, Void> {
-
-        private UploadItemDao mItemDao;
-
-        deleteAllAsyncUploadItems(UploadItemDao mItemDao) {
-            this.mItemDao = mItemDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mItemDao.deleteAll();
-            return null;
+            if (action == ACTION.DELETE) {
+                callback.onDelete();
+            }
         }
     }
 

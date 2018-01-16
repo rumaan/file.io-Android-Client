@@ -31,7 +31,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
@@ -81,12 +80,15 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.upload_progress)
     NumberProgressBar progressBar;
     UploadItemViewModel uploadItemViewModel;
-    @BindView(R.id.btn_upload)
-    Button uploadButton;
     @BindView(R.id.link)
     TextView linkTextView;
     @BindView(R.id.root_view)
     ConstraintLayout rootView;
+
+    @OnClick(R.id.btn_upload)
+    void onClickUploadButton(View view) {
+        MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this, null);
+    }
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
@@ -218,36 +220,37 @@ public class MainActivity extends AppCompatActivity implements
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void chooseFile(Intent dataIntent) {
+        /* Check for network connectivity */
         if (isConnectedToActiveNetwork(this)) {
             // if upload was chosen from the app
             if (dataIntent == null) {
-                // Use systems file browser
+                // Use system file browser
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.setType("*/*");
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."), INTENT_FILE_REQUEST);
 
             } else {
+                // If Intent received from implicit intent
                 onActivityResult(INTENT_FILE_REQUEST, RESULT_OK, dataIntent);
             }
         } else {
-            //   Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            /* Show no network dialog */
             NoNetworkDialogFragment noNetworkDialogFragment = new NoNetworkDialogFragment();
             noNetworkDialogFragment.show(getSupportFragmentManager(), getString(R.string.no_net_dialog_fragment_tag));
         }
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
         ButterKnife.bind(this);
 
+        /* Animate the views */
         MaterialIn.animate(rootView);
 
+        /* Get the view model */
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
 
         /* Handle incoming intent content */
@@ -263,14 +266,6 @@ public class MainActivity extends AppCompatActivity implements
                 handleExplicitFileShare(intent);
             }
         }
-
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this, null);
-            }
-        });
-
         linkTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,8 +323,12 @@ public class MainActivity extends AppCompatActivity implements
     @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     boolean isConnectedToActiveNetwork(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        NetworkInfo networkInfo;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnectedOrConnecting();
+        }
+        return false;
     }
 
     @Override
@@ -393,6 +392,7 @@ public class MainActivity extends AppCompatActivity implements
         if (fragment instanceof ChooseExpireDaysFragment) {
             int value = ((ChooseExpireDaysFragment) fragment).getNumberPickerValue();
             Log.d(TAG, "Number Picker Value: " + value);
+
             dismissDialog(dialog);
 
             // update the selected days to expire in the view model
