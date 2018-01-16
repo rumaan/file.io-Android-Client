@@ -59,6 +59,7 @@ import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
+// TODO: clean up MainActivity
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements
         PopupMenu.OnMenuItemClickListener, DialogClickListener, Upload {
@@ -80,9 +81,12 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.upload_progress)
     NumberProgressBar progressBar;
     UploadItemViewModel uploadItemViewModel;
-    private Button uploadButton;
-    private TextView linkTextView;
-    private ConstraintLayout rootView;
+    @BindView(R.id.btn_upload)
+    Button uploadButton;
+    @BindView(R.id.link)
+    TextView linkTextView;
+    @BindView(R.id.root_view)
+    ConstraintLayout rootView;
 
     @OnClick(R.id.menu)
     void onMenuOptionClick(View view) {
@@ -109,14 +113,9 @@ public class MainActivity extends AppCompatActivity implements
                 Uri fileUri = data.getData();
                 if (fileUri != null) {
                     Log.d(TAG, "onActivityResult: " + fileUri.toString());
-
                     handleFileUri(fileUri);
-
-
-                    // get the content uri of the file
-                    //  MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(MainActivity.this, filePath);
                 } else {
-                    //TODO: show a delightful dialog to the user
+
                     Log.e(TAG, "onActivityResult: ERROR", new NullPointerException("File path URI is null"));
                     Toast.makeText(
                             this, "Some Error Occurred.", Toast.LENGTH_SHORT).show();
@@ -202,7 +201,6 @@ public class MainActivity extends AppCompatActivity implements
     public void uploadFile() {
         // Show progress dialog
         showUploadingView(true);
-
         uploadItemViewModel.uploadFile(this);
     }
 
@@ -219,15 +217,19 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void chooseFile() {
-
-        // TODO: save the file path in BG and add other step to upload by showing the file name or path in the textview
+    public void chooseFile(Intent dataIntent) {
         if (isConnectedToActiveNetwork(this)) {
-            // Use systems file browser
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.setType("*/*");
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."), INTENT_FILE_REQUEST);
+            // if upload was chosen from the app
+            if (dataIntent == null) {
+                // Use systems file browser
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.setType("*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."), INTENT_FILE_REQUEST);
+
+            } else {
+                onActivityResult(INTENT_FILE_REQUEST, RESULT_OK, dataIntent);
+            }
         } else {
             //   Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
             NoNetworkDialogFragment noNetworkDialogFragment = new NoNetworkDialogFragment();
@@ -244,10 +246,6 @@ public class MainActivity extends AppCompatActivity implements
 
         ButterKnife.bind(this);
 
-        uploadButton = findViewById(R.id.btn_upload);
-        linkTextView = findViewById(R.id.link);
-        rootView = findViewById(R.id.root_view);
-
         MaterialIn.animate(rootView);
 
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
@@ -262,15 +260,14 @@ public class MainActivity extends AppCompatActivity implements
             Uri fileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
             Log.d(TAG, "\nURI: " + fileUri);
             if (Intent.ACTION_SEND.equals(action) && fileUri != null) {
-                // TODO: look here
-                //   MainActivityPermissionsDispatcher.uploadFileWithPermissionCheck(this, fileUri);
+                handleExplicitFileShare(intent);
             }
         }
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
+                MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this, null);
             }
         });
 
@@ -286,6 +283,11 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         });
+    }
+
+    /* Handle incoming intent from file share apps */
+    private void handleExplicitFileShare(Intent intent) {
+        MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(this, intent);
     }
 
     @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
