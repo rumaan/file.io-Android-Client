@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements
     void onMenuOptionClick(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater menuInflater = popupMenu.getMenuInflater();
-        menuInflater.inflate(R.menu.options, popupMenu.getMenu());
+        menuInflater.inflate(R.menu.options_main, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.show();
     }
@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements
                     Log.d(TAG, "onActivityResult: " + fileUri.toString());
                     handleFileUri(fileUri);
                 } else {
-
                     Log.e(TAG, "onActivityResult: ERROR", new NullPointerException("File path URI is null"));
                     Toast.makeText(
                             this, "Some Error Occurred.", Toast.LENGTH_SHORT).show();

@@ -24,4 +24,9 @@
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
+    <style name="NoActionBarTheme.ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:selectableItemBackground">?android:selectableItemBackground</item>
+
+    </style>
+
 </resources>
