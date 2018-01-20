@@ -68,7 +68,6 @@ public class MainActivityTest {
                 .perform(click());
         onView(withText("About"))
                 .perform(click());
-
     }
 
 
