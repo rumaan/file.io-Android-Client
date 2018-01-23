@@ -20,6 +20,7 @@ import com.thecoolguy.rumaan.fileio.adapters.UploadHistoryListAdapter;
 import com.thecoolguy.rumaan.fileio.data.Upload;
 import com.thecoolguy.rumaan.fileio.data.UploadItemViewModel;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
+import com.thecoolguy.rumaan.fileio.utils.FileUtils;
 import com.thecoolguy.rumaan.fileio.utils.MaterialIn;
 
 import java.util.List;
@@ -75,7 +76,6 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_fall_down);
         recyclerView.setLayoutAnimation(layoutAnimationController);
 

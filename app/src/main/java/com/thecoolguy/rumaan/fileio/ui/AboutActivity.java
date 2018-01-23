@@ -69,7 +69,7 @@ public class AboutActivity extends AppCompatActivity {
         if (intent != null && intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Sorry, There's no app on your phone to do this task!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_no_app_on_device), Toast.LENGTH_SHORT).show();
         }
     }
 

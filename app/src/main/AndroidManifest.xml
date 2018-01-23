@@ -59,6 +59,26 @@
                 <action android:name="cat.ereza.customactivityoncrash.ERROR" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.DownloadActivity">
+
+            <intent-filter
+                android:autoVerify="true"
+                android:label="@string/filter_view_fileio_download">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <!-- URLs starting with file.io  -->
+                <!-- RegExp accepts all urls starting with https://file.io/*anything.length > 0*/d -->
+                <!-- FIXME: change the encrypt code -->
+                <data
+                    android:host="file.io"
+                    android:pathPattern="..*/dwnld"
+                    android:scheme="https" />
+
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

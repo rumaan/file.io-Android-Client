@@ -15,6 +15,7 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
 import com.thecoolguy.rumaan.fileio.data.models.FileModel;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
+import com.thecoolguy.rumaan.fileio.utils.Consts;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,6 +124,10 @@ class UploadRepository {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 String link = jsonObject.getString("link");
+
+                // append POSTFIX key to link
+                link += Consts.POSTFIX;
+
                 String expiry = jsonObject.getString("expiry");
                 Integer days = getDays(expiry);
                 return new Pair<>(link, days);
