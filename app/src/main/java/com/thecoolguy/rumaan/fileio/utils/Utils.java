@@ -5,7 +5,7 @@ package com.thecoolguy.rumaan.fileio.utils;
  */
 
 public class Utils {
-    /* Removes the '/d' from the URL */
+    /* Removes the '/dwnld' from the URL */
     public static String parseEncryptUrl(String s) {
         int index = s.lastIndexOf(Consts.POSTFIX);
         return s.substring(0, index);

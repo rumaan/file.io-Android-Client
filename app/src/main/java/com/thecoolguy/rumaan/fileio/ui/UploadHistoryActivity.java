@@ -76,9 +76,9 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_fall_down);
+        LayoutAnimationController layoutAnimationController =
+                AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_fall_down);
         recyclerView.setLayoutAnimation(layoutAnimationController);
-
     }
 
     @Override

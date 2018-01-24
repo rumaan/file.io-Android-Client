@@ -37,7 +37,6 @@ public class NoNetworkDialogFragment extends DialogFragment implements View.OnCl
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @NonNull
