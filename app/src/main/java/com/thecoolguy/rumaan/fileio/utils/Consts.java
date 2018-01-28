@@ -14,4 +14,7 @@ public class Consts {
 
     /* Append this to end of the link */
     public static final String POSTFIX = "/dwnld";
+
+    public static final String TIME_STAMP_FORMAT = "dd MMMM, yyyy";
+
 }

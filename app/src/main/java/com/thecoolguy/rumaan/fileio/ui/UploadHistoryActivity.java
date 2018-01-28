@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.sangcomz.stickytimelineview.RecyclerSectionItemDecoration;
+import xyz.sangcomz.stickytimelineview.TimeLineRecyclerView;
 import xyz.sangcomz.stickytimelineview.model.SectionInfo;
 
 public class UploadHistoryActivity extends AppCompatActivity implements OnUploadItemLongClickListener, Upload {
@@ -30,10 +30,14 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
 
     @BindView(R.id.no_uploads_view)
     View noUploadsView;
+    @BindView(R.id.list)
+    TimeLineRecyclerView recyclerView;
     private UploadItemViewModel uploadItemViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_history);
 
@@ -44,7 +48,7 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
             actionBar.setTitle(getString(R.string.upload_history_title));
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        final RecyclerView recyclerView = findViewById(R.id.list);
+
         final UploadHistoryListAdapter uploadHistoryListAdapter = new UploadHistoryListAdapter(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -66,6 +70,8 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
                     }
                 });
 
+        recyclerView.addItemDecoration(getSectionCallback(uploadItemViewModel.getUploadHistoryList().getValue()));
+
         recyclerView.setAdapter(uploadHistoryListAdapter);
         uploadHistoryListAdapter.setOnUploadItemLongClickListener(this);
 
@@ -76,17 +82,18 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
         recyclerView.setLayoutAnimation(layoutAnimationController);*/
     }
 
-    private RecyclerSectionItemDecoration.SectionCallback getSectionCallback() {
+    private RecyclerSectionItemDecoration.SectionCallback getSectionCallback(final List<UploadItem> items) {
+
         return new RecyclerSectionItemDecoration.SectionCallback() {
             @Override
-            public boolean isSection(int i) {
-                return false;
+            public boolean isSection(int position) {
+                // Same section if the dates are same
+                return true;
             }
 
             @org.jetbrains.annotations.Nullable
             @Override
             public SectionInfo getSectionHeader(int i) {
-
                 return null;
             }
         };
@@ -97,7 +104,6 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
         // todo: delete item
     }
     //TODO: abstract class for all this
-
     @Override
     public void onUpload(String result) {
 

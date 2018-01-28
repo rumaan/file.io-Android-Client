@@ -132,8 +132,12 @@ public class MainActivity extends AppCompatActivity implements
         chooseExpireDaysFragment.show(getSupportFragmentManager(), "choose_expire_days");
     }
 
+    /**
+     * @param uri Uri of the file chosen.
+     *            Handles the file uri and passes onto the upload process
+     */
     private void handleFileUri(Uri uri) {
-        //  File file = getFile(uri);
+        //  get the actual file from the storage
         File file = FileUtils.getFile(this, uri);
 
         if (file != null) {
@@ -289,8 +293,6 @@ public class MainActivity extends AppCompatActivity implements
     void showPermissionDeniedForStorage() {
         Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_SHORT).show();
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

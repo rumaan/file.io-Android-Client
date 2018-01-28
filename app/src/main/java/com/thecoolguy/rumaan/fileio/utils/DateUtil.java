@@ -1,9 +1,17 @@
 package com.thecoolguy.rumaan.fileio.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
- * Created by rumaankhalander on 06/01/18.
+ * Date functions helper class
  */
 
 public class DateUtil {
- // TODO: some weired feature coming soon.
+    private static final String TIME_STAMP_FORMAT = "dd MMMM, yyyy";
+
+    public static String getTimeStamp() {
+        return new SimpleDateFormat(TIME_STAMP_FORMAT, Locale.US).format(new Date());
+    }
 }

@@ -6,6 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
+import com.thecoolguy.rumaan.fileio.utils.DateUtil;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class UploadItemDaoTest {
 
     @Test
     public void check_InsertUploadItemSaves() {
-        UploadItem uploadItem = new UploadItem("test", "test", 2);
+        UploadItem uploadItem = new UploadItem("test", "test", DateUtil.getTimeStamp(), 2);
 
         // check for nulls in the upload item object
         assertNotNull(uploadItem);

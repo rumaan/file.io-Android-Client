@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 
 @Entity(tableName = "upload_history")
 public class UploadItem {
+    @ColumnInfo(name = "upload_date")
+    private String date;
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;
@@ -25,10 +27,19 @@ public class UploadItem {
     public UploadItem() {
     }
 
-    public UploadItem(@NonNull String fileName, @NonNull String url, int daysToExpire) {
+    public UploadItem(@NonNull String fileName, @NonNull String url, String date, int daysToExpire) {
         this.fileName = fileName;
         this.url = url;
         this.daysToExpire = daysToExpire;
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getDaysToExpire() {

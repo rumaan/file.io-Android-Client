@@ -11,6 +11,7 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryActivity;
 import com.thecoolguy.rumaan.fileio.utils.Consts;
+import com.thecoolguy.rumaan.fileio.utils.DateUtil;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,7 +42,7 @@ public class UploadHistoryInstrumentedTest {
     public void init() {
         database = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(), UploadHistoryRoomDatabase.class).build();
         for (int i = 0; i < 5; i++) {
-            UploadItem uploadItem = new UploadItem("test file name " + i, "test URL " + i, Consts.DEFAULT_EXPIRE_WEEKS);
+            UploadItem uploadItem = new UploadItem("test file name " + i, "test URL " + i, DateUtil.getTimeStamp(), Consts.DEFAULT_EXPIRE_WEEKS);
             database.uploadItemDao().insert(uploadItem);
         }
 

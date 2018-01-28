@@ -16,6 +16,7 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
 import com.thecoolguy.rumaan.fileio.data.models.FileModel;
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 import com.thecoolguy.rumaan.fileio.utils.Consts;
+import com.thecoolguy.rumaan.fileio.utils.DateUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,10 +95,16 @@ class UploadRepository {
                         if (parsedResults != null) {
                             // Set the URL
                             uploadItem.setUrl(parsedResults.getFirst());
+
                             // Set the Days after which the link will expire
                             uploadItem.setDaysToExpire(parsedResults.getSecond());
+
+                            // Set the upload time
+                            uploadItem.setDate(getCurrentDate());
+
                             // Insert the Object intro the Database
                             insert(uploadItem);
+
                             resultCallback.onUpload(parsedResults.getFirst());
                         } else {
                             failure(request, response, new FuelError(new NullPointerException("Data formed from JSON maybe was null."), null, response));
@@ -111,6 +118,13 @@ class UploadRepository {
                         resultCallback.onError(fuelError);
                     }
                 });
+    }
+
+    /**
+     * @return Current Date as specified in the DateUtil.TIME_STAMP_FORMAT
+     */
+    private String getCurrentDate() {
+        return DateUtil.getTimeStamp();
     }
 
     /**
