@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
@@ -66,11 +67,11 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
                             noUploadsView.setVisibility(View.INVISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
                             uploadHistoryListAdapter.setUploadItemList(uploadItems);
+                            recyclerView.addItemDecoration(getSectionCallback(uploadItemViewModel.getUploadHistoryList().getValue()));
                         }
                     }
                 });
 
-        recyclerView.addItemDecoration(getSectionCallback(uploadItemViewModel.getUploadHistoryList().getValue()));
 
         recyclerView.setAdapter(uploadHistoryListAdapter);
         uploadHistoryListAdapter.setOnUploadItemLongClickListener(this);
@@ -88,13 +89,14 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
             @Override
             public boolean isSection(int position) {
                 // Same section if the dates are same
-                return true;
+                return items.get(position).getDate().equals(items.get(position - 1).getDate());
             }
 
             @org.jetbrains.annotations.Nullable
             @Override
             public SectionInfo getSectionHeader(int i) {
-                return null;
+                String days = String.valueOf(items.get(i).getDaysToExpire()) + " days remaining.";
+                return new SectionInfo(items.get(i).getDate(), days);
             }
         };
     }
@@ -103,6 +105,7 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
     public void onUploadItemLongClick(UploadItem uploadItem) {
         // todo: delete item
     }
+
     //TODO: abstract class for all this
     @Override
     public void onUpload(String result) {

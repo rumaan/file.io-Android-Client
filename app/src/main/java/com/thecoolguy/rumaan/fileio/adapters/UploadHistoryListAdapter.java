@@ -51,7 +51,6 @@ public class UploadHistoryListAdapter extends RecyclerView.Adapter<UploadHistory
             UploadItem uploadItem = uploadItemList.get(position);
             holder.fileName.setText(uploadItem.getFileName());
             holder.fileUrl.setText(uploadItem.getUrl());
-            holder.days.setText(uploadItem.getDaysToExpire() + mCtx.getString(R.string.days));
         }
     }
 
@@ -72,8 +71,6 @@ public class UploadHistoryListAdapter extends RecyclerView.Adapter<UploadHistory
         TextView fileName;
         @BindView(R.id.file_url)
         TextView fileUrl;
-        @BindView(R.id.days)
-        TextView days;
 
         ViewHolder(View itemView) {
             super(itemView);

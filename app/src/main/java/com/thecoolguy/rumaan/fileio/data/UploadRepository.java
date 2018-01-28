@@ -105,6 +105,7 @@ class UploadRepository {
                             // Insert the Object intro the Database
                             insert(uploadItem);
 
+                            // Pass out the received upload link to listeners
                             resultCallback.onUpload(parsedResults.getFirst());
                         } else {
                             failure(request, response, new FuelError(new NullPointerException("Data formed from JSON maybe was null."), null, response));

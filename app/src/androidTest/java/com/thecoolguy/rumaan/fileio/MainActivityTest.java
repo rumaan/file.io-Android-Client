@@ -5,8 +5,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 
 import com.thecoolguy.rumaan.fileio.ui.MainActivity;
 
@@ -20,7 +18,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -71,7 +68,7 @@ public class MainActivityTest {
     }
 
 
-    @Test
+   /* @Test
     public void handle_NoNetwork() {
         // BEFORE: Turn off the network access
 
@@ -85,6 +82,6 @@ public class MainActivityTest {
         assertTrue(noNetworkDialog instanceof DialogFragment);
         // check whether the dialog is showing
         assertTrue(((DialogFragment) noNetworkDialog).getShowsDialog());
-    }
+    }*/
 
 }

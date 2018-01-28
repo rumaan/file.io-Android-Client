@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
     tools:context="com.thecoolguy.rumaan.fileio.ui.UploadHistoryActivity">
 
     <xyz.sangcomz.stickytimelineview.TimeLineRecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
         android:visibility="invisible"
+        app:sectionSubTitleTextColor="@android:color/darker_gray"
+        app:sectionTitleTextColor="@color/colorPrimary"
+        app:timeLineCircleColor="@color/colorPrimary"
+        app:timeLineColor="@color/colorPrimary"
+        app:timeLineWidth="2dp"
         tools:listitem="@layout/upload_item"
         tools:visibility="visible" />
 
