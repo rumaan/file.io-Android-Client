@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements
                 .setInterpolator(new AccelerateDecelerateInterpolator());
         TransitionManager.beginDelayedTransition(rootView, transition);
 
+
         linkTextView.setVisibility(View.VISIBLE);
     }
 
@@ -288,6 +289,8 @@ public class MainActivity extends AppCompatActivity implements
     void showPermissionDeniedForStorage() {
         Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
