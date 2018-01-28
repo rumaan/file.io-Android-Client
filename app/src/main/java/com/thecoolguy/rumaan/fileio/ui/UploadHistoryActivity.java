@@ -7,8 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Toast;
 
 import com.github.kittinunf.fuel.core.FuelError;
@@ -71,16 +72,13 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
                         }
                     }
                 });
-
-
         recyclerView.setAdapter(uploadHistoryListAdapter);
         uploadHistoryListAdapter.setOnUploadItemLongClickListener(this);
 
 
-        /*
         LayoutAnimationController layoutAnimationController =
                 AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_fall_down);
-        recyclerView.setLayoutAnimation(layoutAnimationController);*/
+        recyclerView.setLayoutAnimation(layoutAnimationController);
     }
 
     private RecyclerSectionItemDecoration.SectionCallback getSectionCallback(final List<UploadItem> items) {
@@ -95,7 +93,7 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
             @org.jetbrains.annotations.Nullable
             @Override
             public SectionInfo getSectionHeader(int i) {
-                String days = String.valueOf(items.get(i).getDaysToExpire()) + " days remaining.";
+                String days = String.valueOf(items.get(i).getDaysToExpire()) + getString(R.string.days_rem);
                 return new SectionInfo(items.get(i).getDate(), days);
             }
         };
@@ -103,10 +101,9 @@ public class UploadHistoryActivity extends AppCompatActivity implements OnUpload
 
     @Override
     public void onUploadItemLongClick(UploadItem uploadItem) {
-        // todo: delete item
+        uploadItemViewModel.delete(uploadItem, this);
     }
 
-    //TODO: abstract class for all this
     @Override
     public void onUpload(String result) {
 
