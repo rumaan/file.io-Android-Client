@@ -41,4 +41,5 @@
     <string name="error_no_app_on_device">Sorry, There\'s no app on your phone to do this task!</string>
     <string name="no_internet_icon">No Internet Icon</string>
     <string name="days_rem">days remaining.</string>
+    <string name="clear_history">Clear History</string>
 </resources>

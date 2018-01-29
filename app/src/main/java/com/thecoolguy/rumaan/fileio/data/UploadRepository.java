@@ -170,7 +170,11 @@ class UploadRepository {
         new AsyncActionsUploadItem(ACTION.DELETE, mUploadItemDao, callback).execute(uploadItem);
     }
 
-    private enum ACTION {INSERT, DELETE}
+    void deleteAll() {
+        new AsyncActionsUploadItem(ACTION.DELETE_ALL, mUploadItemDao).execute();
+    }
+
+    private enum ACTION {INSERT, DELETE, DELETE_ALL}
 
     /**
      * Asynchronously do DB operations.
@@ -203,6 +207,8 @@ class UploadRepository {
                 case INSERT:
                     uploadItemDao.insert(uploadItems[0]);
                     return null;
+                case DELETE_ALL:
+                    uploadItemDao.deleteAll();
             }
             return null;
         }

@@ -25,6 +25,10 @@ public class UploadItemViewModel extends AndroidViewModel {
         mUploadHistory = mRepository.getUploadHistoryList();
     }
 
+    public void deleteAll() {
+        mRepository.deleteAll();
+    }
+
     public FileModel getFileModel() {
         return fileModel;
     }
