@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity implements
     ConstraintLayout rootView;
 
     @OnClick(R.id.btn_upload)
-    void onClickUploadButton(View view) {
+    void onClickUploadButton(final View view) {
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this, null);
     }
 
     @OnClick(R.id.menu)
-    void onMenuOptionClick(View view) {
+    void onMenuOptionClick(final View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         MenuInflater menuInflater = popupMenu.getMenuInflater();
         menuInflater.inflate(R.menu.options_main, popupMenu.getMenu());
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void showExpireDaysFragment() {
-        ChooseExpireDaysFragment chooseExpireDaysFragment = new ChooseExpireDaysFragment();
+        final ChooseExpireDaysFragment chooseExpireDaysFragment = new ChooseExpireDaysFragment();
         chooseExpireDaysFragment.show(getSupportFragmentManager(), "choose_expire_days");
     }
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements
      */
     private void handleFileUri(Uri uri) {
         //  get the actual file from the storage
-        File file = FileUtils.getFile(this, uri);
+        final File file = FileUtils.getFile(this, uri);
 
         if (file != null) {
             uploadItemViewModel.setFileModel(new FileModel(file, Consts.DEFAULT_EXPIRE_WEEKS + "w"));
@@ -248,6 +248,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /* This neat lil trick though! */
+        setTheme(R.style.NoActionBarTheme);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -270,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements
                 handleExplicitFileShare(intent);
             }
         }
+
         linkTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -358,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void progress(final int progress) {
-        // uploading progress
+        // uploading progress on the UI
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
