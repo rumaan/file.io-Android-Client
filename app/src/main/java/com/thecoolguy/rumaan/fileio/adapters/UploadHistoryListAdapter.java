@@ -3,7 +3,7 @@ package com.thecoolguy.rumaan.fileio.adapters;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +54,7 @@ public class UploadHistoryListAdapter extends RecyclerView.Adapter<UploadHistory
         }
     }
 
-    public void setUploadItemList(List<UploadItem> uploadItemList) {
+    public void setUploadItemList(final List<UploadItem> uploadItemList) {
         this.uploadItemList = uploadItemList;
 
         // TODO: use DiffUtil

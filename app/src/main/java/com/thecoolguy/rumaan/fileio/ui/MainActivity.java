@@ -58,7 +58,6 @@ import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
-// TODO: clean up MainActivity
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements
         PopupMenu.OnMenuItemClickListener, DialogClickListener, Upload {
@@ -169,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements
                     progressBar.setVisibility(View.VISIBLE);
                     MaterialIn.animate(uploadingText, Gravity.TOP, Gravity.TOP);
                     MaterialIn.animate(progressBar);
+
                 }
             });
 
@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements
                     super.onAnimationEnd(animation);
 
                     uploadLayoutView.setVisibility(View.INVISIBLE);
+
                 }
             });
 
@@ -308,7 +309,6 @@ public class MainActivity extends AppCompatActivity implements
     /* Opens App info screen in settings */
     @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showAppDetailsSettings() {
-        //TODO: show a generic dialog for why the permission is denied
         Toast.makeText(this, getString(R.string.app_wont_work), Toast.LENGTH_LONG).show();
         try {
             Intent intent;

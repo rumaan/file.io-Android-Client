@@ -65,7 +65,6 @@
 
                 <!-- URLs starting with file.io  -->
                 <!-- RegExp accepts all urls starting with https://file.io/*anything.length > 0*/d -->
-                <!-- FIXME: change the encrypt code -->
                 <data
                     android:host="file.io"
                     android:pathPattern="..*/dwnld"

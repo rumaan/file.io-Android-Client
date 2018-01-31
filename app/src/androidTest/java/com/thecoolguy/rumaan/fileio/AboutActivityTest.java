@@ -20,6 +20,4 @@ public class AboutActivityTest {
     public ActivityTestRule<AboutActivity> testRule = new ActivityTestRule<>(AboutActivity.class);
 
 
-    // TODO: write tests here
-
 }

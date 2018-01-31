@@ -14,7 +14,8 @@
         <item name="android:colorControlHighlight">@color/white</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/cool_blue</item>
         <item name="android:fontFamily">@font/capriola</item>
     </style>
 

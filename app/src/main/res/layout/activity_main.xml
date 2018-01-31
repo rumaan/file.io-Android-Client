@@ -5,7 +5,8 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="false"
+    android:background="@drawable/bg_blue_gradient"
     android:theme="@style/NoActionBarTheme"
     tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
 
