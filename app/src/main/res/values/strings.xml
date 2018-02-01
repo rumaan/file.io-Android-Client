@@ -4,7 +4,7 @@
     <string name="file_io">File.io</string>
     <string name="upload_a_file_and_get_a_sharable_link_for_that_file">Upload any file and get a sharable link for that file.</string>
     <string name="file_icon">File Icon</string>
-    <string name="choose_file">Choose a file</string>
+    <string name="choose_file">Pick a file</string>
     <string name="upload">Upload</string>
     <string name="permission_deny">App requires certain permissions to function properly.</string>
     <string name="app_wont_work">App Can\'t work without the permission. You have to manually enable those permissions from App settings.</string>
