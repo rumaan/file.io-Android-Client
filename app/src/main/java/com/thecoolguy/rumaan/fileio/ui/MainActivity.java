@@ -67,12 +67,6 @@ public class MainActivity extends AppCompatActivity implements
     public static final String PACKAGE = "com.thecoolguy.rumaan.fileio";
 
     public static final int INTENT_FILE_REQUEST = 42;
-    @BindView(R.id.imageView)
-    ImageView imageView;
-    @BindView(R.id.header_text)
-    TextView headerText;
-    @BindView(R.id.header_content)
-    TextView headerContent;
     Animator animator;
     @BindView(R.id.uploading_text)
     TextView uploadingText;
@@ -168,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements
                     progressBar.setVisibility(View.VISIBLE);
                     MaterialIn.animate(uploadingText, Gravity.TOP, Gravity.TOP);
                     MaterialIn.animate(progressBar);
-
                 }
             });
 
@@ -218,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements
                 .setStartDelay(300)
                 .setInterpolator(new AccelerateDecelerateInterpolator());
         TransitionManager.beginDelayedTransition(rootView, transition);
-
 
         linkTextView.setVisibility(View.VISIBLE);
     }

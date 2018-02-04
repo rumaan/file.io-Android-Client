@@ -5,9 +5,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 ## Screenshots 📸
 <p float="left">
-<img src="/screenshots/home_screen_framed.png" alt="Home Screen"  height="500"/><img src="/screenshots/file_upload.png" alt="Sharable Link" height="500" /> <img src="/screenshots/upload_file_link.png" alt="Sharable Link" height="500" />
-<img src="/screenshots/file_chooser.png" alt="Sharable Link" height="500" />
-<img src="/screenshots/upload_history.png" alt="Sharable Link" height="500" /></p>
+<img src="/screenshots/sc1.png" alt="Home Screen"  height="700"/>
 
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
