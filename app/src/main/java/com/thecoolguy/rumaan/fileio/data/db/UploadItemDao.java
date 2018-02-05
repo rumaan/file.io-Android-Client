@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.database.Cursor;
 
 import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
@@ -20,7 +21,7 @@ public interface UploadItemDao {
     long insert(UploadItem uploadItem);
 
     @Query("SELECT DISTINCT * FROM upload_history where id = :id")
-    UploadItem getItem(long id);
+    Cursor getItem(long id);
 
     @Delete
     void delete(UploadItem... uploadItem);

@@ -21,17 +21,17 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.transition.AutoTransition;
 import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -60,7 +60,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements
-        PopupMenu.OnMenuItemClickListener, DialogClickListener, Upload {
+        DialogClickListener, Upload {
 
     public static final String TAG = "MainActivity";
     public static final String URL = "http://file.io";
@@ -77,20 +77,15 @@ public class MainActivity extends AppCompatActivity implements
     TextView linkTextView;
     @BindView(R.id.root_view)
     ConstraintLayout rootView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    private PopupMenu popupMenu;
 
     @OnClick(R.id.btn_upload)
     void onClickUploadButton(final View view) {
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this, null);
     }
 
-    @OnClick(R.id.menu)
-    void onMenuOptionClick(final View view) {
-        PopupMenu popupMenu = new PopupMenu(this, view);
-        MenuInflater menuInflater = popupMenu.getMenuInflater();
-        menuInflater.inflate(R.menu.options_main, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.show();
-    }
 
     void showHistory() {
         startActivity(new Intent(this, UploadHistoryActivity.class));
@@ -190,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
             });
 
+
             animator.start();
         }
 
@@ -239,6 +235,25 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_history:
+                showHistory();
+                return true;
+            case R.id.menu_about:
+                showAbout();
+                return true;
+        }
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -247,6 +262,11 @@ public class MainActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         /* Animate the views */
         MaterialIn.animate(rootView);
@@ -332,18 +352,6 @@ public class MainActivity extends AppCompatActivity implements
         return false;
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.menu_about:
-                showAbout();
-                return true;
-            case R.id.menu_history:
-                showHistory();
-                return true;
-        }
-        return false;
-    }
 
     @Override
     public void onUpload(String result) {

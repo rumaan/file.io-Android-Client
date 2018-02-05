@@ -8,7 +8,72 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/bg_blue_gradient"
     android:theme="@style/NoActionBarTheme"
+    app:layout_optimizationLevel="all"
     tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:elevation="0dp"
+        android:theme="@style/NoActionBarTheme.ToolbarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/btn_upload_white"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintDimensionRatio="2:0.38"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/inner_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <TextView
+            android:id="@+id/inner_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Your secret link"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@id/inner_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:text="https://file.io/2Wt5/dwnld"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/inner_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/inner_header" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -24,9 +89,9 @@
         android:layout_marginBottom="24dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/btn_ripple_circle"
+        android:elevation="4dp"
         android:fontFamily="@font/capriola"
         android:padding="16dp"
-        android:elevation="6dp"
         android:text="@string/choose_file"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,46 +100,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
-    <TextView
-        android:id="@+id/link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:clickable="true"
-        android:drawableEnd="@drawable/ic_copy"
-        android:drawablePadding="16dp"
-        android:focusable="true"
-        android:fontFamily="@font/capriola"
-        android:padding="8dp"
-        android:text="@string/link_here"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textIsSelectable="true"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="visible" />
 
-
-    <ImageButton
-        android:id="@+id/menu"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:adjustViewBounds="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/options"
-        android:cropToPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_more_vert" />
+    <!-- <ImageButton
+         android:id="@+id/menu"
+         android:layout_width="35dp"
+         android:layout_height="wrap_content"
+         android:layout_alignParentEnd="true"
+         android:layout_alignParentTop="true"
+         android:layout_marginEnd="8dp"
+         android:layout_marginTop="16dp"
+         android:adjustViewBounds="true"
+         android:background="?attr/selectableItemBackgroundBorderless"
+         android:contentDescription="@string/options"
+         android:cropToPadding="true"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:srcCompat="@drawable/ic_more_vert" />-->
 
     <RelativeLayout
         android:id="@+id/root_view_upload"
