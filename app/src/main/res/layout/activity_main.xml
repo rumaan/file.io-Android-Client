@@ -22,10 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -45,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.08" />
+            app:layout_constraintGuide_percent="0.079155676" />
 
         <TextView
             android:id="@+id/inner_header"
@@ -55,12 +51,13 @@
             android:text="Your secret link"
             android:textAlignment="center"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView11"
+            app:layout_constraintBottom_toTopOf="@+id/link"
             app:layout_constraintStart_toStartOf="@id/inner_guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -71,6 +68,30 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/inner_guideline"
             app:layout_constraintTop_toBottomOf="@+id/inner_header" />
+
+        <ImageView
+            android:id="@+id/copy"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/copy_link"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/link"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/inner_header"
+            app:srcCompat="@drawable/ic_copy" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
 
 
     </android.support.constraint.ConstraintLayout>
@@ -88,8 +109,9 @@
         android:layout_height="0dp"
         android:layout_marginBottom="24dp"
         android:layout_marginTop="8dp"
+        android:translationZ="8dp"
         android:background="@drawable/btn_ripple_circle"
-        android:elevation="4dp"
+        android:elevation="8dp"
         android:fontFamily="@font/capriola"
         android:padding="16dp"
         android:text="@string/choose_file"

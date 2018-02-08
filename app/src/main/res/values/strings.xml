@@ -42,4 +42,5 @@
     <string name="no_internet_icon">No Internet Icon</string>
     <string name="days_rem">days remaining.</string>
     <string name="clear_history">Clear History</string>
+    <string name="copy_link">Copy link icon</string>
 </resources>

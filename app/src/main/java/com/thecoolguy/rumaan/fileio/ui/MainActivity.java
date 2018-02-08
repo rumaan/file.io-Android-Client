@@ -86,6 +86,16 @@ public class MainActivity extends AppCompatActivity implements
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this, null);
     }
 
+    @OnClick(R.id.copy)
+    void onCopyClick() {
+        // Copy the content of the link text to Clipboard
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("link", linkTextView.getText());
+        if (clipboardManager != null) {
+            clipboardManager.setPrimaryClip(clipData);
+            Toast.makeText(MainActivity.this, getString(R.string.link_copy), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     void showHistory() {
         startActivity(new Intent(this, UploadHistoryActivity.class));
@@ -137,14 +147,17 @@ public class MainActivity extends AppCompatActivity implements
     public void showUploadingView(boolean show) {
         final RelativeLayout uploadLayoutView = findViewById(R.id.root_view_upload);
 
+        View view = findViewById(R.id.btn_upload);
         // Mask view animations
-        int cx = 0;
-        int cy = uploadLayoutView.getHeight();
+        // Get the view center
+        int cx = (view.getLeft() + view.getRight()) / 2;
+        int cy = (view.getTop() + view.getBottom()) / 2;
+        int startRadius = view.getHeight() / 2;
         float finalRadius = (float) Math.hypot(uploadLayoutView.getWidth(), uploadLayoutView.getHeight());
 
         if (show) {
-            animator = ViewAnimationUtils.createCircularReveal(uploadLayoutView, cx, cy, 0, finalRadius);
-            animator.setDuration(600);
+            animator = ViewAnimationUtils.createCircularReveal(uploadLayoutView, cx, cy, startRadius, finalRadius);
+            animator.setDuration(700);
             animator.setInterpolator(new FastOutSlowInInterpolator());
 
             uploadLayoutView.setVisibility(View.VISIBLE);
@@ -163,8 +176,8 @@ public class MainActivity extends AppCompatActivity implements
             animator.start();
 
         } else {
-            animator = ViewAnimationUtils.createCircularReveal(uploadLayoutView, cx, cy, finalRadius, 0);
-            animator.setDuration(600);
+            animator = ViewAnimationUtils.createCircularReveal(uploadLayoutView, cx, cy, finalRadius, startRadius);
+            animator.setDuration(700);
             animator.setInterpolator(new FastOutSlowInInterpolator());
 
             animator.addListener(new AnimatorListenerAdapter() {
@@ -232,7 +245,9 @@ public class MainActivity extends AppCompatActivity implements
             NoNetworkDialogFragment noNetworkDialogFragment = new NoNetworkDialogFragment();
             noNetworkDialogFragment.show(getSupportFragmentManager(), getString(R.string.no_net_dialog_fragment_tag));
         }
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -268,8 +283,7 @@ public class MainActivity extends AppCompatActivity implements
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-        /* Animate the views */
-        MaterialIn.animate(rootView);
+        // MaterialIn.animate(rootView);
 
         /* Get the view model */
         uploadItemViewModel = ViewModelProviders.of(this).get(UploadItemViewModel.class);
@@ -288,18 +302,6 @@ public class MainActivity extends AppCompatActivity implements
             }
         }
 
-        linkTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Copy the content of the link text to Clipboard
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("link", linkTextView.getText());
-                if (clipboardManager != null) {
-                    clipboardManager.setPrimaryClip(clipData);
-                    Toast.makeText(MainActivity.this, getString(R.string.link_copy), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     /* Handle incoming intent from file share apps */
