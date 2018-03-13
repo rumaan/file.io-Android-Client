@@ -5,74 +5,76 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import com.thecoolguy.rumaan.fileio.data.db.DatabaseContract;
 
-@Entity(tableName = "upload_history")
+@Entity(tableName = DatabaseContract.TABLE_NAME)
 public class UploadItem {
-    @ColumnInfo(name = "upload_date")
-    private String date;
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    private int id;
-    @NonNull
-    @ColumnInfo(name = "file_name")
-    private String fileName;
-    @NonNull
-    @ColumnInfo(name = "url")
-    private String url;
-    /* Default Days the link will expire is 14 Days */
-    @ColumnInfo(name = "days_to_expire")
-    private int daysToExpire = 14;
 
-    @Ignore
-    public UploadItem() {
-    }
+  @ColumnInfo(name = DatabaseContract.COLUMN_DATE_UPLOAD)
+  private String date;
+  @PrimaryKey(autoGenerate = true)
+  @NonNull
+  private int id;
+  @NonNull
+  @ColumnInfo(name = DatabaseContract.COLUMN_DATE_FILE_NAME)
+  private String fileName;
+  @NonNull
+  @ColumnInfo(name = DatabaseContract.COLUMN_UPLOAD_URL)
+  private String url;
+  /* Default Days the link will expire is 14 Days */
+  @ColumnInfo(name = DatabaseContract.COLUMN_DAYS_TO_EXPIRE)
+  private int daysToExpire = 14;
 
-    public UploadItem(@NonNull String fileName, @NonNull String url, String date, int daysToExpire) {
-        this.fileName = fileName;
-        this.url = url;
-        this.daysToExpire = daysToExpire;
-        this.date = date;
-    }
+  @Ignore
+  public UploadItem() {
+  }
 
-    public String getDate() {
-        return date;
-    }
+  public UploadItem(@NonNull String fileName, @NonNull String url, String date, int daysToExpire) {
+    this.fileName = fileName;
+    this.url = url;
+    this.daysToExpire = daysToExpire;
+    this.date = date;
+  }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
+  public String getDate() {
+    return date;
+  }
 
-    public int getDaysToExpire() {
-        return daysToExpire;
-    }
+  public void setDate(String date) {
+    this.date = date;
+  }
 
-    public void setDaysToExpire(int daysToExpire) {
-        this.daysToExpire = daysToExpire;
-    }
+  public int getDaysToExpire() {
+    return daysToExpire;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public void setDaysToExpire(int daysToExpire) {
+    this.daysToExpire = daysToExpire;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    @NonNull
-    public String getFileName() {
-        return fileName;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setFileName(@NonNull String fileName) {
-        this.fileName = fileName;
-    }
+  @NonNull
+  public String getFileName() {
+    return fileName;
+  }
 
-    @NonNull
-    public String getUrl() {
-        return url;
-    }
+  public void setFileName(@NonNull String fileName) {
+    this.fileName = fileName;
+  }
 
-    public void setUrl(@NonNull String url) {
-        this.url = url;
-    }
+  @NonNull
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(@NonNull String url) {
+    this.url = url;
+  }
 }
