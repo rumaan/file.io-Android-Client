@@ -5,7 +5,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
-import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
+import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.utils.DateUtil;
 
 import org.junit.After;
@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertNotNull;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class UploadItemDaoTest {
+public class FileEntityDaoTest {
 
     UploadHistoryRoomDatabase database;
 
@@ -41,19 +41,19 @@ public class UploadItemDaoTest {
 
     @Test
     public void check_InsertUploadItemSaves() {
-        UploadItem uploadItem = new UploadItem("test", "test", DateUtil.getTimeStamp(), 2);
+        FileEntity fileEntity = new FileEntity("test", "test", DateUtil.getTimeStamp(), 2);
 
         // check for nulls in the upload item object
-        assertNotNull(uploadItem);
+        assertNotNull(fileEntity);
 
-        assertEquals("test", uploadItem.getFileName());
-        assertEquals("test", uploadItem.getUrl());
+        assertEquals("test", fileEntity.getName());
+        assertEquals("test", fileEntity.getUrl());
 
 
         // check for nulls in database object
         assertNotNull(database);
 
-        long id = database.uploadItemDao().insert(uploadItem);
+        long id = database.uploadItemDao().insert(fileEntity);
 
         assertNotNull(id);
 

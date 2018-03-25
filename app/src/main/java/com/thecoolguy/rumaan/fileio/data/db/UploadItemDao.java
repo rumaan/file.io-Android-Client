@@ -6,28 +6,25 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
+import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 
 import java.util.List;
 
-/**
- * Created by rumaankhalander on 18/12/17.
- */
 @Dao
 public interface UploadItemDao {
 
     @Insert
-    long insert(UploadItem uploadItem);
+    long insert(FileEntity fileEntity);
 
-    @Query("SELECT DISTINCT * FROM upload_history where id = :id")
-    UploadItem getItem(long id);
+    @Query("SELECT DISTINCT * FROM File where id = :id")
+    FileEntity getItem(long id);
 
     @Delete
-    void delete(UploadItem... uploadItem);
+    void delete(FileEntity... fileEntity);
 
-    @Query("DELETE FROM upload_history")
+    @Query("DELETE FROM File")
     void deleteAll();
 
-    @Query("SELECT * FROM upload_history")
-    LiveData<List<UploadItem>> getAllUploads();
+    @Query("SELECT * FROM File")
+    LiveData<List<FileEntity>> getAllUploads();
 }

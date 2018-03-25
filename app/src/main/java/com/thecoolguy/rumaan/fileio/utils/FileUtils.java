@@ -39,7 +39,7 @@ public class FileUtils {
     public static String getPath(final Context context, final Uri uri) {
 
         if (DEBUG)
-            Log.d(TAG + " File -",
+            Log.d(TAG + " FileEntity -",
                     "Authority: " + uri.getAuthority() +
                             ", Fragment: " + uri.getFragment() +
                             ", Port: " + uri.getPort() +
@@ -111,7 +111,7 @@ public class FileUtils {
 
             return getDataColumn(context, uri, null, null);
         }
-        // File
+        // FileEntity
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
@@ -121,7 +121,7 @@ public class FileUtils {
 
 
     /**
-     * Convert Uri into File, if possible.
+     * Convert Uri into FileEntity, if possible.
      *
      * @return file A local file that the Uri was pointing to, or null if the
      * Uri is unsupported or pointed to a remote resource.
