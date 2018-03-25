@@ -5,7 +5,7 @@ import android.app.Application;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 
 /**
- * Created by rumaankhalander on 24/12/17.
+ * Base Application class
  */
 
 public class FileioApplication extends Application {
@@ -20,7 +20,6 @@ public class FileioApplication extends Application {
                 .apply();
 
 
+
     }
-
-
 }

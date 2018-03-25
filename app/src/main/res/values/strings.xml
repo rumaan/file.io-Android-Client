@@ -2,15 +2,15 @@
     <string name="app_name">File.io</string>
     <string name="link_here">Link Here</string>
     <string name="file_io">File.io</string>
-    <string name="upload_a_file_and_get_a_sharable_link_for_that_file">Upload any file and get a sharable link for that file.</string>
+    <string name="upload_a_file_and_get_a_sharable_link_for_that_file">Upload any fileEntity and get a sharable link for that fileEntity.</string>
     <string name="file_icon">File Icon</string>
-    <string name="choose_file">Pick a file</string>
+    <string name="choose_file">Pick a fileEntity</string>
     <string name="upload">Upload</string>
     <string name="permission_deny">App requires certain permissions to function properly.</string>
     <string name="app_wont_work">App Can\'t work without the permission. You have to manually enable those permissions from App settings.</string>
     <string name="cancel_file_choose_msg">Action canceled by the user.</string>
     <string name="storage_permission_rationale_title">Storage Permission</string>
-    <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access files.</string>
+    <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access fileEntities.</string>
     <string name="link_copy">Link Copied to Clipboard!</string>
     <string name="no_internet">No internet connection!. Please try again.</string>
     <string name="upload_history_title">Upload History</string>
@@ -23,16 +23,16 @@
     <string name="no_internet_connection">No Internet connection!</string>
     <string name="okay">OKay!</string>
     <string name="no_internet_description">Looks like you aren\'t connected to the network.\nPlease check your connection and try again!</string>
-    <string name="no_uploads">It seems like you haven\'t uploaded any files yet. Upload a file and check in here again.</string>
+    <string name="no_uploads">It seems like you haven\'t uploaded any fileEntities yet. Upload a fileEntity and check in here again.</string>
     <string name="no_uploads_sad_face_image">No uploads sad face image.</string>
     <string name="no_net_dialog_fragment_tag">no_net_dialog</string>
     <string name="weeks">Weeks</string>
     <string name="select">Select</string>
-    <string name="choose_the_expire_time_of_the_file">Choose the expire time of the file.</string>
+    <string name="choose_the_expire_time_of_the_file">Choose the expire time of the fileEntity.</string>
     <string name="days">Days</string>
     <string name="open_source_licenses">Open-Source Licenses</string>
     <string name="license">Licenses</string>
-    <string name="file_io_desc">Ephemeral file sharing\n Convenient, anonymous and secure</string>
+    <string name="file_io_desc">Ephemeral fileEntity sharing\n Convenient, anonymous and secure</string>
     <string name="me_handle" translatable="false">\@TheCoolGuy</string>
     <string name="rumaan" translatable="false">Rumaan</string>
     <string name="profile_image">Profile Image</string>

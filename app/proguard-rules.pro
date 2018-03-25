@@ -1,5 +1,5 @@
 # Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
+# You can control the set of applied configuration fileEntities using the
 # proguardFiles setting in build.gradle.
 #
 # For more details, see
@@ -17,7 +17,7 @@
 #-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
-# hide the original source file name.
+# hide the original source fileEntity name.
 #-renamesourcefileattribute SourceFile
 
 -dontwarn okio.**

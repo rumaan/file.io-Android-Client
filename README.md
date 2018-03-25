@@ -1,7 +1,7 @@
 # AnonyFile Android App
-This simple app allows you to upload any file and get a _sharable_ link with a set expiration time.
-The file will be **Deleted** after its downloaded or after expiration time (regardless of whether its downloaded or not).
-This app is made with the help of [file.io](https://file.io) which is an **_Anonymous_, _Secure_** file sharing platform by [Humbly](http://humbly.com/).
+This simple app allows you to upload any fileEntity and get a _sharable_ link with a set expiration time.
+The fileEntity will be **Deleted** after its downloaded or after expiration time (regardless of whether its downloaded or not).
+This app is made with the help of [fileEntity.io](https://fileEntity.io) which is an **_Anonymous_, _Secure_** fileEntity sharing platform by [Humbly](http://humbly.com/).
 
 ## Screenshots 📸
 <p float="left">
