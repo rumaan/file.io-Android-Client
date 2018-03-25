@@ -1,6 +1,6 @@
 package com.thecoolguy.rumaan.fileio;
 
-import com.thecoolguy.rumaan.fileio.utils.DateUtil;
+import com.thecoolguy.rumaan.fileio.utils.Date;
 
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class DateTest {
         // change this wtr to current day
         String actualDate = "28 January, 2018";
 
-        String date = DateUtil.getTimeStamp();
+        String date = Date.getTimeStamp();
 
         assertNotNull(date);
         assertEquals(actualDate, date);

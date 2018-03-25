@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/root_view"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:animateLayoutChanges="true"
-  android:background="@drawable/bg_blue_gradient"
-  tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
 
-
-
-
-</android.support.constraint.ConstraintLayout>
+  <android.support.constraint.ConstraintLayout
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_blue_gradient"
+    tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
+  </android.support.constraint.ConstraintLayout>
+</layout>

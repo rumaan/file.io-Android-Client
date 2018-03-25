@@ -10,7 +10,7 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryActivity;
 import com.thecoolguy.rumaan.fileio.utils.Constants;
-import com.thecoolguy.rumaan.fileio.utils.DateUtil;
+import com.thecoolguy.rumaan.fileio.utils.Date;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -48,7 +48,7 @@ public class UploadHistoryInstrumentedTest {
         // add five items into the database
         for (int i = 0; i < 5; i++) {
             FileEntity fileEntity = new FileEntity("test fileEntity name " + i, "test URL "
-                    + i, DateUtil.getTimeStamp(), Constants.DEFAULT_EXPIRE_WEEKS);
+                    + i, Date.getTimeStamp(), Constants.DEFAULT_EXPIRE_WEEKS);
             database.uploadItemDao().insert(fileEntity);
         }
 

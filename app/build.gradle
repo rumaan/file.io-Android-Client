@@ -17,6 +17,14 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    dataBinding {
+        enabled = true
     }
 
 }
@@ -35,7 +43,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:rules:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
-
 
     // permission dispatcher
     implementation('com.github.hotchemi:permissionsdispatcher:3.0.1') {
@@ -58,11 +65,6 @@ dependencies {
 
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
 
-    // Dagger 2 dependencies
-    implementation 'com.google.dagger:dagger-android:2.x'
-    implementation 'com.google.dagger:dagger-android-support:2.x'
-    // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.x'
 
 }
 

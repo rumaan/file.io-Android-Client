@@ -12,9 +12,8 @@ import com.thecoolguy.rumaan.fileio.utils.Utils;
  */
 public final class Repository {
 
-
   private static final String TAG = "Repository";
-  private UploadItemDao mUploadItemDao;
+  private final UploadItemDao mUploadItemDao;
 
   public Repository(Application application) {
     UploadHistoryRoomDatabase uploadHistoryRoomDatabase = UploadHistoryRoomDatabase
@@ -28,4 +27,5 @@ public final class Repository {
   public static void initiateUpload() {
 
   }
+
 }
