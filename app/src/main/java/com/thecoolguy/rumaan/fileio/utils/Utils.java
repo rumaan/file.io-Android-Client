@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -13,14 +14,15 @@ import android.provider.Settings;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import kotlin.Pair;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Bunch of helper methods here.
  */
-public class Utils {
+public final class Utils {
 
   /**
    * Wrapper class for all Android related helper methods.
@@ -85,7 +87,7 @@ public class Utils {
     }
 
     /* Copy the given text into clipboard */
-    public static void copyToClipboard(final Context context, final String label,
+    public static void copyTextToClipboard(final Context context, final String label,
         final String text) {
       ClipboardManager clipboardManager = (ClipboardManager) context
           .getSystemService(Context.CLIPBOARD_SERVICE);
@@ -124,7 +126,7 @@ public class Utils {
      * @param response JSON String.
      * @return Pair object of Received Link and Expiry Days.
      */
-    public static Pair<String, Integer> parseResults(String response) {
+    public static ContentValues parseResults(String response) {
       if (response != null) {
         try {
           JSONObject jsonObject = new JSONObject(response);
@@ -135,7 +137,10 @@ public class Utils {
 
           String expiry = jsonObject.getString("expiry");
           Integer days = getDays(expiry);
-          return new Pair<>(link, days);
+          ContentValues contentValues = new ContentValues();
+          contentValues.put("link", link);
+          contentValues.put("days", days);
+          return contentValues;
         } catch (JSONException e) {
           e.printStackTrace();
         }
@@ -152,5 +157,25 @@ public class Utils {
       // Split on spaces
       return Integer.parseInt(expiry.split(" ")[0]);
     }
+  }
+
+  /**
+   * Date functions helper class
+   */
+  public static final class Date {
+
+    public static final String TIME_STAMP_FORMAT = "dd MMMM, yyyy";
+
+    private static String getTimeStamp() {
+      return new SimpleDateFormat(TIME_STAMP_FORMAT, Locale.US).format(new java.util.Date());
+    }
+
+    /**
+     * @return Current Date as specified in the Date.TIME_STAMP_FORMAT
+     */
+    public static String getCurrentDate() {
+      return Date.getTimeStamp();
+    }
+
   }
 }

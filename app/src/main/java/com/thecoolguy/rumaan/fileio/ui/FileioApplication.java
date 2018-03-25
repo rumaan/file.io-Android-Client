@@ -18,8 +18,5 @@ public class FileioApplication extends Application {
         CaocConfig.Builder.create()
                 .errorActivity(ErrorActivity.class)
                 .apply();
-
-
-
     }
 }

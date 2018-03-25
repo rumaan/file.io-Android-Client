@@ -41,12 +41,12 @@ public class DownloadActivity extends AppCompatActivity {
     String temp = uri.toString();
     // Strip the url on '/d'
 
-    String url = Utils.parseEncryptUrl(temp);
+    String url = Utils.URLParser.parseEncryptUrl(temp);
 
     Log.d(TAG, "openIntent: " + url);
 
     // Open the URL using Web Browser
-    Intent intent = Utils.newIntent(Intent.ACTION_VIEW, Intent.CATEGORY_APP_BROWSER, null);
+    Intent intent = Utils.Android.newIntent(Intent.ACTION_VIEW, Intent.CATEGORY_APP_BROWSER, null);
     if (intent.resolveActivity(getPackageManager()) != null) {
       finishAffinity();
       startActivity(intent);
