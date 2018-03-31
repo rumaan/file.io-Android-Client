@@ -3,12 +3,11 @@ package com.thecoolguy.rumaan.fileio.data.repository
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Blob
 import com.github.kittinunf.fuel.core.ResponseDeserializable
-import com.github.kittinunf.fuel.httpUpload
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
-import com.thecoolguy.rumaan.fileio.utils.Constants
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import java.io.FileInputStream
 
@@ -18,26 +17,29 @@ object Uploader {
     fun uploadFile(context: Context, fileUri: Uri, fileInputStream: FileInputStream) {
         val localFile = Utils.getFileDetails(context, fileUri)
 
-        Constants.BASE_URL.httpUpload()
-                .blob { request, url ->
-                    Log.d(TAG, request.toString())
+        Fuel.upload("https://file.io")
+                .blob { _, _ ->
                     Blob(localFile.name, localFile.size, {
                         fileInputStream
                     })
                 }
-                .progress { readBytes, totalBytes ->
-
+                .name {
+                    "file"
                 }
-                .responseString { request, response, result ->
+                .progress { readBytes, totalBytes ->
+                    val p = (readBytes.toFloat() / totalBytes * 100).toInt()
+                    Log.d(TAG, "Progress: $p")
+                }
+                .responseObject(Response.Deserializer()) { _, _, result ->
                     when (result) {
                         is Result.Success -> {
-                            val data = result.get()
-                            Log.d(TAG, data)
+                            val res = result.get()
+                            Log.d(TAG, res.toString())
                         }
                         is Result.Failure -> {
                             val exception = result.getException()
-                            Log.e(TAG, exception.localizedMessage, exception)
                         }
+
                     }
                 }
 
