@@ -7,13 +7,24 @@ import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+import android.provider.OpenableColumns;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import org.json.JSONException;
@@ -23,6 +34,86 @@ import org.json.JSONObject;
  * Bunch of helper methods here.
  */
 public final class Utils {
+
+  private static final String TAG = Utils.class.getSimpleName();
+
+  /**
+   * Returns the file from temp cache dir by copying it from the InputStream
+   *
+   * @param fileInputStream InputStream of the requested file.
+   * @return Requested File
+   */
+  public static File getFile(@NonNull FileInputStream fileInputStream) {
+    // TODO: Remove this method
+    return null;
+  }
+
+  public static LocalFile getFileDetails(@NonNull final Context context, @NonNull final Uri fileUri
+  ) {
+    Cursor cursor = null;
+    try {
+      cursor = context.getContentResolver()
+          .query(fileUri, null, null, null, null);
+
+      if (cursor != null) {
+        LocalFile localFile = null;
+        while (cursor.moveToNext()) {
+          int nameIndex = cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME);
+          int sizeIndex = cursor.getColumnIndexOrThrow(OpenableColumns.SIZE);
+
+          String fileName = cursor.getString(nameIndex);
+          long fileSize = cursor.getLong(sizeIndex);
+
+          localFile = new LocalFile(fileUri, fileName, fileSize);
+          Log.d(TAG, "FileDetails: " + localFile);
+
+        }
+        return localFile;
+
+        // return new LocalFile();
+      } else {
+        throw new CursorIndexOutOfBoundsException("Invalid Cursor position!");
+      }
+
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (cursor != null) {
+        cursor.close();
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Open the file from the storage in read mode and return the
+   * InputStream.
+   *
+   * @param context Context of the calling activity
+   * @param fileUri Uri of the requested file
+   * @return Return the Stream of the requested file
+   */
+  public static FileInputStream getFileInputStream(final Uri fileUri, final Context context) {
+    try {
+      ParcelFileDescriptor parcelFileDescriptor = context.getContentResolver()
+          .openFileDescriptor(fileUri, "r");
+      if (parcelFileDescriptor != null) {
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        if (fileDescriptor.valid()) {
+          return new FileInputStream(fileDescriptor);
+        } else {
+          throw new FileNotFoundException();
+        }
+      } else {
+        throw new FileNotFoundException();
+      }
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
 
   /**
    * Wrapper class for all Android related helper methods.
