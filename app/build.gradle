@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+def supportLibVersion = '27.1.0'
 
 android {
     compileSdkVersion 27
@@ -32,10 +35,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta5'
-    implementation 'com.android.support:design:27.1.0'
-    implementation 'com.android.support:cardview-v7:27.1.0'
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta6'
+    implementation "com.android.support:design:$supportLibVersion"
+    implementation "com.android.support:cardview-v7:$supportLibVersion"
 
     // Test dependencies
     testImplementation 'junit:junit:4.12'
@@ -54,17 +57,30 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    implementation 'com.google.firebase:firebase-core:12.0.0'
-    // Room components
-    implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
-    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.roomVersion"
-    // Lifecycle components
-    implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
-    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
+    implementation 'com.google.firebase:firebase-core:12.0.1'
+
+    /* Room, LiveData, ViewModel */
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+    // Test helpers for LiveData
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+    // Test helpers for Room
+    testImplementation "android.arch.persistence.room:testing:1.0.0"
 
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
 
+    // Fuel android service
+    implementation 'com.github.kittinunf.fuel:fuel-android:1.12.1' //for Android
+
+    // Gson Deserializer
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    // Kotlin Reflections
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
 }
 

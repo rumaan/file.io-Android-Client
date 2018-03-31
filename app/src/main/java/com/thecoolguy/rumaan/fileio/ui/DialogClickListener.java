@@ -8,5 +8,7 @@ import android.support.v4.app.Fragment;
  */
 
 interface DialogClickListener {
-    void onDialogPositiveClick(Dialog dialog, Fragment fragment);
+
+  // TODO: change name
+  void onDialogPositiveClick(Dialog dialog, Fragment dialogFragment);
 }
