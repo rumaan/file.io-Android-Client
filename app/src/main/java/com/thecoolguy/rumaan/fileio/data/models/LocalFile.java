@@ -1,6 +1,7 @@
 package com.thecoolguy.rumaan.fileio.data.models;
 
 import android.net.Uri;
+import java.io.FileInputStream;
 import java.util.Objects;
 
 /**
@@ -12,6 +13,7 @@ public final class LocalFile {
   private String name;
   private long size;
   private Uri uri;
+  private FileInputStream fileInputStream;
 
   public LocalFile(Uri uri, String name, long size) {
     this.name = name;
@@ -20,6 +22,14 @@ public final class LocalFile {
   }
 
   public LocalFile() {
+  }
+
+  public FileInputStream getFileInputStream() {
+    return fileInputStream;
+  }
+
+  public void setFileInputStream(FileInputStream fileInputStream) {
+    this.fileInputStream = fileInputStream;
   }
 
   @Override

@@ -21,7 +21,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
-import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,18 +36,15 @@ public final class Utils {
 
   private static final String TAG = Utils.class.getSimpleName();
 
-  /**
-   * Returns the file from temp cache dir by copying it from the InputStream
-   *
-   * @param fileInputStream InputStream of the requested file.
-   * @return Requested File
-   */
-  public static File getFile(@NonNull FileInputStream fileInputStream) {
-    // TODO: Remove this method
-    return null;
-  }
 
-  public static LocalFile getFileDetails(@NonNull final Context context, @NonNull final Uri fileUri
+  /**
+   * Get the file details -> name, size from the Android Provider Database
+   *
+   * @param fileUri Requested file URI
+   * @param context Context of the requesting activity
+   * @return File Details of the given URI and wrap it into a POJO with file stream
+   */
+  public static LocalFile getLocalFile(@NonNull final Context context, @NonNull final Uri fileUri
   ) {
     Cursor cursor = null;
     try {
@@ -65,6 +61,8 @@ public final class Utils {
           long fileSize = cursor.getLong(sizeIndex);
 
           localFile = new LocalFile(fileUri, fileName, fileSize);
+          localFile.setFileInputStream(getFileInputStream(fileUri, context));
+
           Log.d(TAG, "FileDetails: " + localFile);
 
         }
@@ -216,7 +214,9 @@ public final class Utils {
      *
      * @param response JSON String.
      * @return Pair object of Received Link and Expiry Days.
+     * @deprecated The Response object has been modified into a POJO.
      */
+    @Deprecated
     public static ContentValues parseResults(String response) {
       if (response != null) {
         try {

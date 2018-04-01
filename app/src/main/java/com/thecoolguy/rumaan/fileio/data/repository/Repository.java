@@ -1,15 +1,10 @@
 package com.thecoolguy.rumaan.fileio.data.repository;
 
 import android.app.Application;
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
-import com.thecoolguy.rumaan.fileio.utils.Utils;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Handles the data part of the application
@@ -32,13 +27,8 @@ public final class Repository {
 
 
   /* Create the upload service and start the upload */
-  public static void initiateUpload(final Uri fileUri, final Context context) {
-    FileInputStream fileInputStream = Utils.getFileInputStream(fileUri, context);
-    if (fileInputStream != null) {
-      Uploader.INSTANCE.uploadFile(context, fileUri, fileInputStream);
-    } else {
-      Log.e(TAG, "initiateUpload: Error Getting the file!", new FileNotFoundException());
-    }
+  public static void initiateUpload(@NotNull final LocalFile localFile) {
+    Uploader.INSTANCE.uploadFile(localFile);
   }
 
 }
