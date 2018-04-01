@@ -11,13 +11,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.MainActivityViewModel;
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
+import org.jetbrains.annotations.NotNull;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -25,28 +28,26 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements DialogClickListener {
+public class MainActivity extends AppCompatActivity implements DialogClickListener,
+    OnFileLoadListener {
 
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
-
+  private MainActivityViewModel viewModel;
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if (requestCode == INTENT_FILE_REQUEST) {
       if (resultCode == RESULT_OK) {
-
         Uri fileUri = data.getData();
-
         if (fileUri != null) {
-          ViewModelProviders.of(this).get(MainActivityViewModel.class)
-              .chooseFileFromUri(getApplicationContext(), fileUri);
+          // TODO: bad idea
+          viewModel.chooseFileFromUri(this, fileUri, MainActivity.this);
         } else {
           Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
               .show();
         }
-
       } else {
         Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
       }
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
   @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
-  public void chooseFile(View view) {
+  public void chooseFile() {
     /* Check for network connectivity */
     if (Utils.Android.isConnectedToNetwork(this)) {
       // Use system file browser
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     /* Set theme to app theme after creating the activity */
     setTheme(R.style.NoActionBarTheme);
 
+    viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+
     ActivityMainBinding activityMainBinding = DataBindingUtil
         .setContentView(this, R.layout.activity_main);
 
@@ -93,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
       }
     });
-
   }
 
   @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -108,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     Utils.Android.showAppDetailsSettings(this);
   }
 
-
   @Override
   public void onDialogPositiveClick(Dialog dialog, Fragment dialogFragment) {
     if (dialogFragment instanceof NoNetworkDialogFragment) {
@@ -116,5 +117,9 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     }
   }
 
-
+  /* Callback for file load */
+  @Override
+  public void onFileLoad(@NotNull LocalFile localFile) {
+    Log.i(TAG, localFile.toString());
+  }
 }
