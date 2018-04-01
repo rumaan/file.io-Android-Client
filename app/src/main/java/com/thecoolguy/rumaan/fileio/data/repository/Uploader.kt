@@ -23,7 +23,7 @@ object Uploader {
                 }
                 .progress { readBytes, totalBytes ->
                     val p = (readBytes.toFloat() / totalBytes * 100).toInt()
-                    Log.d(TAG, "Progress: $p")
+                    Log.i(TAG, "Progress: $p")
                 }
                 .responseObject(Response.Deserializer()) { _, _, result ->
                     // Close the stream
@@ -32,7 +32,7 @@ object Uploader {
                     when (result) {
                         is Result.Success -> {
                             val res = result.get()
-                            Log.d(TAG, res.toString())
+                            Log.i(TAG, res.toString())
                         }
                         is Result.Failure -> {
                             val exception = result.getException()

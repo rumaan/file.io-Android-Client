@@ -62,9 +62,6 @@ public final class Utils {
 
           localFile = new LocalFile(fileUri, fileName, fileSize);
           localFile.setFileInputStream(getFileInputStream(fileUri, context));
-
-          Log.d(TAG, "FileDetails: " + localFile);
-
         }
         return localFile;
 
