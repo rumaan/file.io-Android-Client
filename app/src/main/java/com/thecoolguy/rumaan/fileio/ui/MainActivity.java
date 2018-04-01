@@ -3,6 +3,7 @@ package com.thecoolguy.rumaan.fileio.ui;
 import android.Manifest;
 import android.Manifest.permission;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
@@ -10,12 +11,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.data.repository.Repository;
+import com.thecoolguy.rumaan.fileio.data.MainActivityViewModel;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import permissions.dispatcher.NeedsPermission;
@@ -39,10 +39,13 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
         Uri fileUri = data.getData();
 
-        Log.d(TAG, "FileURI: " + fileUri);
-        Log.d(TAG, "FileName: " + fileUri.getLastPathSegment());
-
-        Repository.initiateUpload(fileUri, getApplicationContext());
+        if (fileUri != null) {
+          ViewModelProviders.of(this).get(MainActivityViewModel.class)
+              .chooseFileFromUri(getApplicationContext(), fileUri);
+        } else {
+          Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
+              .show();
+        }
 
       } else {
         Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
   @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
-  public void chooseFile() {
+  public void chooseFile(View view) {
     /* Check for network connectivity */
     if (Utils.Android.isConnectedToNetwork(this)) {
       // Use system file browser
@@ -112,4 +115,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
       Utils.Android.dismissDialog(dialog);
     }
   }
+
+
 }

@@ -6,6 +6,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="@drawable/bg_blue_gradient"
     tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
 
@@ -14,8 +15,8 @@
       android:id="@+id/choose_file"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:onClick="chooseFile"
       android:layout_marginBottom="24dp"
+      android:onClick="chooseFile"
       android:text="Choose File"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
