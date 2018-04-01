@@ -25,12 +25,12 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 
 ## TODO List ✅:
 - [X] Set Expiration Time
-- [ ] Handle different use cases for storage on the device.
+- [X] Handle different use cases for storage on the device.
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
 - [X] Custom Error Dialog
 - [X] restructure App with **MVVM** (kinda maybe!)😉
-- [ ] UI Testing
+- [X] UI Testing
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon
 - [ ] Kotlinize the project 🎳
