@@ -2,6 +2,7 @@ package com.thecoolguy.rumaan.fileio.ui;
 
 import android.app.Application;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
+import com.thecoolguy.rumaan.fileio.data.repository.Repository;
 
 
 /**
@@ -19,5 +20,7 @@ public class FileioApplication extends Application {
         .errorActivity(ErrorActivity.class)
         .apply();
 
+    // Create the repository instance
+    Repository.setInstance(this);
   }
 }
