@@ -6,7 +6,7 @@ import android.net.Uri
 import android.util.Log
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.data.repository.Repository
-import com.thecoolguy.rumaan.fileio.ui.OnFileLoadListener
+import com.thecoolguy.rumaan.fileio.ui.FileLoadListener
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import kotlinx.coroutines.experimental.launch
 
@@ -21,7 +21,7 @@ class MainActivityViewModel : ViewModel() {
     /**
      * Get the file from the database and save in the current view model state.
      */
-    fun chooseFileFromUri(context: Context, fileUri: Uri, fileLoadListener: OnFileLoadListener) {
+    fun chooseFileFromUri(context: Context, fileUri: Uri, fileLoadListener: FileLoadListener) {
         launch {
             localFile = Utils.getLocalFile(context, fileUri)
             localFile?.let {
@@ -31,9 +31,15 @@ class MainActivityViewModel : ViewModel() {
         Log.i(TAG, "Outside!")
     }
 
-    fun uploadFile(context: Context) {
+    /**
+     * Upload the file to server and save the response into the database.
+     * */
+    fun uploadFile() {
         localFile?.let {
-            Repository.initiateUpload(it)
+            // upload file
+            Repository.getInstance().upload(it)
+
+            // TODO: update progress
         }
     }
 

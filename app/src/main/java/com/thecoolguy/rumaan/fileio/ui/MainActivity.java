@@ -29,7 +29,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements DialogClickListener,
-    OnFileLoadListener {
+    FileLoadListener {
 
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
@@ -121,5 +121,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     Log.i(TAG, localFile.toString());
+    viewModel.uploadFile();
   }
 }

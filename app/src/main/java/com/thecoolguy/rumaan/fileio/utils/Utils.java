@@ -19,7 +19,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
@@ -224,7 +223,7 @@ public final class Utils {
           link += Constants.POSTFIX;
 
           String expiry = jsonObject.getString("expiry");
-          Integer days = getDays(expiry);
+          Integer days = getDaysFromExpireString(expiry);
           ContentValues contentValues = new ContentValues();
           contentValues.put("link", link);
           contentValues.put("days", days);
@@ -240,7 +239,7 @@ public final class Utils {
      * Returns Days from the string.
      * ex: "242 Days" ->  returns 242
      */
-    private static Integer getDays(String expiry) {
+    public static Integer getDaysFromExpireString(String expiry) {
       // FIXME: look out for months and years, if you seek to implement them in the future.
       // Split on spaces
       return Integer.parseInt(expiry.split(" ")[0]);
