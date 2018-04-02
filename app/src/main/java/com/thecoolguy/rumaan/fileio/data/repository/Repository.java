@@ -1,11 +1,13 @@
 package com.thecoolguy.rumaan.fileio.data.repository;
 
 import android.app.Application;
+import android.util.Log;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
-import com.thecoolguy.rumaan.fileio.ui.FileUploadListener;
+import com.thecoolguy.rumaan.fileio.listeners.FileUploadListener;
+import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -42,21 +44,34 @@ public final class Repository implements FileUploadListener {
     }
   }
 
-  public void upload(LocalFile localFile) {
-    Uploader.INSTANCE.uploadFile(localFile, this);
+  public void upload(LocalFile localFile, FileUploadProgressListener progressListener) {
+    Uploader.INSTANCE.uploadFile(localFile, this, progressListener);
   }
 
   private void save(FileEntity fileEntity) {
     // TODO: save to database
+    onComplete(fileEntity);
   }
+
 
   @Override
   public void onFileUpload(@NotNull FileEntity fileEntity) {
+    // save the file to database
     save(fileEntity);
   }
 
   @Override
   public void onFileUploadError(@NotNull Exception exception) {
+    // TODO: log this error
+  }
 
+  @Override
+  public void uploadProgress(int progress) {
+    // Do nothing currently
+  }
+
+  @Override
+  public void onComplete(@NotNull FileEntity fileEntity) {
+    Log.i(TAG, "onComplete: " + fileEntity.toString());
   }
 }

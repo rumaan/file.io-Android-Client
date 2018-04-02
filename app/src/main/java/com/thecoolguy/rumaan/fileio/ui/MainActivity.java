@@ -17,8 +17,12 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.MainActivityViewModel;
+import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
+import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
+import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
+import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import org.jetbrains.annotations.NotNull;
 import permissions.dispatcher.NeedsPermission;
@@ -28,8 +32,11 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements DialogClickListener,
-    FileLoadListener {
+public class MainActivity
+    extends AppCompatActivity
+    implements
+    DialogClickListener,
+    FileLoadListener, FileUploadProgressListener {
 
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
@@ -121,6 +128,16 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     Log.i(TAG, localFile.toString());
-    viewModel.uploadFile();
+    viewModel.uploadFile(this);
+  }
+
+  @Override
+  public void uploadProgress(int progress) {
+    // Update the progress into the view
+  }
+
+  @Override
+  public void onComplete(@NotNull FileEntity fileEntity) {
+    Log.i(TAG, "onComplete: " + fileEntity.toString());
   }
 }
