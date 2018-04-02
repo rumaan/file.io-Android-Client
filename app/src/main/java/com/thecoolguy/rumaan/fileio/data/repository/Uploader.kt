@@ -1,6 +1,5 @@
 package com.thecoolguy.rumaan.fileio.data.repository
 
-import android.util.Log
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Blob
 import com.github.kittinunf.fuel.core.ResponseDeserializable
@@ -8,15 +7,20 @@ import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
-import com.thecoolguy.rumaan.fileio.ui.FileUploadListener
+import com.thecoolguy.rumaan.fileio.listeners.FileUploadListener
+import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.runBlocking
 import org.jetbrains.annotations.NotNull
 
 object Uploader {
+
     private val TAG = Uploader::class.simpleName
-    fun uploadFile(@NotNull localFile: LocalFile, listener: FileUploadListener) {
+
+    // TODO: fix this mess
+    fun uploadFile(@NotNull localFile: LocalFile, uploadListener: FileUploadListener,
+                   progressListener: FileUploadProgressListener) {
         // Async task thread
         Fuel.upload("https://file.io")
                 .blob { _, _ ->
@@ -29,7 +33,10 @@ object Uploader {
                 }
                 .progress { readBytes, totalBytes ->
                     val p = (readBytes.toFloat() / totalBytes * 100).toInt()
-                    Log.i(TAG, "Progress: $p")
+
+                    // publish progress to all observer
+                    progressListener.uploadProgress(p)
+                    uploadListener.uploadProgress(p)
                 }
                 .responseObject(Response.Deserializer()) { _, _, result ->
                     // Close the stream
@@ -43,13 +50,16 @@ object Uploader {
                                             res.link, Utils.Date.getCurrentDate(),
                                             Utils.JSONParser.getDaysFromExpireString(res.expiry))
                                 }
-                                listener.onFileUpload(deferredFileEntity.await())
+
+                                // publish result to all listeners
+                                val fileEntity = deferredFileEntity.await()
+                                uploadListener.onFileUpload(fileEntity)
                             }
 
                         }
                         is Result.Failure -> {
                             val exception = result.getException()
-                            listener.onFileUploadError(exception)
+                            uploadListener.onFileUploadError(exception)
                         }
                     }
                 }

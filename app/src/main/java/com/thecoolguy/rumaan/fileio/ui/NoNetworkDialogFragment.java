@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.thecoolguy.rumaan.fileio.R;
+import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 
 
 public class NoNetworkDialogFragment extends DialogFragment implements View.OnClickListener {

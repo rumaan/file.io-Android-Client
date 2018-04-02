@@ -86,4 +86,15 @@ public final class FileEntity {
   public void setUrl(@NonNull String url) {
     this.url = url;
   }
+
+  @Override
+  public String toString() {
+    return "FileEntity{" +
+        "date='" + date + '\'' +
+        ", id=" + id +
+        ", name='" + name + '\'' +
+        ", url='" + url + '\'' +
+        ", daysToExpire=" + daysToExpire +
+        '}';
+  }
 }

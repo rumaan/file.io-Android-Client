@@ -6,7 +6,8 @@ import android.net.Uri
 import android.util.Log
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.data.repository.Repository
-import com.thecoolguy.rumaan.fileio.ui.FileLoadListener
+import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
+import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import kotlinx.coroutines.experimental.launch
 
@@ -34,10 +35,10 @@ class MainActivityViewModel : ViewModel() {
     /**
      * Upload the file to server and save the response into the database.
      * */
-    fun uploadFile() {
+    fun uploadFile(listener: FileUploadProgressListener) {
         localFile?.let {
             // upload file
-            Repository.getInstance().upload(it)
+            Repository.getInstance().upload(it, listener)
 
             // TODO: update progress
         }
