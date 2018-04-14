@@ -48,7 +48,6 @@ public final class LocalFile {
 
   @Override
   public int hashCode() {
-
     return Objects.hash(name, size, uri);
   }
 
