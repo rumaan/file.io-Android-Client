@@ -1,5 +1,8 @@
 package com.thecoolguy.rumaan.fileio;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
@@ -25,6 +28,11 @@ public class MainActivityTest {
   public void useAppContext() throws Exception {
     Context context = InstrumentationRegistry.getTargetContext();
     assertEquals("com.thecoolguy.rumaan.fileio", context.getPackageName());
+  }
+
+  @Test
+  public void chooseFile_click() {
+    onView(withId(R.id.choose_file)).perform(click());
   }
 
 

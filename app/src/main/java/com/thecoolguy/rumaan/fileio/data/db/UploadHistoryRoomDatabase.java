@@ -23,7 +23,6 @@ public abstract class UploadHistoryRoomDatabase extends RoomDatabase {
                 }
             }
         }
-
         return sINSTANCE;
     }
 

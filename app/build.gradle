@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def supportLibVersion = '27.1.0'
+def supportLibVersion = '27.1.1'
 
 android {
     compileSdkVersion 27
@@ -42,7 +42,7 @@ kotlin {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta6'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"
 
@@ -89,7 +89,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     // Kotlin Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
+   // implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
+
+    implementation 'org.jetbrains.anko:anko-coroutines:0.10.4'
 
 }
 

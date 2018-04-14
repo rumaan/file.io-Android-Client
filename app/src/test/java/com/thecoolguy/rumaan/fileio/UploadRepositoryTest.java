@@ -14,7 +14,7 @@ public class UploadRepositoryTest {
     String url = "https://file.io/?expires=2";
     String days = "2";
     String withConstantsUrl = Constants.BASE_URL + Constants.QUERY + Constants.EXPIRE_PARAM + days;
-    String testUrl = Utils.getExpireUrl(days);
+    String testUrl = Utils.URLParser.getExpireUrl(days);
 
     assertNotNull(testUrl);
     assertEquals(url, testUrl);

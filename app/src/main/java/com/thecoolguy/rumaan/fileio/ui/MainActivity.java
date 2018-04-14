@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.data.MainActivityViewModel;
+import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
@@ -128,6 +128,8 @@ public class MainActivity
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     Log.i(TAG, localFile.toString());
+
+    // TODO: Update the view
     viewModel.uploadFile(this);
   }
 

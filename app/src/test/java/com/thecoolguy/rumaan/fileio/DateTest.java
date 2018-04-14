@@ -1,11 +1,10 @@
 package com.thecoolguy.rumaan.fileio;
 
-import com.thecoolguy.rumaan.fileio.utils.Date;
-
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import com.thecoolguy.rumaan.fileio.utils.Utils;
+import org.junit.Test;
 
 /**
  * Test the utility date functions.
@@ -13,15 +12,15 @@ import static org.junit.Assert.assertNotNull;
 
 public class DateTest {
 
-    /* Probably the worst test for date ever 🤣*/
-    @Test
-    public void test_CurrentDate() {
-        // change this wtr to current day
-        String actualDate = "28 January, 2018";
+  /* Probably the worst test for date ever 🤣*/
+  @Test
+  public void test_CurrentDate() {
+    // change this wtr to current day
+    String actualDate = "04 April, 2018";
 
-        String date = Date.getTimeStamp();
+    String date = Utils.Date.getCurrentDate();
 
-        assertNotNull(date);
-        assertEquals(actualDate, date);
-    }
+    assertNotNull(date);
+    assertEquals(actualDate, date);
+  }
 }

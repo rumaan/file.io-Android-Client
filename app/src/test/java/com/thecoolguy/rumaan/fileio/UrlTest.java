@@ -16,7 +16,7 @@ public class UrlTest {
         String testUrl = "https://file.io/dfW34/dwnld";
         String check = "https://file.io/dfW34";
 
-        String url = Utils.parseEncryptUrl(testUrl);
+        String url = Utils.URLParser.parseEncryptUrl(testUrl);
         assertEquals(check, url);
     }
 

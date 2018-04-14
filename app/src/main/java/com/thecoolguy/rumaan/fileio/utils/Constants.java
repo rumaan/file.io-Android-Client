@@ -8,7 +8,7 @@ import android.net.Uri;
 
 public class Constants {
 
-  public static final String BASE_URL = "https://www.file.io/";
+  public static final String BASE_URL = "https://file.io/";
   public static final String QUERY = "?";
   public static final String EXPIRE_PARAM = "expires=";
   public static final int DEFAULT_EXPIRE_WEEKS = 1;
