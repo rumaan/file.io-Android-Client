@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
@@ -24,6 +23,7 @@ import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
+import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -49,7 +49,6 @@ public class MainActivity
       if (resultCode == RESULT_OK) {
         Uri fileUri = data.getData();
         if (fileUri != null) {
-          // TODO: bad idea
           viewModel.chooseFileFromUri(this, fileUri, MainActivity.this);
         } else {
           Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
@@ -75,8 +74,7 @@ public class MainActivity
     /* Check for network connectivity */
     if (Utils.Android.isConnectedToNetwork(this)) {
       // Use system file browser
-      Intent intent = Utils
-          .Android.newIntent(Intent.ACTION_OPEN_DOCUMENT, Intent.CATEGORY_OPENABLE, "*/*");
+      Intent intent = Utils.Android.getChooseFileIntent();
       startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."),
           INTENT_FILE_REQUEST);
     } else {
@@ -85,6 +83,7 @@ public class MainActivity
           getString(R.string.no_net_dialog_fragment_tag));
     }
   }
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

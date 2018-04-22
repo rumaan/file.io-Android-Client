@@ -114,6 +114,11 @@ public final class Utils {
    */
   public static final class Android {
 
+    public static Intent getChooseFileIntent() {
+      return Utils
+          .Android.newIntent(Intent.ACTION_OPEN_DOCUMENT, Intent.CATEGORY_OPENABLE, "*/*");
+    }
+
     /* Returns the state of current network info */
     public static boolean isConnectedToNetwork(Context context) {
       ConnectivityManager connectivityManager = (ConnectivityManager) context

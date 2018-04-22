@@ -23,9 +23,6 @@ public class FileEntityTest {
         // nullability of upload item object
         assertNotNull(fileEntity);
 
-        assertNotNull(fileEntity.getId());
-
-
         // Test for fileEntity name
         fileEntity.setName(testFileName);
         assertNotNull(fileEntity.getName());
