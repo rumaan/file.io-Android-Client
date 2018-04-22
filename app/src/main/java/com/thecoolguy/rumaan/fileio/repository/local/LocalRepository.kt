@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio.repository
+package com.thecoolguy.rumaan.fileio.repository.local
 
 /**
  * Deals with the loading of a file from the Storage

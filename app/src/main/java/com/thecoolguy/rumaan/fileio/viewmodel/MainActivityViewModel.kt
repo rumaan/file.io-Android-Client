@@ -44,7 +44,7 @@ class MainActivityViewModel : ViewModel() {
      * @param listener Callback class where the upload callbacks must be published.
      * */
     fun uploadFile(listener: FileUploadProgressListener) {
-        localFile?.let {
+        localFile.let {
             // upload file
             Repository.getInstance().upload(it, listener)
             // TODO: Show progress window here.
