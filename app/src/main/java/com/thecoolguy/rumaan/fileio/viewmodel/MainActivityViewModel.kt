@@ -3,14 +3,16 @@ package com.thecoolguy.rumaan.fileio.viewmodel
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener
 import com.thecoolguy.rumaan.fileio.repository.Repository
 import com.thecoolguy.rumaan.fileio.utils.Utils
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Abstraction for Repository with Lifecycle aware stuffs
@@ -26,17 +28,24 @@ class MainActivityViewModel : ViewModel() {
      *
      */
     fun chooseFileFromUri(context: Context, fileUri: Uri, fileLoadListener: FileLoadListener) {
-        async(UI) {
-            val deferredFile = bg {
-                Utils.getLocalFile(context, fileUri)
-            }
+        val fileObservable = getLocalFileObservable(context, fileUri)
+        fileObservable.subscribeBy(
+                onSuccess = {
+                    localFile = it
+                    fileLoadListener.onFileLoad(it)
+                },
 
-            localFile = deferredFile.await()
-            localFile.let {
-                fileLoadListener.onFileLoad(it)
-            }
-        }
+                onError = {
+                    Log.e(TAG, it.localizedMessage, it)
+                }
+        )
     }
+
+    private fun getLocalFileObservable(context: Context, fileUri: Uri): Single<LocalFile> =
+            Single.just(Utils.getLocalFile(context, fileUri))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+
 
     /**
      * Upload the file to server and save the response into the database.
@@ -44,11 +53,11 @@ class MainActivityViewModel : ViewModel() {
      * @param listener Callback class where the upload callbacks must be published.
      * */
     fun uploadFile(listener: FileUploadProgressListener) {
-        localFile.let {
-            // upload file
-            Repository.getInstance().upload(it, listener)
-            // TODO: Show progress window here.
-        }
+        // upload file
+        Repository.getInstance().upload(localFile, listener)
+
+        // TODO: Show progress window here.
+
     }
 
     companion object {
