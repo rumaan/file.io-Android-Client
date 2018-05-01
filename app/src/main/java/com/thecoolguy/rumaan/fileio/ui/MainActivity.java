@@ -22,6 +22,7 @@ import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
+import com.thecoolguy.rumaan.fileio.repository.Repository;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -102,6 +103,10 @@ public class MainActivity
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
       }
     });
+
+    // TODO: Remove this
+    Repository.getInstance().getAllItems();
+
   }
 
   @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,

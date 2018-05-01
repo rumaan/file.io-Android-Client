@@ -24,8 +24,6 @@ class MainActivityViewModel : ViewModel() {
 
     /**
      * Get the file from the database and save in the current view model state.
-     *
-     *
      */
     fun chooseFileFromUri(context: Context, fileUri: Uri, fileLoadListener: FileLoadListener) {
         val fileObservable = getLocalFileObservable(context, fileUri)
@@ -34,7 +32,6 @@ class MainActivityViewModel : ViewModel() {
                     localFile = it
                     fileLoadListener.onFileLoad(it)
                 },
-
                 onError = {
                     Log.e(TAG, it.localizedMessage, it)
                 }
@@ -57,7 +54,6 @@ class MainActivityViewModel : ViewModel() {
         Repository.getInstance().upload(localFile, listener)
 
         // TODO: Show progress window here.
-
     }
 
     companion object {

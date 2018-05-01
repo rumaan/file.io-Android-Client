@@ -32,13 +32,6 @@ android {
 
 }
 
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
-
-
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -91,6 +84,8 @@ dependencies {
     // Rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+
+    implementation 'androidx.core:core-ktx:0.3'
 
 }
 
