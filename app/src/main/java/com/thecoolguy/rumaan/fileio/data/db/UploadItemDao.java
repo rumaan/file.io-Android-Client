@@ -9,7 +9,6 @@ import android.arch.persistence.room.Query;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import java.util.List;
 
 @Dao
 public interface UploadItemDao {
@@ -26,8 +25,6 @@ public interface UploadItemDao {
   @Query("DELETE FROM " + TABLE_NAME)
   void deleteAll();
 
-  /*@Query("SELECT * FROM " + TABLE_NAME)
-  LiveData<List<FileEntity>> getAllUploads();*/
   @Query("SELECT * FROM " + TABLE_NAME)
-  Single<List<FileEntity>> getAllUploads();
+  Flowable<FileEntity> getAllUploads();
 }
