@@ -38,6 +38,27 @@ public class FileEntityDaoTest {
   }
 
   @Test
+  public void check_CountTheRows() {
+    int count = database.uploadItemDao().getTotalRows();
+
+    /* Initially the number of rows in database is zero */
+    assertEquals(0, count);
+
+
+    /* Create an empty file entity */
+    FileEntity fileEntity = new FileEntity(
+        "testItem", "testUrl", Utils.Date.getCurrentDate(), 1
+    );
+    /* Insert an item into the database */
+    database.uploadItemDao().insert(fileEntity);
+
+    /* Get the total number of rows after insertion */
+    count = database.uploadItemDao().getTotalRows();
+
+    assertEquals(1, count);
+  }
+
+  @Test
   public void check_InsertUploadItemSaves() {
     FileEntity fileEntity = new FileEntity("test", "test", Utils.Date.getCurrentDate(), 2);
 

@@ -21,11 +21,12 @@ object DatabaseHelper {
                 }
     }
 
-    fun getAllItems(mUploadItemDao: UploadItemDao): Flowable<FileEntity> {
+    fun getAllItems(mUploadItemDao: UploadItemDao): Flowable<MutableList<FileEntity>> {
         return mUploadItemDao.allUploads
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-
     }
+
+
 
 }

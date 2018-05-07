@@ -39,7 +39,7 @@ class MainActivityViewModel : ViewModel() {
     }
 
     private fun getLocalFileObservable(context: Context, fileUri: Uri): Single<LocalFile> =
-            Single.just(Utils.getLocalFile(context, fileUri))
+            Single.fromCallable { (Utils.getLocalFile(context, fileUri)) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
 

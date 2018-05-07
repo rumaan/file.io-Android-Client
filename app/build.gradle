@@ -6,6 +6,14 @@ apply plugin: 'kotlin-android-extensions'
 def supportLibVersion = '27.1.1'
 
 android {
+
+    // Gradle optimizations
+    if (project.hasProperty('devBuild')) {
+        splits.abi.enable = false
+        splits.density.enable = false
+        aaptOptions.cruncherEnabled = false
+    }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.thecoolguy.rumaan.fileio"
@@ -42,10 +50,10 @@ dependencies {
 
     // Test dependencies
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test:rules:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
 
     // permission dispatcher
     implementation('com.github.hotchemi:permissionsdispatcher:3.0.1') {
@@ -57,7 +65,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation 'com.google.firebase:firebase-core:15.0.2'
 
     /* Room */
     implementation "android.arch.persistence.room:rxjava2:1.0.0"

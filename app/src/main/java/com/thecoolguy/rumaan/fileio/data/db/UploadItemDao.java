@@ -9,6 +9,7 @@ import android.arch.persistence.room.Query;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import java.util.List;
 
 @Dao
 public interface UploadItemDao {
@@ -25,6 +26,9 @@ public interface UploadItemDao {
   @Query("DELETE FROM " + TABLE_NAME)
   void deleteAll();
 
+  @Query("SELECT DISTINCT count(*) FROM " + TABLE_NAME)
+  int getTotalRows();
+
   @Query("SELECT * FROM " + TABLE_NAME)
-  Flowable<FileEntity> getAllUploads();
+  Flowable<List<FileEntity>> getAllUploads();
 }
