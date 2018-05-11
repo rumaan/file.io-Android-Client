@@ -15,6 +15,8 @@ public class FileioApplication extends Application {
   public void onCreate() {
     super.onCreate();
 
+
+
     // Custom Activity on Crash
     CaocConfig.Builder.create()
         .errorActivity(ErrorActivity.class)
