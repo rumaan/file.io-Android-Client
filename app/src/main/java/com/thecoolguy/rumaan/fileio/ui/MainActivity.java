@@ -22,7 +22,6 @@ import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
-import com.thecoolguy.rumaan.fileio.repository.Repository;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -85,12 +84,11 @@ public class MainActivity
     }
   }
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     /* Set theme to app theme after creating the activity */
     setTheme(R.style.NoActionBarTheme);
+    super.onCreate(savedInstanceState);
 
     viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -104,10 +102,10 @@ public class MainActivity
       }
     });
 
-    // TODO: Remove this
-    Repository.getInstance().getAllItems();
-
+    // TODO: debug app launch times
+    reportFullyDrawn();
   }
+
 
   @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
