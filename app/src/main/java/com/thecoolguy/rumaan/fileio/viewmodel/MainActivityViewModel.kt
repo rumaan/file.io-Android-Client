@@ -25,7 +25,8 @@ class MainActivityViewModel : ViewModel() {
     /**
      * Get the file from the database and save in the current view model state.
      */
-    fun chooseFileFromUri(context: Context, fileUri: Uri, fileLoadListener: FileLoadListener) {
+    fun chooseFileFromUri(context: Context, fileUri: Uri) {
+        val fileLoadListener = context as FileLoadListener
         val fileObservable = getLocalFileObservable(context, fileUri)
         fileObservable.subscribeBy(
                 onSuccess = {
@@ -33,6 +34,7 @@ class MainActivityViewModel : ViewModel() {
                     fileLoadListener.onFileLoad(it)
                 },
                 onError = {
+                    fileObservable.retry(1)
                     Log.e(TAG, it.localizedMessage, it)
                 }
         )

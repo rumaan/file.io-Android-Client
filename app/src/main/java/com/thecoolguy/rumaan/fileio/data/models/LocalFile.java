@@ -21,7 +21,6 @@ public final class LocalFile {
     this.uri = uri;
   }
 
-
   public LocalFile() {
   }
 

@@ -22,6 +22,7 @@ import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
+import com.thecoolguy.rumaan.fileio.repository.DisposableBucket;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +50,7 @@ public class MainActivity
       if (resultCode == RESULT_OK) {
         Uri fileUri = data.getData();
         if (fileUri != null) {
-          viewModel.chooseFileFromUri(this, fileUri, MainActivity.this);
+          viewModel.chooseFileFromUri(this, fileUri);
         } else {
           Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
               .show();
@@ -89,11 +90,10 @@ public class MainActivity
     /* Set theme to app theme after creating the activity */
     setTheme(R.style.NoActionBarTheme);
     super.onCreate(savedInstanceState);
-
-    viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-
     ActivityMainBinding activityMainBinding = DataBindingUtil
         .setContentView(this, R.layout.activity_main);
+
+    viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
     activityMainBinding.chooseFile.setOnClickListener(new OnClickListener() {
       @Override
@@ -101,9 +101,6 @@ public class MainActivity
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
       }
     });
-
-    // TODO: debug app launch times
-    reportFullyDrawn();
   }
 
 
@@ -132,16 +129,24 @@ public class MainActivity
     Log.i(TAG, localFile.toString());
 
     // TODO: Update the view
+
     viewModel.uploadFile(this);
   }
 
   @Override
   public void uploadProgress(int progress) {
     // Update the progress into the view
+    Log.i(TAG, "uploadProgress: " + progress);
   }
 
   @Override
   public void onComplete(@NotNull FileEntity fileEntity) {
-    Log.i(TAG, "onComplete: " + fileEntity.toString());
+    //Log.i(TAG, "onComplete: " + fileEntity.toString());
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    DisposableBucket.INSTANCE.clearDisposableBucket();
   }
 }
