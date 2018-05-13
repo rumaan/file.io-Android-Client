@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 def supportLibVersion = '27.1.1'
+def work_version = "1.0.0-alpha01"
 
 android {
 
@@ -94,6 +95,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
 
     implementation 'androidx.core:core-ktx:0.3'
+
+    implementation "android.arch.work:work-runtime-ktx:$work_version"
+    androidTestImplementation "android.arch.work:work-testing:$work_version"
 
 }
 
