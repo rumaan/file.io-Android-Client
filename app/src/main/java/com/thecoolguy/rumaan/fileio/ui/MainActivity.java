@@ -15,6 +15,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
@@ -23,6 +28,7 @@ import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
 import com.thecoolguy.rumaan.fileio.repository.DisposableBucket;
+import com.thecoolguy.rumaan.fileio.repository.UploadWorker;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -82,6 +88,13 @@ public class MainActivity
       /* Show no network dialog */
       Utils.Android.showDialogFragment(new NoNetworkDialogFragment(), getSupportFragmentManager(),
           getString(R.string.no_net_dialog_fragment_tag));
+
+      // TODO: handle this in UI
+      // Choose the file regardless
+      Toast.makeText(this, "File will be uploaded once you're connected to the internet!",
+          Toast.LENGTH_LONG).show();
+      startActivityForResult(Intent.createChooser(Utils.Android.getChooseFileIntent(),
+          "Choose file to Upload.."), INTENT_FILE_REQUEST);
     }
   }
 
@@ -129,8 +142,29 @@ public class MainActivity
     Log.i(TAG, localFile.toString());
 
     // TODO: Update the view
+    if (Utils.Android.isConnectedToNetwork(this)) {
+      viewModel.uploadFile(this);
+    } else {
+      // Schedule a Work to upload and post it as notification after completion
 
-    viewModel.uploadFile(this);
+      // Pass in the file URI
+      // FIXME: redundant calls for getLocalFile()
+      Data fileData = new Data.Builder()
+          .putString(UploadWorker.KEY_URI, localFile.getUri().toString())
+          .build();
+
+      Constraints constraints = new Constraints.Builder()
+          .setRequiredNetworkType(NetworkType.CONNECTED)
+          .setRequiresBatteryNotLow(true)
+          .build();
+
+      OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
+          .setConstraints(constraints)
+          .setInputData(fileData)
+          .build();
+
+      WorkManager.getInstance().enqueue(oneTimeWorkRequest);
+    }
   }
 
   @Override

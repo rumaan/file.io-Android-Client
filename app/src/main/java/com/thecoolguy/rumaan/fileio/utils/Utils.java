@@ -90,8 +90,9 @@ public final class Utils {
    * @return Return the Stream of the requested file
    */
   public static FileInputStream getFileInputStream(final Uri fileUri, final Context context) {
+    ParcelFileDescriptor parcelFileDescriptor;
     try {
-      ParcelFileDescriptor parcelFileDescriptor = context.getContentResolver()
+      parcelFileDescriptor = context.getContentResolver()
           .openFileDescriptor(fileUri, "r");
       if (parcelFileDescriptor != null) {
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
@@ -106,6 +107,8 @@ public final class Utils {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
       Log.e(TAG, "File Not Found!", e);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     return null;
