@@ -83,7 +83,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/btn_blue_ripple_white"
                 android:fontFamily="@font/capriola"
-                android:text="@string/okay"
+                android:text="@string/upload_later"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

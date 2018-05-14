@@ -28,13 +28,13 @@ class UploadWorker : Worker() {
                             onSuccess = {
                                 val fileEntity = Uploader.getFileEntity(it, localFile)
                                 Repository.getInstance().onFileUpload(fileEntity)
-                                Log.d(TAG, "FileEntity: $fileEntity")
                             },
                             onError = {
                                 uploaderObservable.retry(2)
                                 Log.e(TAG, "Error Uploading the file: ${it.localizedMessage}", it)
                             }
                     )
+
             return WorkerResult.SUCCESS
         }
 

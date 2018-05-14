@@ -4,10 +4,14 @@ import android.Manifest;
 import android.Manifest.permission;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +25,8 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.LocalFile;
+import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
@@ -88,14 +92,22 @@ public class MainActivity
       /* Show no network dialog */
       Utils.Android.showDialogFragment(new NoNetworkDialogFragment(), getSupportFragmentManager(),
           getString(R.string.no_net_dialog_fragment_tag));
-
-      // TODO: handle this in UI
-      // Choose the file regardless
-      Toast.makeText(this, "File will be uploaded once you're connected to the internet!",
-          Toast.LENGTH_LONG).show();
-      startActivityForResult(Intent.createChooser(Utils.Android.getChooseFileIntent(),
-          "Choose file to Upload.."), INTENT_FILE_REQUEST);
     }
+  }
+
+  private void chooseFileOffline() {
+    // TODO: handle this in UI
+    // Choose the file regardless
+    Toast.makeText(this, "File will be uploaded once you're connected to the internet!",
+        Toast.LENGTH_LONG).show();
+    startActivityForResult(Intent.createChooser(Utils.Android.getChooseFileIntent(),
+        "Choose file to Upload.."), INTENT_FILE_REQUEST);
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+
   }
 
   @Override
@@ -133,6 +145,9 @@ public class MainActivity
   public void onDialogPositiveClick(Dialog dialog, Fragment dialogFragment) {
     if (dialogFragment instanceof NoNetworkDialogFragment) {
       Utils.Android.dismissDialog(dialog);
+
+      // Schedule for offline work
+      chooseFileOffline();
     }
   }
 
@@ -175,7 +190,10 @@ public class MainActivity
 
   @Override
   public void onComplete(@NotNull FileEntity fileEntity) {
-    //Log.i(TAG, "onComplete: " + fileEntity.toString());
+    Log.i(TAG, "onComplete: " + fileEntity.toString());
+
+    // post a notification
+    // new NotificationHelper().create(getApplicationContext(), fileEntity);
   }
 
   @Override
@@ -183,4 +201,5 @@ public class MainActivity
     super.onStop();
     DisposableBucket.INSTANCE.clearDisposableBucket();
   }
+
 }
