@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.widget.Toast;
 import com.thecoolguy.rumaan.fileio.R;
 
 public class UploadHistoryActivity extends AppCompatActivity {
@@ -27,6 +28,12 @@ public class UploadHistoryActivity extends AppCompatActivity {
       ActionBar actionBar = getSupportActionBar();
       actionBar.setTitle(getString(R.string.upload_history_title));
       actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    if (getIntent() != null) {
+      String name = getIntent().getStringExtra(getString(R.string.key_file_name));
+      String url = getIntent().getStringExtra(getString(R.string.key_file_url));
+      Toast.makeText(this, "File Name: " + name + "\nFile Url: " + url, Toast.LENGTH_SHORT).show();
     }
 
   }
