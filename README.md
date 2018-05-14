@@ -1,4 +1,5 @@
-# AnonyFile Android App
+# Fileio Android App
+
 This simple app allows you to upload any fileEntity and get a _sharable_ link with a set expiration time.
 The fileEntity will be **Deleted** after its downloaded or after expiration time (regardless of whether its downloaded or not).
 This app is made with the help of [fileEntity.io](https://fileEntity.io) which is an **_Anonymous_, _Secure_** fileEntity sharing platform by [Humbly](http://humbly.com/).
@@ -23,12 +24,12 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 
 ## TODO List ✅:
 - [X] Set Expiration Time
-- [ ] Handle different use cases for storage on the device.
+- [X] Handle different use cases for storage on the device.
 - [X] Handle Different File Types and Different File Managers (**BUG!!**)
 - [X] Progress Bar for File Upload Progress
 - [X] Custom Error Dialog
 - [X] restructure App with **MVVM** (kinda maybe!)😉
-- [ ] UI Testing
+- [X] UI Testing
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon
 - [ ] Kotlinize the project 🎳
