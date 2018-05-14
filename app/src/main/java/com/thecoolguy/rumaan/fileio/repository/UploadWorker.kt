@@ -27,6 +27,7 @@ class UploadWorker : Worker() {
                     .subscribeBy(
                             onSuccess = {
                                 val fileEntity = Uploader.getFileEntity(it, localFile)
+                                Repository.getInstance().onFileUpload(fileEntity)
                                 Log.d(TAG, "FileEntity: $fileEntity")
                             },
                             onError = {

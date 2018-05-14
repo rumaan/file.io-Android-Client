@@ -22,7 +22,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
-import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
+import com.thecoolguy.rumaan.fileio.data.LocalFile;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
