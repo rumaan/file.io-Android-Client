@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.thecoolguy.rumaan.fileio.data.models.LocalFile
+import com.thecoolguy.rumaan.fileio.data.LocalFile
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
 import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener
 import com.thecoolguy.rumaan.fileio.repository.Repository

@@ -20,10 +20,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
+import com.thecoolguy.rumaan.fileio.data.LocalFile;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import org.json.JSONException;
@@ -36,6 +37,10 @@ public final class Utils {
 
   private static final String TAG = Utils.class.getSimpleName();
 
+  public static InputStream getInputStream(final Context context, final Uri uri)
+      throws FileNotFoundException {
+    return context.getContentResolver().openInputStream(uri);
+  }
 
   /**
    * Get the file details -> name, size from the Android Provider Database
@@ -45,7 +50,7 @@ public final class Utils {
    * @return File Details of the given URI and wrap it into a POJO with file stream
    */
   public static LocalFile getLocalFile(@NonNull final Context context, @NonNull final Uri fileUri
-  ) {
+  ) throws CursorIndexOutOfBoundsException, FileNotFoundException {
     Cursor cursor = null;
     try {
       cursor = context.getContentResolver()
@@ -59,26 +64,18 @@ public final class Utils {
 
           String fileName = cursor.getString(nameIndex);
           long fileSize = cursor.getLong(sizeIndex);
-
-          localFile = new LocalFile(fileUri, fileName, fileSize);
-          localFile.setFileInputStream(getFileInputStream(fileUri, context));
+          InputStream inputStream = getInputStream(context, fileUri);
+          localFile = new LocalFile(fileName, fileSize, fileUri, inputStream);
         }
         return localFile;
-
-        // return new LocalFile();
       } else {
         throw new CursorIndexOutOfBoundsException("Invalid Cursor position!");
       }
-
-
-    } catch (Exception e) {
-      e.printStackTrace();
     } finally {
       if (cursor != null) {
         cursor.close();
       }
     }
-    return null;
   }
 
   /**
