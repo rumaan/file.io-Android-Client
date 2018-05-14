@@ -1,34 +1,34 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/capriola</item>
-    </style>
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="fontFamily">@font/capriola</item>
+  </style>
 
-    <!-- No action bar theme -->
-    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:colorControlHighlight">@color/white</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:navigationBarColor">@color/cool_blue</item>
-        <item name="android:fontFamily">@font/capriola</item>
-    </style>
+  <!-- No action bar theme -->
+  <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorControlHighlight">@color/white</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/colorPrimary</item>
+    <item name="android:navigationBarColor">@color/cool_blue</item>
+    <item name="fontFamily">@font/capriola</item>
+  </style>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/background_launch_screen</item>
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:navigationBarColor">@color/cool_blue</item>
-    </style>
+  <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/background_launch_screen</item>
+    <item name="android:statusBarColor">@color/colorPrimary</item>
+    <item name="android:navigationBarColor">@color/cool_blue</item>
+  </style>
 
 
-    <style name="NoActionBarTheme.ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
-        <!-- Toolbar views normal state color -->
-        <item name="colorControlNormal">@color/white</item>
-    </style>
+  <style name="NoActionBarTheme.ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+    <!-- Toolbar views normal state color -->
+    <item name="colorControlNormal">@color/white</item>
+  </style>
 
 </resources>

@@ -1,78 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.thecoolguy.rumaan.fileio">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="com.thecoolguy.rumaan.fileio">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-    <application
-        android:name=".ui.FileioApplication"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="*/*" />
-            </intent-filter>
-            <!-- Separate intent filters -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+  <application
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:name=".ui.FileioApplication"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme"
+    tools:ignore="GoogleAppIndexingWarning">
+    <activity
+      android:name=".ui.MainActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/SplashTheme">
+      <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
 
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <category android:name="android.intent.category.DEFAULT"/>
 
-        <activity
-            android:name=".ui.UploadHistoryActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.AboutActivity"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/NoActionBarTheme" />
-        <activity
-            android:name=".ui.ErrorActivity"
-            android:process=":error_activity"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme">
-            <intent-filter>
-                <action android:name="cat.ereza.customactivityoncrash.ERROR" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ui.DownloadActivity">
+        <data android:mimeType="*/*"/>
+      </intent-filter>
+      <!-- Separate intent filters -->
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-            <intent-filter
-                android:autoVerify="true"
-                android:label="@string/filter_view_fileio_download">
-                <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
 
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
+      <!-- App shortcuts -->
+      <!--<meta-data
+        android:name="android.app.shortcuts"
+        android:resource="@xml/shortcuts"/>-->
+    </activity>
 
-                <!-- URLs starting with file.io  -->
-                <!-- RegExp accepts all urls starting with https://file.io/*anything.length > 0*/d -->
-                <data
-                    android:host="file.io"
-                    android:pathPattern="..*/dwnld"
-                    android:scheme="https" />
 
-            </intent-filter>
-        </activity>
+    <meta-data
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts"/>
 
-    </application>
+    <activity
+      android:name=".ui.UploadHistoryActivity"
+      android:parentActivityName=".ui.MainActivity"
+      android:theme="@style/AppTheme"/>
+    <activity
+      android:name=".ui.ErrorActivity"
+      android:process=":error_activity"
+      android:screenOrientation="portrait"
+      android:theme="@style/NoActionBarTheme">
+      <intent-filter>
+        <action android:name="cat.ereza.customactivityoncrash.ERROR"/>
+      </intent-filter>
+    </activity>
+    <activity android:name=".ui.DownloadActivity">
+      <intent-filter
+        android:autoVerify="true"
+        android:label="@string/filter_view_fileio_download">
+        <action android:name="android.intent.action.VIEW"/>
+
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+
+        <!-- URLs starting with file.io -->
+        <!-- RegExp accepts all urls starting with http://file.io/*anything.length > 0*/d -->
+        <data
+          android:host="file.io"
+          android:pathPattern="..*/dwnld"
+          android:scheme="https"/>
+      </intent-filter>
+    </activity>
+
+    <service
+      android:exported="false"
+      android:name=".ui.UploadService"/>
+  </application>
 
 </manifest>

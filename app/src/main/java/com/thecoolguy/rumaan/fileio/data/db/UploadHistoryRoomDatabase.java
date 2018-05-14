@@ -4,28 +4,27 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 
-import com.thecoolguy.rumaan.fileio.data.models.UploadItem;
 
-
-@Database(entities = {UploadItem.class}, version = 1)
+@Database(entities = {FileEntity.class}, version = 1)
 public abstract class UploadHistoryRoomDatabase extends RoomDatabase {
-    private static UploadHistoryRoomDatabase sINSTANCE;
 
-    public static UploadHistoryRoomDatabase getInstance(Context context) {
+  private static UploadHistoryRoomDatabase sINSTANCE;
+
+  public static UploadHistoryRoomDatabase getInstance(Context context) {
+    if (sINSTANCE == null) {
+      synchronized (UploadHistoryRoomDatabase.class) {
         if (sINSTANCE == null) {
-            synchronized (UploadHistoryRoomDatabase.class) {
-                if (sINSTANCE == null) {
-                    sINSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            UploadHistoryRoomDatabase.class,
-                            "upload_history")
-                            .build();
-                }
-            }
+          sINSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+              UploadHistoryRoomDatabase.class,
+              "upload_history")
+              .build();
         }
-
-        return sINSTANCE;
+      }
     }
+    return sINSTANCE;
+  }
 
-    public abstract UploadItemDao uploadItemDao();
+  public abstract UploadItemDao uploadItemDao();
 }

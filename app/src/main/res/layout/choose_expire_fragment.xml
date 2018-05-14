@@ -29,44 +29,6 @@
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.shawnlin.numberpicker.NumberPicker
-                android:id="@+id/numberpicker"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="16dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                app:np_dividerColor="@color/colorPrimary"
-                app:np_dividerDistance="65dp"
-                app:np_max="10"
-                app:np_min="1"
-                app:np_selectedTextColor="@color/colorPrimary"
-                app:np_selectedTextSize="48sp"
-                app:np_textColor="@android:color/darker_gray" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="24dp"
-                android:fontFamily="@font/capriola"
-                android:gravity="center"
-                android:text="@string/weeks"
-                android:textAlignment="center"
-                android:textSize="38sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
 
         <Button

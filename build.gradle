@@ -1,12 +1,5 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
-ext {
-    roomVersion = '1.0.0'
-    archLifecycleVersion = '1.1.0'
-}
-
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.40'
 
     repositories {
         google()
@@ -16,14 +9,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
 
 
         classpath 'io.fabric.tools:gradle:1.24.4'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        classpath 'com.google.gms:google-services:3.1.0'
+        classpath 'com.google.gms:google-services:3.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -43,9 +33,10 @@ allprojects {
 }*/
 repositories {
     mavenCentral()
+    google()
 }
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 compileKotlin {
     kotlinOptions {
@@ -57,3 +48,4 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
+

@@ -1,187 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+  <android.support.constraint.ConstraintLayout
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     android:background="@drawable/bg_blue_gradient"
-    android:theme="@style/NoActionBarTheme"
-    app:layout_optimizationLevel="all"
     tools:context="com.thecoolguy.rumaan.fileio.ui.MainActivity">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:elevation="0dp"
-        android:theme="@style/NoActionBarTheme.ToolbarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/btn_upload_white"
-        android:elevation="2dp"
-        app:layout_constraintBottom_toTopOf="@id/guideline"
-        app:layout_constraintDimensionRatio="2:0.38"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <android.support.constraint.Guideline
-            android:id="@+id/inner_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.079155676" />
-
-        <TextView
-            android:id="@+id/inner_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Your secret link"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/link"
-            app:layout_constraintStart_toStartOf="@id/inner_guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:ellipsize="end"
-            android:text="https://file.io/2Wt5/dwnld"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/inner_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/inner_header" />
-
-        <ImageView
-            android:id="@+id/copy"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="8dp"
-            android:background="?selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:contentDescription="@string/copy_link"
-            android:focusable="true"
-            android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="@+id/link"
-            app:layout_constraintDimensionRatio="h,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="@+id/inner_header"
-            app:srcCompat="@drawable/ic_copy" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.85" />
-
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
-
     <Button
-        android:id="@+id/btn_upload"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="8dp"
-        android:translationZ="8dp"
-        android:background="@drawable/btn_ripple_circle"
-        android:elevation="8dp"
-        android:fontFamily="@font/capriola"
-        android:padding="16dp"
-        android:text="@string/choose_file"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+      android:id="@+id/choose_file"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="24dp"
+      android:text="Choose File"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.5"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+  </android.support.constraint.ConstraintLayout>
 
 
-    <!-- <ImageButton
-         android:id="@+id/menu"
-         android:layout_width="35dp"
-         android:layout_height="wrap_content"
-         android:layout_alignParentEnd="true"
-         android:layout_alignParentTop="true"
-         android:layout_marginEnd="8dp"
-         android:layout_marginTop="16dp"
-         android:adjustViewBounds="true"
-         android:background="?attr/selectableItemBackgroundBorderless"
-         android:contentDescription="@string/options"
-         android:cropToPadding="true"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:srcCompat="@drawable/ic_more_vert" />-->
-
-    <RelativeLayout
-        android:id="@+id/root_view_upload"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        android:elevation="8dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:visibility="gone">
-
-        <TextView
-            android:id="@+id/uploading_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/upload_progress"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_margin="4dp"
-            android:fontFamily="@font/capriola"
-            android:text="Uploading.."
-            android:textAppearance="?android:textAppearanceLarge"
-            android:visibility="invisible" />
-
-        <com.daimajia.numberprogressbar.NumberProgressBar
-            android:id="@+id/upload_progress"
-            style="@style/NumberProgressBar_Default"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginEnd="24dp"
-            android:layout_marginStart="24dp"
-            android:visibility="invisible"
-            app:progress_max="100"
-            app:progress_text_offset="2dp"
-            app:progress_text_size="16sp"
-            app:progress_text_visibility="visible" />
-
-
-    </RelativeLayout>
-
-</android.support.constraint.ConstraintLayout>
+</layout>
