@@ -9,6 +9,8 @@ import com.github.kittinunf.result.Result
 import com.thecoolguy.rumaan.fileio.data.LocalFile
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 import com.thecoolguy.rumaan.fileio.data.models.Response
+import com.thecoolguy.rumaan.fileio.listeners.UploadListener
+import com.thecoolguy.rumaan.fileio.repository.DisposableBucket
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,18 +21,23 @@ object Uploader {
 
     private val TAG = Uploader::class.simpleName
 
-    fun upload(localFile: LocalFile) {
-        getUploadObservable(localFile)
+    fun upload(localFile: LocalFile, uploadListener: UploadListener) {
+        val disposable = getUploadObservable(localFile)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             val fileEntity = getFileEntity(it, localFile)
-                            Log.d(TAG, fileEntity?.toString())
+                            fileEntity?.let {
+                                uploadListener.onComplete(it)
+                                Log.d(TAG, it.toString())
+                            }
+
                         },
                         onError = {
                             Log.e(TAG, it.localizedMessage, it)
                         }
                 )
+        DisposableBucket.add(disposable)
     }
 
     fun getUploadObservable(localFile: LocalFile): Single<Result<Response, FuelError>> {

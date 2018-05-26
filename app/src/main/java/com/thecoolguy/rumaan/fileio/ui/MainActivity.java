@@ -104,7 +104,7 @@ public class MainActivity
   @Override
   protected void onStart() {
     super.onStart();
-
+    startService(new Intent(this, UploadService.class));
   }
 
   @Override

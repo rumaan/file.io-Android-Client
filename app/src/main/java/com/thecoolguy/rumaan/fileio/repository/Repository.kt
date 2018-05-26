@@ -23,9 +23,9 @@ object Repository : UploadListener, DatabaseCallback {
                 .uploadItemDao()
     }
 
-    private val observerList = mutableListOf<UploadListener>()
+    private val observerList = mutableListOf<UploadListener?>()
 
-    private fun addObserver(uploadListener: UploadListener) {
+    fun addObserver(uploadListener: UploadListener) {
         if (!observerList.contains(uploadListener)) {
             observerList.add(uploadListener)
         }
@@ -40,12 +40,19 @@ object Repository : UploadListener, DatabaseCallback {
         // add the listener to list
         addObserver(uploadListener)
         // TODO: change this
-        Uploader.upload(localFile)
+        Uploader.upload(localFile, this)
     }
 
     override fun onComplete(fileEntity: FileEntity) {
+        // notify all observers
+        observerList
+                .forEach {
+                    it?.onComplete(fileEntity)
+                }
+
         // callback for file upload success
-        saveToDb(fileEntity)
+        // TODO: uncomment this
+        // saveToDb(fileEntity)
     }
 
     override fun progress(progress: Int) {

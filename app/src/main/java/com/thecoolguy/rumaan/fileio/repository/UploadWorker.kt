@@ -3,19 +3,20 @@ package com.thecoolguy.rumaan.fileio.repository
 import android.net.Uri
 import android.util.Log
 import androidx.work.Worker
+import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.network.Uploader
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import io.reactivex.rxkotlin.subscribeBy
 
 class UploadWorker : Worker() {
+
+
     companion object {
         const val KEY_URI = "file_uri"
         private val TAG = UploadWorker::class.simpleName
     }
 
-
     override fun doWork(): WorkerResult {
-
         val fileUri = inputData.getString(KEY_URI, null)
         Log.d(TAG, "FileURI: $fileUri")
         fileUri?.let { it ->
@@ -24,15 +25,16 @@ class UploadWorker : Worker() {
             val uploaderObservable = Uploader
                     .getUploadObservable(localFile)
 
-
             val disposable = uploaderObservable
                     .subscribeBy(
                             onSuccess = {
                                 val fileEntity = Uploader.getFileEntity(it, localFile)
                                 // schedule this file object to be saved into the database
-
-                                Log.d(TAG, fileEntity?.toString())
-                                // Repository.getInstance().onFileUpload(fileEntity)
+                                fileEntity?.let {
+                                    Log.d(TAG, it.toString())
+                                    // Repository.getInstance().onFileUpload(fileEntity)
+                                    Repository.onComplete(it)
+                                }
                             },
                             onError = {
                                 uploaderObservable.retry(2)
