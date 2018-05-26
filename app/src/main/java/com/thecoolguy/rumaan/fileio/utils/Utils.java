@@ -35,12 +35,14 @@ import org.json.JSONObject;
  */
 public final class Utils {
 
+
   private static final String TAG = Utils.class.getSimpleName();
 
   public static InputStream getInputStream(final Context context, final Uri uri)
       throws FileNotFoundException {
     return context.getContentResolver().openInputStream(uri);
   }
+
 
   /**
    * Get the file details -> name, size from the Android Provider Database
@@ -270,6 +272,5 @@ public final class Utils {
     public static String getCurrentDate() {
       return Date.getTimeStamp();
     }
-
   }
 }
