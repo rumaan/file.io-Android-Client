@@ -11,7 +11,6 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.Constraints;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -166,6 +165,7 @@ public class MainActivity
 
       // Pass in the file URI
       // FIXME: redundant calls for getLocalFile()
+
       Data fileData = new Data.Builder()
           .putString(UploadWorker.KEY_URI, localFile.getUri().toString())
           .build();
