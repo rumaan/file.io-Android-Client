@@ -1,17 +1,15 @@
 package com.thecoolguy.rumaan.fileio.ui;
 
+import static com.thecoolguy.rumaan.fileio.utils.Utils.Android.isConnectedToNetwork;
+
 import android.Manifest;
 import android.Manifest.permission;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +28,7 @@ import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
-import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener;
+import com.thecoolguy.rumaan.fileio.listeners.UploadListener;
 import com.thecoolguy.rumaan.fileio.repository.DisposableBucket;
 import com.thecoolguy.rumaan.fileio.repository.UploadWorker;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
@@ -41,13 +39,12 @@ import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
-
 @RuntimePermissions
 public class MainActivity
     extends AppCompatActivity
     implements
     DialogClickListener,
-    FileLoadListener, FileUploadProgressListener {
+    FileLoadListener, UploadListener {
 
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
@@ -126,6 +123,8 @@ public class MainActivity
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
       }
     });
+
+
   }
 
 
@@ -142,7 +141,7 @@ public class MainActivity
   }
 
   @Override
-  public void onDialogPositiveClick(Dialog dialog, Fragment dialogFragment) {
+  public void onDialogPositiveClick(@NonNull Dialog dialog, @NonNull Fragment dialogFragment) {
     if (dialogFragment instanceof NoNetworkDialogFragment) {
       Utils.Android.dismissDialog(dialog);
 
@@ -151,13 +150,15 @@ public class MainActivity
     }
   }
 
+
   /* Callback for file load */
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     Log.i(TAG, localFile.toString());
 
     // TODO: Update the view
-    if (Utils.Android.isConnectedToNetwork(this)) {
+    // TODO: add upload the chosen file view
+    if (isConnectedToNetwork(this)) {
       viewModel.uploadFile(this);
     } else {
       // Schedule a Work to upload and post it as notification after completion
@@ -183,7 +184,7 @@ public class MainActivity
   }
 
   @Override
-  public void uploadProgress(int progress) {
+  public void progress(int progress) {
     // Update the progress into the view
     Log.i(TAG, "uploadProgress: " + progress);
   }

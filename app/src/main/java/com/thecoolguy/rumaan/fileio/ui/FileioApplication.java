@@ -28,8 +28,8 @@ public class FileioApplication extends Application {
         .errorActivity(ErrorActivity.class)
         .apply();
 
-    // Create the repository instance
-    Repository.setInstance(this);
+    // Set the application context in the repository
+    Repository.applicationContext = this;
 
     Intent intent = new Intent(this, UploadService.class);
     bindService(intent, new ServiceConnection() {

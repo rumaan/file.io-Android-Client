@@ -6,7 +6,7 @@ import android.net.Uri
 import android.util.Log
 import com.thecoolguy.rumaan.fileio.data.LocalFile
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
-import com.thecoolguy.rumaan.fileio.listeners.FileUploadProgressListener
+import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.repository.Repository
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import io.reactivex.Single
@@ -51,15 +51,14 @@ class MainActivityViewModel : ViewModel() {
      *
      * @param listener Callback class where the upload callbacks must be published.
      * */
-    fun uploadFile(listener: FileUploadProgressListener) {
+    fun uploadFile(listener: UploadListener) {
         // upload file
-        Repository.getInstance().upload(localFile, listener)
-
+        Repository.upload(localFile, listener)
         // TODO: Show progress window here.
     }
 
     companion object {
-        private val TAG = "MainActivityViewModel"
+        private const val TAG = "MainActivityViewModel"
     }
 
 }
