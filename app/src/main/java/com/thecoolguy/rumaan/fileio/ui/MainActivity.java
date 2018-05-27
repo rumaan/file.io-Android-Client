@@ -104,7 +104,6 @@ public class MainActivity
   @Override
   protected void onStart() {
     super.onStart();
-    startService(new Intent(this, UploadService.class));
   }
 
   @Override
@@ -191,11 +190,7 @@ public class MainActivity
   }
 
   @Override
-  public void onComplete(@NotNull FileEntity fileEntity) {
-    Log.i(TAG, "onComplete: " + fileEntity.toString());
-
-    // post a notification
-    // new NotificationHelper().create(getApplicationContext(), fileEntity);
+  public void onUpload(@NotNull FileEntity fileEntity) {
   }
 
   @Override
@@ -204,4 +199,9 @@ public class MainActivity
     DisposableBucket.INSTANCE.clearDisposableBucket();
   }
 
+  @Override
+  public void onComplete(@NotNull FileEntity fileEntity) {
+    Toast.makeText(this, "Upload and Save Successful!", Toast.LENGTH_SHORT).show();
+    new NotificationHelper().create(getApplicationContext(), fileEntity);
+  }
 }

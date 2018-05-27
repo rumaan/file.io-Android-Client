@@ -1,7 +1,6 @@
 package com.thecoolguy.rumaan.fileio.network
 
 import android.util.Log
-import com.crashlytics.android.Crashlytics
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Blob
 import com.github.kittinunf.fuel.core.FuelError
@@ -31,7 +30,7 @@ object Uploader {
                         onSuccess = {
                             val fileEntity = getFileEntity(it, localFile)
                             fileEntity?.let {
-                                uploadListener.onComplete(it)
+                                uploadListener.onUpload(it)
                                 Log.d(TAG, it.toString())
                             }
 
@@ -58,11 +57,8 @@ object Uploader {
     fun getFileEntity(result: Result<Response, FuelError>,
                       localFile: LocalFile): FileEntity? {
         val response = result.component1()
-        Crashlytics.log(response.toString())
-        Log.d(TAG, response.toString())
         response?.let {
             // FIXME: something is fishy here when minifyEnabled true
-            Log.d(TAG, response.toString())
             return FileEntity(localFile.name, response.link, Utils.Date.getCurrentDate(),
                     getDaysFromExpireString(response.expiry))
         }

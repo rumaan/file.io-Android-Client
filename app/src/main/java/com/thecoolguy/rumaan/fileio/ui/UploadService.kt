@@ -10,6 +10,10 @@ import com.thecoolguy.rumaan.fileio.repository.Repository
 
 class UploadService : Service(), UploadListener {
     override fun onComplete(fileEntity: FileEntity) {
+
+    }
+
+    override fun onUpload(fileEntity: FileEntity) {
         postNotification(fileEntity)
     }
 
