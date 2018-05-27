@@ -125,13 +125,7 @@ public class MainActivity
   }
 
   @Override
-  protected void onStart() {
-    super.onStart();
-  }
-
-  @Override
   protected void onCreate(Bundle savedInstanceState) {
-    /* Set theme to app theme after creating the activity */
     setTheme(R.style.NoActionBarTheme);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);

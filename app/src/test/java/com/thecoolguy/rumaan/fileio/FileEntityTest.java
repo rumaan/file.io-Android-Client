@@ -1,5 +1,6 @@
 package com.thecoolguy.rumaan.fileio;
 
+import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
@@ -18,14 +19,10 @@ public class FileEntityTest {
     public void check_UploadItemSetValues() {
         FileEntity fileEntity = new FileEntity();
 
-        // nullability of upload item object
-        assertNotNull(fileEntity);
-
         // Test for fileEntity name
         fileEntity.setName(testFileName);
         assertNotNull(fileEntity.getName());
         assertEquals(testFileName, fileEntity.getName());
-
 
         // Test for url
         fileEntity.setUrl(testUrl);
