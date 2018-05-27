@@ -7,14 +7,12 @@ def supportLibVersion = '27.1.1'
 def work_version = "1.0.0-alpha02"
 
 android {
-
     // Gradle optimizations
     if (project.hasProperty('devBuild')) {
         splits.abi.enable = false
         splits.density.enable = false
         aaptOptions.cruncherEnabled = false
     }
-
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.thecoolguy.rumaan.fileio"
@@ -23,84 +21,72 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
         debug {
             minifyEnabled false
         }
     }
-
     dataBinding {
         enabled = true
     }
-
+    productFlavors {
+    }
+    dexOptions {
+    }
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"
-
     // Test dependencies
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
-
     // permission dispatcher
     implementation('com.github.hotchemi:permissionsdispatcher:3.0.1') {
         exclude module: "support-v13"
     }
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
-
     // Firebase Crashlytics
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
     implementation 'com.google.firebase:firebase-core:16.0.0'
-
     /* Room */
-    implementation "android.arch.persistence.room:rxjava2:1.1.0"
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation 'android.arch.persistence.room:rxjava2:1.1.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
-
     // Test helpers for arch components
-    testImplementation "android.arch.core:core-testing:1.1.1"
-
+    testImplementation 'android.arch.core:core-testing:1.1.1'
     // Test helpers for Room
-    testImplementation "android.arch.persistence.room:testing:1.1.0"
-
+    testImplementation 'android.arch.persistence.room:testing:1.1.0'
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
-
     // Fuel android service
-    implementation 'com.github.kittinunf.fuel:fuel-rxjava:1.12.0' //for RxJava support
+    implementation 'com.github.kittinunf.fuel:fuel-rxjava:1.12.0'
+    //for RxJava support
     // implementation 'com.github.kittinunf.fuel:fuel-android:1.12.1' //for Android
-
     // Gson Deserializer
     implementation 'com.google.code.gson:gson:2.8.2'
-
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-
     // Rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
     implementation 'com.uber.autodispose:autodispose-kotlin:0.8.0'
-
     implementation 'androidx.core:core-ktx:0.3'
-
     implementation "android.arch.work:work-runtime-ktx:$work_version"
     androidTestImplementation "android.arch.work:work-testing:$work_version"
-
 }
 
 apply plugin: 'com.google.gms.google-services'

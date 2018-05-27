@@ -3,9 +3,9 @@ package com.thecoolguy.rumaan.fileio.repository
 import android.net.Uri
 import android.util.Log
 import androidx.work.Worker
-import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.network.Uploader
 import com.thecoolguy.rumaan.fileio.utils.Utils
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 
 class UploadWorker : Worker() {
@@ -18,7 +18,6 @@ class UploadWorker : Worker() {
 
     override fun doWork(): WorkerResult {
         val fileUri = inputData.getString(KEY_URI, null)
-        Log.d(TAG, "FileURI: $fileUri")
         fileUri?.let { it ->
             // get the local file object from the backing storage
             val localFile = Utils.getLocalFile(applicationContext, Uri.parse(it))
@@ -26,6 +25,7 @@ class UploadWorker : Worker() {
                     .getUploadObservable(localFile)
 
             val disposable = uploaderObservable
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
                             onSuccess = {
                                 val fileEntity = Uploader.getFileEntity(it, localFile)

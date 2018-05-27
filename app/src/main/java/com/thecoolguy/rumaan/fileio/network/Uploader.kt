@@ -1,6 +1,7 @@
 package com.thecoolguy.rumaan.fileio.network
 
 import android.util.Log
+import com.crashlytics.android.Crashlytics
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Blob
 import com.github.kittinunf.fuel.core.FuelError
@@ -12,10 +13,12 @@ import com.thecoolguy.rumaan.fileio.data.models.Response
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.repository.DisposableBucket
 import com.thecoolguy.rumaan.fileio.utils.Utils
+import com.thecoolguy.rumaan.fileio.utils.Utils.JSONParser.getDaysFromExpireString
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+
 
 object Uploader {
 
@@ -55,11 +58,14 @@ object Uploader {
     fun getFileEntity(result: Result<Response, FuelError>,
                       localFile: LocalFile): FileEntity? {
         val response = result.component1()
+        Crashlytics.log(response.toString())
+        Log.d(TAG, response.toString())
         response?.let {
-            return FileEntity(localFile.name, response.link, response.expiry,
-                    Utils.JSONParser.getDaysFromExpireString(response.expiry))
+            // FIXME: something is fishy here when minifyEnabled true
+            Log.d(TAG, response.toString())
+            return FileEntity(localFile.name, response.link, Utils.Date.getCurrentDate(),
+                    getDaysFromExpireString(response.expiry))
         }
-
         return null
     }
 }

@@ -251,6 +251,9 @@ public final class Utils {
     public static Integer getDaysFromExpireString(String expiry) {
       // FIXME: look out for months and years, if you seek to implement them in the future.
       // Split on spaces
+      if (expiry == null) {
+        throw new RuntimeException("Expiry is null");
+      }
       return Integer.parseInt(expiry.split(" ")[0]);
     }
   }

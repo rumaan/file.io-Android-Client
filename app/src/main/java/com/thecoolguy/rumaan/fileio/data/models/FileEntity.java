@@ -38,7 +38,8 @@ public final class FileEntity {
   public FileEntity() {
   }
 
-  public FileEntity(@NonNull String name, @NonNull String url, String date, int daysToExpire) {
+  public FileEntity(@NonNull String name,
+      @NonNull String url, String date, int daysToExpire) {
     this.name = name;
     this.url = url;
     this.daysToExpire = daysToExpire;

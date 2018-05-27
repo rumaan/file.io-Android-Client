@@ -1,5 +1,6 @@
 package com.thecoolguy.rumaan.fileio.ui
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -35,6 +36,7 @@ class NotificationHelper {
                     setSmallIcon(R.drawable.ic_file_upload)
                     setContentTitle("File Upload Successful")
                     setContentText(fileEntity.url)
+                    setDefaults(Notification.DEFAULT_SOUND)
                     priority = NotificationCompat.PRIORITY_DEFAULT
                     setContentIntent(pendingIntent)
                     setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
