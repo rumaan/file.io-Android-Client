@@ -1,8 +1,7 @@
 package com.thecoolguy.rumaan.fileio.repository
 
 import android.app.Application
-import android.util.Log
-import com.thecoolguy.rumaan.fileio.data.LocalFile
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.data.db.DatabaseHelper
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase
 import com.thecoolguy.rumaan.fileio.data.db.UploadItemDao
@@ -10,17 +9,10 @@ import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 import com.thecoolguy.rumaan.fileio.listeners.DatabaseCallback
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.network.Uploader
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 object Repository : UploadListener, DatabaseCallback {
-    private val TAG = Repository::class.simpleName
-
     override fun onSave(fileEntity: FileEntity, id: Long) {
         // on file entity saved to database callback
-
-        // saveToDb(fileEntity)
     }
 
     // use this as context throughout
@@ -31,8 +23,6 @@ object Repository : UploadListener, DatabaseCallback {
                 .uploadItemDao()
     }
 
-    fun getDao() = mDao
-
     private val observerList = mutableListOf<UploadListener?>()
 
     fun addObserver(uploadListener: UploadListener) {
@@ -41,39 +31,32 @@ object Repository : UploadListener, DatabaseCallback {
         }
     }
 
+    private fun saveToDb(fileEntity: FileEntity) {
+        DatabaseHelper.saveToDatabase(fileEntity,
+                mDao, this)
+    }
+
     fun upload(localFile: LocalFile, uploadListener: UploadListener) {
         // add the listener to list
         addObserver(uploadListener)
+        // TODO: change this
         Uploader.upload(localFile, this)
     }
 
-    override fun onUpload(fileEntity: FileEntity) {
-        /* // notify all observers
-         observerList
-                 .forEach {
-                     it?.onUpload(fileEntity)
-                 }*/
+    override fun onComplete(fileEntity: FileEntity) {
+        // notify all observers
+        observerList
+                .forEach {
+                    it?.onComplete(fileEntity)
+                }
 
-        // save the file to database
-        DatabaseHelper.save(fileEntity, mDao)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeBy(
-                        onSuccess = {
-                            observerList.forEach {
-                                it?.onComplete(fileEntity)
-                            }
-                        },
-                        onError = {
-                            Log.e(TAG, it.localizedMessage, it)
-                        }
-                )
+        // callback for file upload success
+        // TODO: uncomment this
+        // saveToDb(fileEntity)
     }
 
     override fun progress(progress: Int) {
     }
 
-    override fun onComplete(fileEntity: FileEntity) {
-    }
 
 }

@@ -20,7 +20,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import com.thecoolguy.rumaan.fileio.data.LocalFile;
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

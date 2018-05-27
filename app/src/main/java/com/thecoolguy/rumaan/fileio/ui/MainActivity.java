@@ -23,8 +23,8 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.data.LocalFile;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
@@ -104,10 +104,7 @@ public class MainActivity
   @Override
   protected void onStart() {
     super.onStart();
-
-    // FIXME: why ?
-    //  startService(new Intent(this, NotificationService.class));
-
+    startService(new Intent(this, UploadService.class));
   }
 
   @Override
@@ -166,6 +163,9 @@ public class MainActivity
     } else {
       // Schedule a Work to upload and post it as notification after completion
 
+      // Pass in the file URI
+      // FIXME: redundant calls for getLocalFile()
+
       Data fileData = new Data.Builder()
           .putString(UploadWorker.KEY_URI, localFile.getUri().toString())
           .build();
@@ -191,7 +191,11 @@ public class MainActivity
   }
 
   @Override
-  public void onUpload(@NotNull FileEntity fileEntity) {
+  public void onComplete(@NotNull FileEntity fileEntity) {
+    Log.i(TAG, "onComplete: " + fileEntity.toString());
+
+    // post a notification
+    // new NotificationHelper().create(getApplicationContext(), fileEntity);
   }
 
   @Override
@@ -200,8 +204,4 @@ public class MainActivity
     DisposableBucket.INSTANCE.clearDisposableBucket();
   }
 
-  @Override
-  public void onComplete(@NotNull FileEntity fileEntity) {
-    Toast.makeText(this, "Upload and Save Complete!", Toast.LENGTH_SHORT).show();
-  }
 }

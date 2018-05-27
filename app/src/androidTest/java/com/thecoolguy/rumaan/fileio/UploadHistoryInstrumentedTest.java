@@ -6,7 +6,6 @@ import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
-import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryActivity;
 import com.thecoolguy.rumaan.fileio.utils.Constants;
 import com.thecoolguy.rumaan.fileio.utils.Utils;

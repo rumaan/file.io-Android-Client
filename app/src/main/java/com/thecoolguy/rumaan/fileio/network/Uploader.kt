@@ -6,8 +6,8 @@ import com.github.kittinunf.fuel.core.Blob
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.rx.rx_object
 import com.github.kittinunf.result.Result
-import com.thecoolguy.rumaan.fileio.data.LocalFile
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.data.models.Response
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.repository.DisposableBucket
@@ -28,8 +28,10 @@ object Uploader {
                         onSuccess = {
                             val fileEntity = getFileEntity(it, localFile)
                             fileEntity?.let {
-                                uploadListener.onUpload(it)
+                                uploadListener.onComplete(it)
+                                Log.d(TAG, it.toString())
                             }
+
                         },
                         onError = {
                             Log.e(TAG, it.localizedMessage, it)

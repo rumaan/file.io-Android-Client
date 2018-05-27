@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.thecoolguy.rumaan.fileio.data.LocalFile
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener
 import com.thecoolguy.rumaan.fileio.repository.Repository
@@ -54,6 +54,7 @@ class MainActivityViewModel : ViewModel() {
     fun uploadFile(listener: UploadListener) {
         // upload file
         Repository.upload(localFile, listener)
+        // TODO: Show progress window here.
     }
 
     companion object {

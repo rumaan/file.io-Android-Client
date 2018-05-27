@@ -7,7 +7,6 @@ import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
-import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import org.junit.After;
 import org.junit.Before;

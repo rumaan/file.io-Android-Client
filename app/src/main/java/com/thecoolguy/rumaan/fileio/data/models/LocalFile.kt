@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio.data
+package com.thecoolguy.rumaan.fileio.data.models
 
 import android.net.Uri
 import java.io.InputStream
