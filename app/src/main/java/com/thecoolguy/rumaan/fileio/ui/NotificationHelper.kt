@@ -23,6 +23,7 @@ class NotificationHelper {
 
         // set the data into the intent
         intent.putExtra(context.getString(R.string.key_file_name), fileEntity.name)
+        intent.putExtra(context.getString(R.string.key_file_id), fileEntity.id)
         intent.putExtra(context.getString(R.string.key_file_url), fileEntity.url)
 
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)

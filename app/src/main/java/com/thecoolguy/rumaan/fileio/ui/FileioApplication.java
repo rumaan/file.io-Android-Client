@@ -31,7 +31,7 @@ public class FileioApplication extends Application {
     // Set the application context in the repository
     Repository.applicationContext = this;
 
-    Intent intent = new Intent(this, UploadService.class);
+    Intent intent = new Intent(this, NotificationService.class);
     bindService(intent, new ServiceConnection() {
       @Override
       public void onServiceConnected(ComponentName componentName, IBinder iBinder) {

@@ -78,7 +78,7 @@
 
     <service
       android:exported="false"
-      android:name=".ui.UploadService"/>
+      android:name=".ui.NotificationService"/>
   </application>
 
 </manifest>

@@ -21,7 +21,7 @@
   <string name="okay_cool">Okay! Cool!</string>
   <string name="oops_some_error_occurred">Oops! Some Error Occurred!</string>
   <string name="no_internet_connection">No Internet connection!</string>
-  <string name="okay">OKay!</string>
+  <string name="okay">Okay</string>
   <string name="upload_later">Upload Later</string>
   <string name="no_internet_description">Looks like you aren\'t connected to the network.\nWe will schedule this upload when you have a connection.</string>
   <string name="no_uploads">It seems like you haven\'t uploaded any fileEntities yet. Upload a fileEntity and check in here again.</string>
@@ -46,6 +46,7 @@
   <string name="days_rem">days remaining.</string>
   <string name="clear_history">Clear History</string>
   <string name="copy_link">Copy link icon</string>
-  <string name="key_file_name">file_name</string>
-  <string name="key_file_url">file_url</string>
+  <string name="key_file_name" translatable="false">file_name</string>
+  <string name="key_file_url" translatable="false">file_url</string>
+  <string name="key_file_id" translatable="false">file_id</string>
 </resources>

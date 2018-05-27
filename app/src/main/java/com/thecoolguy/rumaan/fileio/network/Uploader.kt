@@ -28,10 +28,8 @@ object Uploader {
                         onSuccess = {
                             val fileEntity = getFileEntity(it, localFile)
                             fileEntity?.let {
-                                uploadListener.onComplete(it)
-                                Log.d(TAG, it.toString())
+                                uploadListener.onUpload(it)
                             }
-
                         },
                         onError = {
                             Log.e(TAG, it.localizedMessage, it)

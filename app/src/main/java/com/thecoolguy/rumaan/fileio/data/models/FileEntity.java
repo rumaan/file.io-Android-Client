@@ -22,7 +22,7 @@ public final class FileEntity {
   private String date;
 
   @PrimaryKey(autoGenerate = true)
-  private int id;
+  private long id;
 
   @ColumnInfo(name = DatabaseContract.COLUMN_DATE_FILE_NAME)
   private String name;
@@ -61,11 +61,11 @@ public final class FileEntity {
     this.daysToExpire = daysToExpire;
   }
 
-  public int getId() {
+  public long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(long id) {
     this.id = id;
   }
 

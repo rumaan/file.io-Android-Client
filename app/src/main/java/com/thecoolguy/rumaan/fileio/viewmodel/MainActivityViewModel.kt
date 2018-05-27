@@ -54,7 +54,6 @@ class MainActivityViewModel : ViewModel() {
     fun uploadFile(listener: UploadListener) {
         // upload file
         Repository.upload(localFile, listener)
-        // TODO: Show progress window here.
     }
 
     companion object {
