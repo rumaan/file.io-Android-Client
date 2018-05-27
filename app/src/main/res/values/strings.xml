@@ -35,7 +35,7 @@
   <string name="days">Days</string>
   <string name="open_source_licenses">Open-Source Licenses</string>
   <string name="license">Licenses</string>
-  <string name="file_io_desc">Ephemeral fileEntity sharing\n Convenient, anonymous and secure</string>
+  <string name="file_io_desc">Ephemeral file sharing\n Convenient, anonymous and secure</string>
   <string name="me_handle" translatable="false">\@TheCoolGuy</string>
   <string name="rumaan" translatable="false">Rumaan</string>
   <string name="profile_image">Profile Image</string>

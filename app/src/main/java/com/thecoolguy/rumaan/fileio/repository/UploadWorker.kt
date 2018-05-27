@@ -14,7 +14,6 @@ import io.reactivex.schedulers.Schedulers
 
 class UploadWorker : Worker() {
 
-
     companion object {
         const val KEY_URI = "file_uri"
         private val TAG = UploadWorker::class.simpleName
@@ -43,12 +42,11 @@ class UploadWorker : Worker() {
             val localFile = Utils.getLocalFile(applicationContext, Uri.parse(it))
             val uploaderObservable = Uploader
                     .getUploadObservable(localFile)
-
             val disposable = uploaderObservable
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
                             onSuccess = {
-                                val fileEntity = Uploader.getFileEntity(it, localFile)
+                                val fileEntity = Uploader.composeIntoFileEntity(it, localFile)
                                 // schedule this file object to be saved into the database
                                 fileEntity?.let {
                                     save(it)

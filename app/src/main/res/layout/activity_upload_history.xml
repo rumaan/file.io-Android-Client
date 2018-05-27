@@ -7,7 +7,6 @@
     tools:context="com.thecoolguy.rumaan.fileio.ui.UploadHistoryActivity">
 
 
-
     <LinearLayout
         android:id="@+id/no_uploads_view"
         android:layout_width="match_parent"

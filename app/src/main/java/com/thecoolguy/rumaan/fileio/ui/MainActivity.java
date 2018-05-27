@@ -3,19 +3,21 @@ package com.thecoolguy.rumaan.fileio.ui;
 import static com.thecoolguy.rumaan.fileio.utils.Utils.Android.isConnectedToNetwork;
 
 import android.Manifest;
-import android.Manifest.permission;
 import android.app.Dialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 import androidx.work.Constraints;
 import androidx.work.Data;
@@ -25,7 +27,6 @@ import androidx.work.WorkManager;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
-import com.thecoolguy.rumaan.fileio.databinding.ActivityMainBinding;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener;
@@ -49,6 +50,28 @@ public class MainActivity
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
   private MainActivityViewModel viewModel;
+
+  private Button chooseFileBtn;
+  private Toolbar toolbar;
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.options_main, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.menu_history:
+        startActivity(new Intent(this, UploadHistoryActivity.class));
+        return true;
+      case R.id.menu_about:
+        startActivity(new Intent(this, AboutActivity.class));
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+  }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -111,30 +134,32 @@ public class MainActivity
     /* Set theme to app theme after creating the activity */
     setTheme(R.style.NoActionBarTheme);
     super.onCreate(savedInstanceState);
-    ActivityMainBinding activityMainBinding = DataBindingUtil
-        .setContentView(this, R.layout.activity_main);
+    setContentView(R.layout.activity_main);
+
+    chooseFileBtn = findViewById(R.id.choose_file);
+    toolbar = findViewById(R.id.toolbar);
+    toolbar.setTitle("");
+    setSupportActionBar(toolbar);
 
     viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
-    activityMainBinding.chooseFile.setOnClickListener(new OnClickListener() {
+    chooseFileBtn.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View view) {
         MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(MainActivity.this);
       }
     });
 
-
   }
-
 
   @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
   void showPermissionDeniedForStorage() {
-    Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_SHORT).show();
+    Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_LONG).show();
   }
 
   @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE, permission.ACCESS_NETWORK_STATE})
+      Manifest.permission.WRITE_EXTERNAL_STORAGE})
   void showAppSettings() {
     Utils.Android.showAppDetailsSettings(this);
   }
@@ -171,7 +196,6 @@ public class MainActivity
 
       Constraints constraints = new Constraints.Builder()
           .setRequiredNetworkType(NetworkType.CONNECTED)
-          .setRequiresBatteryNotLow(true)
           .build();
 
       OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(UploadWorker.class)
@@ -186,7 +210,9 @@ public class MainActivity
   @Override
   public void progress(int progress) {
     // Update the progress into the view
+
     Log.i(TAG, "uploadProgress: " + progress);
+
   }
 
   @Override

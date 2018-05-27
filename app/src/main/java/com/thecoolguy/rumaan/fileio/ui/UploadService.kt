@@ -17,7 +17,6 @@ class UploadService : Service(), UploadListener {
         postNotification(fileEntity)
     }
 
-
     override fun progress(progress: Int) {
     }
 

@@ -7,12 +7,7 @@ def supportLibVersion = '27.1.1'
 def work_version = "1.0.0-alpha02"
 
 android {
-    // Gradle optimizations
-    if (project.hasProperty('devBuild')) {
-        splits.abi.enable = false
-        splits.density.enable = false
-        aaptOptions.cruncherEnabled = false
-    }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.thecoolguy.rumaan.fileio"
@@ -27,17 +22,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            versionNameSuffix 'release'
         }
         debug {
             minifyEnabled false
+            versionNameSuffix 'debug'
         }
-    }
-    dataBinding {
-        enabled = true
-    }
-    productFlavors {
-    }
-    dexOptions {
     }
 }
 

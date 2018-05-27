@@ -16,6 +16,7 @@ class NotificationHelper {
     companion object {
         const val CHANNEL_ID = "42"
         const val NOTIFICATION_ID = 44
+        const val GROUP_KEY = "com.thecoolguy.rumaan.fileio.GROUP_NOTIFICATIONS"
     }
 
     fun create(context: Context, fileEntity: FileEntity) {
@@ -27,8 +28,8 @@ class NotificationHelper {
         intent.putExtra(context.getString(R.string.key_file_url), fileEntity.url)
 
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        val pendingIntent = PendingIntent.getActivity(context,
-                0, intent, 0)
+        val pendingIntent = PendingIntent
+                .getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .apply {
@@ -38,8 +39,10 @@ class NotificationHelper {
                     setContentText(fileEntity.url)
                     setDefaults(Notification.DEFAULT_SOUND)
                     priority = NotificationCompat.PRIORITY_DEFAULT
+                    setColorized(true)
                     setContentIntent(pendingIntent)
                     setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                    setGroup(GROUP_KEY)
                 }
 
         // for O and up create a notification channel before posting the notification
@@ -57,6 +60,5 @@ class NotificationHelper {
 
         val notificationManagerCompat = NotificationManagerCompat.from(context)
         notificationManagerCompat.notify(NOTIFICATION_ID, notificationBuilder.build())
-
     }
 }

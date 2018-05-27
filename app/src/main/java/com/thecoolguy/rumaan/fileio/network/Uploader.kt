@@ -18,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
-
 object Uploader {
 
     private val TAG = Uploader::class.simpleName
@@ -28,12 +27,11 @@ object Uploader {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
-                            val fileEntity = getFileEntity(it, localFile)
+                            val fileEntity = composeIntoFileEntity(it, localFile)
                             fileEntity?.let {
-                                uploadListener.onUpload(it)
                                 Log.d(TAG, it.toString())
+                                uploadListener.onUpload(it)
                             }
-
                         },
                         onError = {
                             Log.e(TAG, it.localizedMessage, it)
@@ -54,8 +52,8 @@ object Uploader {
                 .subscribeOn(Schedulers.io())
     }
 
-    fun getFileEntity(result: Result<Response, FuelError>,
-                      localFile: LocalFile): FileEntity? {
+    fun composeIntoFileEntity(result: Result<Response, FuelError>,
+                              localFile: LocalFile): FileEntity? {
         val response = result.component1()
         response?.let {
             // FIXME: something is fishy here when minifyEnabled true

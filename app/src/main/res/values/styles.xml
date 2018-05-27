@@ -29,6 +29,7 @@
   <style name="NoActionBarTheme.ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
     <!-- Toolbar views normal state color -->
     <item name="colorControlNormal">@color/white</item>
+    <item name="titleTextColor">@color/white</item>
   </style>
 
 </resources>

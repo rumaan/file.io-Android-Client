@@ -75,6 +75,10 @@
           android:scheme="https"/>
       </intent-filter>
     </activity>
+    <activity
+      android:name=".ui.AboutActivity"
+      android:parentActivityName=".ui.MainActivity"
+      android:theme="@style/NoActionBarTheme"/>
 
     <service
       android:exported="false"
