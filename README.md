@@ -1,4 +1,4 @@
-# AnonyFile Android App
+# File.io Android App
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/845a73f559a747279016b83c41a78446)](https://www.codacy.com/app/rumaan/file.io-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rumaan/file.io-app&amp;utm_campaign=Badge_Grade)
 
 This simple app allows you to upload any file and get a _sharable_ link with a set expiration time.
