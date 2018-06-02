@@ -32,3 +32,4 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [X] Kotlinize the project 🎳
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon
+- [X] Offline Case (using WorkManager)
