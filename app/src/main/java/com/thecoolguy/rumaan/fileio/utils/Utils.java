@@ -12,6 +12,7 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build.VERSION_CODES;
 import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
@@ -164,15 +165,10 @@ public final class Utils {
     public static void showAppDetailsSettings(Context context) {
       try {
         Intent intent;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-          intent = new Intent(Intent.ACTION_APPLICATION_PREFERENCES);
-          intent.setData(Uri.parse("package:" + context.getPackageName()));
-          context.startActivity(intent);
-        } else {
-          intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-          intent.setData(Uri.parse("package: " + context.getPackageName()));
-          context.startActivity(intent);
-        }
+        intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        context.startActivity(intent);
       } catch (ActivityNotFoundException e) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS);
         context.startActivity(intent);

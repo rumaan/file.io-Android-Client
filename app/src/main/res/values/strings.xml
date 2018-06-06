@@ -48,4 +48,7 @@
   <string name="copy_link">Copy link icon</string>
   <string name="key_file_name">file_name</string>
   <string name="key_file_url">file_url</string>
+
+  <!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

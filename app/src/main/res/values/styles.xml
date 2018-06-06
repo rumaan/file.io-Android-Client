@@ -16,6 +16,7 @@
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:statusBarColor">@color/colorPrimary</item>
     <item name="android:navigationBarColor">@color/cool_blue</item>
+    <item name="android:windowActivityTransitions">true</item>
     <item name="fontFamily">@font/capriola</item>
   </style>
 
