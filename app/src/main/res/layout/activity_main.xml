@@ -22,21 +22,13 @@
     app:layout_constraintTop_toTopOf="parent"/>
 
   <FrameLayout
-    android:id="@+id/fragment_container"
+    android:id="@+id/parent_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/toolbar">
-    <fragment
-      android:id="@+id/choose_file_fragment"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:fragmentEnterTransition="@android:transition/fade"
-      android:fragmentExitTransition="@android:transition/fade"
-      android:fragmentReenterTransition="@android:transition/fade"
-      android:name="com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment"/>
   </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,8 +24,10 @@ import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener;
 import com.thecoolguy.rumaan.fileio.repository.DisposableBucket;
 import com.thecoolguy.rumaan.fileio.ui.NotificationHelper;
+import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment.OnFragmentInteractionListener;
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment;
+import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
 
-  private Toolbar toolbar;
   private MainActivityViewModel viewModel;
 
   @Override
@@ -104,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   }
 
   private void chooseFileOffline() {
-    // TODO: handle this in UI
     // Choose the file regardless
     Toast.makeText(this, "File will be uploaded once you're connected to the internet!",
         Toast.LENGTH_LONG).show();
@@ -118,9 +120,16 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    toolbar = findViewById(R.id.toolbar);
+    Toolbar toolbar = findViewById(R.id.toolbar);
     toolbar.setTitle("");
     setSupportActionBar(toolbar);
+
+    // set up initial fragment
+    getSupportFragmentManager()
+        .beginTransaction()
+        .add(R.id.parent_fragment_container, ChooseFileFragment.newInstance(),
+            ChooseFileFragment.TAG)
+        .commit();
 
     viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
   }
@@ -143,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     if (dialogFragment instanceof NoNetworkDialogFragment) {
       Utils.Android.dismissDialog(dialog);
       // Schedule for offline work
-      chooseFileOffline();
+      //  chooseFileOffline();
     }
   }
 
@@ -151,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @Override
   public void progress(int progress) {
     // Update the progress into the view
-
     Log.i(TAG, "uploadProgress: " + progress);
 
   }
@@ -181,6 +189,13 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     // change the current fragment to upload
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+    transaction.replace(R.id.parent_fragment_container, UploadFileFragment.newInstance(),
+        UploadFileFragment.TAG);
+    transaction.addToBackStack(null);
+
+    transaction.commit();
   }
 }

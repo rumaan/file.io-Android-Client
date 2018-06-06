@@ -13,10 +13,9 @@ class ChooseFileFragment : Fragment() {
     /**
      *  Callback when a file is chosen and is stored in the local file object cache.
      * */
-    fun buttonChooseFileClick() {
+    private fun buttonChooseFileClick() {
         listener?.onChooseFileClick()
     }
-
 
     private var listener: OnFragmentInteractionListener? = null
     private var chooseButton: Button? = null
@@ -55,6 +54,7 @@ class ChooseFileFragment : Fragment() {
     }
 
     companion object {
+        const val TAG = "ChooseFile"
         @JvmStatic
         fun newInstance() = ChooseFileFragment()
     }
