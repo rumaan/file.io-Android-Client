@@ -17,7 +17,7 @@
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning">
     <activity
-      android:name=".ui.MainActivity"
+      android:name=".ui.activities.MainActivity"
       android:screenOrientation="portrait"
       android:theme="@style/SplashTheme">
       <intent-filter>
@@ -46,11 +46,11 @@
       android:resource="@array/preloaded_fonts"/>
 
     <activity
-      android:name=".ui.UploadHistoryActivity"
-      android:parentActivityName=".ui.MainActivity"
+      android:name=".ui.activities.UploadHistoryActivity"
+      android:parentActivityName=".ui.activities.MainActivity"
       android:theme="@style/AppTheme"/>
     <activity
-      android:name=".ui.ErrorActivity"
+      android:name=".ui.activities.ErrorActivity"
       android:process=":error_activity"
       android:screenOrientation="portrait"
       android:theme="@style/NoActionBarTheme">
@@ -59,8 +59,8 @@
       </intent-filter>
     </activity>
     <activity
-      android:name=".ui.AboutActivity"
-      android:parentActivityName=".ui.MainActivity"
+      android:name=".ui.activities.AboutActivity"
+      android:parentActivityName=".ui.activities.MainActivity"
       android:theme="@style/NoActionBarTheme"/>
 
     <service

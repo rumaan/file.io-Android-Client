@@ -6,7 +6,7 @@ import android.support.test.filters.SmallTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.thecoolguy.rumaan.fileio.ui.MainActivity;
+import com.thecoolguy.rumaan.fileio.ui.activities.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class ExampleInstrumentedTest {
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         // Context of the app under TEst.
         Context appContext = InstrumentationRegistry.getTargetContext();
 

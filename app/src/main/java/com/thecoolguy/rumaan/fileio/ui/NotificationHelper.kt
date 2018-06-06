@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
+import com.thecoolguy.rumaan.fileio.ui.activities.UploadHistoryActivity
 
 class NotificationHelper {
     companion object {

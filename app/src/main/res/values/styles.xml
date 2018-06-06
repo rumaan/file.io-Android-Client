@@ -32,4 +32,9 @@
     <item name="titleTextColor">@color/white</item>
   </style>
 
+  <style name="TransparentNav" parent="NoActionBarTheme">
+    <item name="android:navigationBarColor">@android:color/transparent</item>
+    <item name="android:windowTranslucentNavigation">true</item>
+  </style>
+
 </resources>

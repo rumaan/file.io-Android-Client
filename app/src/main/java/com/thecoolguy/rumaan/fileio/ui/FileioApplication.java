@@ -3,6 +3,7 @@ package com.thecoolguy.rumaan.fileio.ui;
 import android.app.Application;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 import com.thecoolguy.rumaan.fileio.repository.Repository;
+import com.thecoolguy.rumaan.fileio.ui.activities.ErrorActivity;
 
 
 /**

@@ -7,7 +7,7 @@
     android:shortcutShortLabel="@string/choose_file_upload">
     <intent
       android:action="android.intent.action.OPEN_DOCUMENT"
-      android:targetClass="com.thecoolguy.rumaan.fileio.ui.MainActivity"
+      android:targetClass="com.thecoolguy.rumaan.fileio.ui.activities.MainActivity"
       android:targetPackage="com.thecoolguy.rumaan.fileio.ui"
       />
     <categories android:name="android.intent.category.OPENABLE"/>
