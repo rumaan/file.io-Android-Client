@@ -12,7 +12,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
-- [RxJava 2](https://github.com/ReactiveX/RxJava)
+- [RxKotlin/RxJava 2](https://github.com/ReactiveX/RxKotlin)
 - [Fuel](https://github.com/kittinunf/Fuel)
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
@@ -32,3 +32,4 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [X] Kotlinize the project 🎳
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon
+- [X] Offline Case (using WorkManager)
