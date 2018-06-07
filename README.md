@@ -32,3 +32,4 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon
 - [X] Offline Case (using WorkManager)
+- [ ] Complete rest of the UI
