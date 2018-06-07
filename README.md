@@ -7,7 +7,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 ## Screenshots 📸
 <p float="left">
-<img src="/screenshots/sc1.png" alt="Home Screen" height="600"/>
+<img src="/screenshots/sc.png" alt="Home Screen" height="600"/>
 
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
@@ -28,7 +28,6 @@ Vector Images from [FlatIcon](https://www.flaticon.com/).
 - [X] Handle different use cases for storage on the device.
 - [ ] Progress Bar for File Upload Progress
 - [X] Custom Error Dialog
-- [X] UI Testing
 - [X] Kotlinize the project 🎳
 - [ ] Support for *Multiple* File Upload (Create a List)
 - [ ] App Icon

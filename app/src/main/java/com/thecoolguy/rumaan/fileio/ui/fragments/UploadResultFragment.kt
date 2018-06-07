@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
 import kotlinx.android.synthetic.main.fragment_upload_result.*
@@ -44,7 +43,7 @@ class UploadResultFragment : Fragment() {
             listener?.onClose()
         }
 
-        Toast.makeText(context, fileUrl, Toast.LENGTH_SHORT).show()
+        link.text = fileUrl
     }
 
     companion object {
