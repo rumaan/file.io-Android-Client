@@ -42,7 +42,7 @@ public class UploadHistoryActivity extends AppCompatActivity {
     if (getIntent() != null) {
       String name = getIntent().getStringExtra(getString(R.string.key_file_name));
       String url = getIntent().getStringExtra(getString(R.string.key_file_url));
-      Toast.makeText(this, "File Name: " + name + "\nFile Url: " + url, Toast.LENGTH_SHORT).show();
+      //     Toast.makeText(this, "File Name: " + name + "\nFile Url: " + url, Toast.LENGTH_SHORT).show();
     }
 
   }

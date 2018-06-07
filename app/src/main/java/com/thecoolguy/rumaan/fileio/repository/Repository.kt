@@ -58,6 +58,8 @@ object Repository : UploadListener, DatabaseCallback {
     fun upload(localFile: LocalFile, uploadListener: UploadListener) {
         // add the listener to list
         addObserver(uploadListener)
+
+        // this refers to DatabaseCallback
         Uploader.upload(localFile, this)
     }
 

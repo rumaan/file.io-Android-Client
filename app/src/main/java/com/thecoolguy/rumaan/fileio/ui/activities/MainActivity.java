@@ -21,11 +21,11 @@ import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
+import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener;
 import com.thecoolguy.rumaan.fileio.listeners.UploadListener;
 import com.thecoolguy.rumaan.fileio.repository.DisposableBucket;
 import com.thecoolguy.rumaan.fileio.ui.NotificationHelper;
 import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment;
-import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment.OnFragmentInteractionListener;
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
@@ -39,6 +39,8 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements DialogClickListener, UploadListener,
     OnFragmentInteractionListener, FileLoadListener {
+
+  // TODO: replace all Toasts with Snackbars
 
   public static final String TAG = "MainActivity";
   private static final int INTENT_FILE_REQUEST = 44;
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
               .show();
         }
       } else {
-        Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
       }
     }
   }
@@ -151,17 +153,13 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   public void onDialogPositiveClick(@NonNull Dialog dialog, @NonNull Fragment dialogFragment) {
     if (dialogFragment instanceof NoNetworkDialogFragment) {
       Utils.Android.dismissDialog(dialog);
-      // Schedule for offline work
-      //  chooseFileOffline();
     }
   }
-
 
   @Override
   public void progress(int progress) {
     // Update the progress into the view
     Log.i(TAG, "uploadProgress: " + progress);
-
   }
 
   @Override
@@ -187,15 +185,21 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   }
 
   @Override
+  public void onUploadFileClick() {
+    viewModel.uploadFile(this);
+  }
+
+  @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     // change the current fragment to upload
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
-
+    transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
+        android.R.anim.fade_in, android.R.anim.fade_out);
     transaction.replace(R.id.parent_fragment_container, UploadFileFragment.newInstance(),
         UploadFileFragment.TAG);
     transaction.addToBackStack(null);
-
     transaction.commit();
+
   }
 }
