@@ -11,23 +11,23 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
+- [WorkManager] (https://developer.android.com/topic/libraries/architecture/workmanager)
+- [LiveData] (https://developer.android.com/topic/libraries/architecture/livedata)
+- [Room] (https://developer.android.com/topic/libraries/architecture/room)
+- [ViewModel] (https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
-- [RxKotlin/RxJava 2](https://github.com/ReactiveX/RxKotlin)
 - [Fuel](https://github.com/kittinunf/Fuel)
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
-- [Android Architechture Components](https://developer.android.com/topic/libraries/architecture/)
 - [CustomActivityOnCrash](https://github.com/Ereza/CustomActivityOnCrash)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
 
 ## TODO List ✅:
-- [X] Set Expiration Time
+- [ ] Set Expiration Time
 - [X] Handle different use cases for storage on the device.
-- [X] Handle Different File Types and Different File Managers (**BUG!!**)
-- [X] Progress Bar for File Upload Progress
+- [ ] Progress Bar for File Upload Progress
 - [X] Custom Error Dialog
-- [X] restructure App with **MVVM** (kinda maybe!)😉
 - [X] UI Testing
 - [X] Kotlinize the project 🎳
 - [ ] Support for *Multiple* File Upload (Create a List)
