@@ -11,10 +11,10 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
-- [WorkManager] (https://developer.android.com/topic/libraries/architecture/workmanager)
-- [LiveData] (https://developer.android.com/topic/libraries/architecture/livedata)
-- [Room] (https://developer.android.com/topic/libraries/architecture/room)
-- [ViewModel] (https://developer.android.com/topic/libraries/architecture/viewmodel)
+- [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+- [Room](https://developer.android.com/topic/libraries/architecture/room)
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
 - [Fuel](https://github.com/kittinunf/Fuel)
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
