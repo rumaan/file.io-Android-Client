@@ -1,31 +1,23 @@
 package com.thecoolguy.rumaan.fileio.network
 
-// TODO: Update the view
-// TODO: add upload the chosen file view
-/*
-if (isConnectedToNetwork(this))
-{
-    viewModel.uploadFile(this)
-}
-else
-{
-    // Schedule a Work to upload and post it as notification after completion
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import com.thecoolguy.rumaan.fileio.data.models.LocalFile
+import com.thecoolguy.rumaan.fileio.repository.UploadWorker
 
-    // Pass in the file URI
-    // FIXME: redundant calls for getLocalFile()
 
-    val fileData = Data.Builder()
+fun createWorkRequest(localFile: LocalFile): OneTimeWorkRequest {
+    val data = Data.Builder()
             .putString(UploadWorker.KEY_URI, localFile.uri.toString())
             .build()
-
     val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-    val oneTimeWorkRequest = OneTimeWorkRequest.Builder(UploadWorker::class.java)
+    return OneTimeWorkRequest.Builder(UploadWorker::class.java)
             .setConstraints(constraints)
-            .setInputData(fileData)
+            .setInputData(data)
             .build()
-
-    WorkManager.getInstance().enqueue(oneTimeWorkRequest)
-}*/
+}

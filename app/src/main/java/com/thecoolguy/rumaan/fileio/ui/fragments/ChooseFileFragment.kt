@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
+import com.thecoolguy.rumaan.fileio.utils.MaterialIn
 
 class ChooseFileFragment : Fragment() {
     /**
@@ -27,6 +28,9 @@ class ChooseFileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        MaterialIn.animate(view)
+
         view.findViewById<Button>(R.id.btn_choose_file)
                 .setOnClickListener {
                     buttonChooseFileClick()

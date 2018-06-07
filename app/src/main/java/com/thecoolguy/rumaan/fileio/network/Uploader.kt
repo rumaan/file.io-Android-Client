@@ -16,7 +16,6 @@ import com.thecoolguy.rumaan.fileio.utils.Utils.JSONParser.getDaysFromExpireStri
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 object Uploader {
 
@@ -49,7 +48,6 @@ object Uploader {
                     Log.d(TAG, "Progress: $progress")
                 }
                 .rx_object(Response.Deserializer())
-                .subscribeOn(Schedulers.io())
     }
 
     fun composeIntoFileEntity(result: Result<Response, FuelError>,

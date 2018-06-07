@@ -10,7 +10,6 @@ import com.thecoolguy.rumaan.fileio.ui.NotificationHelper
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 class UploadWorker : Worker() {
 
@@ -21,8 +20,6 @@ class UploadWorker : Worker() {
 
     private fun save(fileEntity: FileEntity) {
         val disposable = DatabaseHelper.saveToDatabase(fileEntity, Repository.getDao())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
                         onSuccess = {
                             /* Post a notification after saving */
@@ -36,6 +33,7 @@ class UploadWorker : Worker() {
     }
 
     override fun doWork(): WorkerResult {
+        // TODO: don't offload work to another thread
         val fileUri = inputData.getString(KEY_URI, null)
         fileUri?.let { it ->
             // get the local file object from the backing storage
@@ -43,7 +41,6 @@ class UploadWorker : Worker() {
             val uploaderObservable = Uploader
                     .getUploadObservable(localFile)
             val disposable = uploaderObservable
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribeBy(
                             onSuccess = {
                                 val fileEntity = Uploader.composeIntoFileEntity(it, localFile)
@@ -57,12 +54,9 @@ class UploadWorker : Worker() {
                                 Log.e(TAG, "Error Uploading the file: ${it.localizedMessage}", it)
                             }
                     )
-
             DisposableBucket.add(disposable)
-
             return WorkerResult.SUCCESS
         }
-
         return WorkerResult.FAILURE
     }
 

@@ -2,6 +2,7 @@ package com.thecoolguy.rumaan.fileio.ui.activities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import androidx.work.WorkStatus;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
@@ -69,17 +71,13 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (requestCode == INTENT_FILE_REQUEST) {
-      if (resultCode == RESULT_OK) {
-        Uri fileUri = data.getData();
-        if (fileUri != null) {
-          viewModel.chooseFileFromUri(this, fileUri);
-        } else {
-          Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
-              .show();
-        }
+    if (requestCode == INTENT_FILE_REQUEST && resultCode == RESULT_OK) {
+      Uri fileUri = data.getData();
+      if (fileUri != null) {
+        viewModel.chooseFileFromUri(this, fileUri);
       } else {
-        //  Toast.makeText(this, getString(R.string.cancel_file_choose_msg), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
+            .show();
       }
     }
   }
@@ -106,14 +104,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
       Utils.Android.showDialogFragment(new NoNetworkDialogFragment(), getSupportFragmentManager(),
           getString(R.string.no_net_dialog_fragment_tag));
     }
-  }
-
-  private void chooseFileOffline() {
-    // Choose the file regardless
-    Toast.makeText(this, "File will be uploaded once you're connected to the internet!",
-        Toast.LENGTH_LONG).show();
-    startActivityForResult(Intent.createChooser(Utils.Android.getChooseFileIntent(),
-        "Choose file to Upload.."), INTENT_FILE_REQUEST);
   }
 
   @Override
@@ -178,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     new NotificationHelper().create(getApplicationContext(), fileEntity);
   }
 
-
   @Override
   public void onChooseFileClick() {
     MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(this);
@@ -186,7 +175,18 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
   @Override
   public void onUploadFileClick() {
-    viewModel.uploadFile(this);
+    viewModel.uploadFile();
+
+    if (viewModel.getUploadWorkStatus() != null) {
+      viewModel.getUploadWorkStatus().observe(this, new Observer<WorkStatus>() {
+        @Override
+        public void onChanged(WorkStatus workStatus) {
+          if (workStatus.getState().isFinished()) {
+            Toast.makeText(MainActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+          }
+        }
+      });
+    }
   }
 
   @Override
