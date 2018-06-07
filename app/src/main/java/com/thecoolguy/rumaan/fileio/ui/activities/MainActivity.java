@@ -149,6 +149,17 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   }
 
   @Override
+  public void onBackPressed() {
+    int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+    /* Pop until first fragment i.e (ChooseFileFragment) */
+    if (backStackCount > 1) {
+      getSupportFragmentManager().popBackStack(ChooseFileFragment.TAG, 0);
+    } else {
+      finish();
+    }
+  }
+
+  @Override
   public void onUploadFileClick() {
     showSnackBar();
     viewModel.uploadFile();
@@ -162,10 +173,10 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
             // switch to results fragment
             getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.parent_fragment_container, UploadResultFragment.newInstance(url),
-                    UploadResultFragment.TAG)
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
                     android.R.anim.fade_in, android.R.anim.fade_out)
+                .replace(R.id.parent_fragment_container, UploadResultFragment.newInstance(url),
+                    UploadResultFragment.TAG)
                 .addToBackStack(UploadResultFragment.TAG)
                 .commit();
           }

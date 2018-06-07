@@ -13,6 +13,7 @@ import com.thecoolguy.rumaan.fileio.network.composeIntoFileEntity
 import com.thecoolguy.rumaan.fileio.ui.NotificationHelper
 import com.thecoolguy.rumaan.fileio.utils.Utils
 
+
 class UploadWorker : Worker() {
 
     companion object {
@@ -49,5 +50,6 @@ class UploadWorker : Worker() {
         }
         return WorkerResult.FAILURE
     }
+
 
 }
