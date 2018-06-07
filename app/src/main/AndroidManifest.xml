@@ -64,9 +64,6 @@
       android:parentActivityName=".ui.activities.MainActivity"
       android:theme="@style/NoActionBarTheme"/>
 
-    <service
-      android:exported="false"
-      android:name=".ui.UploadService"/>
   </application>
 
 </manifest>

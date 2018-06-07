@@ -8,25 +8,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.work.WorkStatus;
 import com.thecoolguy.rumaan.fileio.R;
-import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener;
-import com.thecoolguy.rumaan.fileio.listeners.UploadListener;
-import com.thecoolguy.rumaan.fileio.repository.DisposableBucket;
-import com.thecoolguy.rumaan.fileio.ui.NotificationHelper;
 import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
@@ -39,7 +40,7 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements DialogClickListener, UploadListener,
+public class MainActivity extends AppCompatActivity implements DialogClickListener,
     OnFragmentInteractionListener, FileLoadListener {
 
   // TODO: replace all Toasts with Snackbars
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   private static final int INTENT_FILE_REQUEST = 44;
 
   private MainActivityViewModel viewModel;
+  private ConstraintLayout rootView;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,17 +95,9 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
   public void chooseFile() {
-    /* Check for network connectivity */
-    if (Utils.Android.isConnectedToNetwork(this)) {
-      // Use system file browser
-      Intent intent = Utils.Android.getChooseFileIntent();
-      startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."),
-          INTENT_FILE_REQUEST);
-    } else {
-      /* Show no network dialog */
-      Utils.Android.showDialogFragment(new NoNetworkDialogFragment(), getSupportFragmentManager(),
-          getString(R.string.no_net_dialog_fragment_tag));
-    }
+    Intent intent = Utils.Android.getChooseFileIntent();
+    startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."),
+        INTENT_FILE_REQUEST);
   }
 
   @Override
@@ -111,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     setTheme(R.style.NoActionBarTheme);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
+    rootView = findViewById(R.id.root_view);
     Toolbar toolbar = findViewById(R.id.toolbar);
     toolbar.setTitle("");
     setSupportActionBar(toolbar);
@@ -147,34 +141,14 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   }
 
   @Override
-  public void progress(int progress) {
-    // Update the progress into the view
-    Log.i(TAG, "uploadProgress: " + progress);
-  }
-
-  @Override
-  public void onUpload(@NotNull FileEntity fileEntity) {
-  }
-
-  @Override
-  protected void onStop() {
-    super.onStop();
-    DisposableBucket.INSTANCE.clearDisposableBucket();
-  }
-
-  @Override
-  public void onComplete(@NotNull FileEntity fileEntity) {
-    Toast.makeText(this, "Upload and Save Successful!", Toast.LENGTH_SHORT).show();
-    new NotificationHelper().create(getApplicationContext(), fileEntity);
-  }
-
-  @Override
   public void onChooseFileClick() {
     MainActivityPermissionsDispatcher.chooseFileWithPermissionCheck(this);
   }
 
   @Override
   public void onUploadFileClick() {
+    showSnackBar();
+
     viewModel.uploadFile();
 
     if (viewModel.getUploadWorkStatus() != null) {
@@ -189,6 +163,26 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     }
   }
 
+  private void showSnackBar() {
+    final Snackbar snackbar = Snackbar
+        .make(rootView, getString(R.string.file_uploaded_soon), Snackbar.LENGTH_INDEFINITE);
+    snackbar.setAction(getString(R.string.okay), new OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        snackbar.dismiss();
+      }
+    });
+    snackbar
+        .setActionTextColor(ContextCompat.getColor(MainActivity.this, R.color.dark_yellow));
+
+    View snackBarView = snackbar.getView();
+    TextView snackTextView = snackBarView
+        .findViewById(android.support.design.R.id.snackbar_text);
+    snackTextView.setMaxLines(3);
+
+    snackbar.show();
+  }
+
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     // change the current fragment to upload
@@ -196,7 +190,8 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
         android.R.anim.fade_in, android.R.anim.fade_out);
-    transaction.replace(R.id.parent_fragment_container, UploadFileFragment.newInstance(),
+    transaction.replace(R.id.parent_fragment_container,
+        UploadFileFragment.newInstance(localFile.getName()),
         UploadFileFragment.TAG);
     transaction.addToBackStack(null);
     transaction.commit();

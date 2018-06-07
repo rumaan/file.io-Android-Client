@@ -7,17 +7,26 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
+import com.thecoolguy.rumaan.fileio.utils.MaterialIn
+import kotlinx.android.synthetic.main.fragment_upload_file.*
+
+private const val ARG_FILENAME = "filename"
 
 class UploadFileFragment : Fragment() {
-
     private var listener: OnFragmentInteractionListener? = null
+    private var fileName: String? = null
 
     private fun uploadFile() {
         listener?.onUploadFileClick()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            fileName = it.getString(ARG_FILENAME)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -28,9 +37,15 @@ class UploadFileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<Button>(R.id.btn_upload_file).setOnClickListener {
+
+        MaterialIn.animate(view)
+
+
+        btn_upload_file.setOnClickListener {
             uploadFile()
         }
+
+        file_name.text = fileName
     }
 
     override fun onAttach(context: Context?) {
@@ -44,8 +59,15 @@ class UploadFileFragment : Fragment() {
 
     companion object {
         const val TAG = "UploadFileFragment"
+
         @JvmStatic
-        fun newInstance() =
+        fun newInstance(fileName: String) =
                 UploadFileFragment()
+                        .apply {
+                            arguments = Bundle().apply {
+                                putString(ARG_FILENAME, fileName)
+                            }
+                        }
     }
 }
+

@@ -10,7 +10,7 @@ data class Response(val success: Boolean,
                     val message: String,
                     val error: Int) {
     class Deserializer : ResponseDeserializable<Response> {
-        override fun deserialize(content: String): Response? {
+        override fun deserialize(content: String): Response {
             return Gson().fromJson(content, Response::class.java)
         }
     }

@@ -4,17 +4,12 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.work.WorkManager
 import androidx.work.WorkStatus
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
 import com.thecoolguy.rumaan.fileio.network.createWorkRequest
 import com.thecoolguy.rumaan.fileio.utils.Utils
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Abstraction for Repository with Lifecycle aware stuffs
@@ -32,24 +27,9 @@ class MainActivityViewModel : ViewModel() {
      */
     fun chooseFileFromUri(context: Context, fileUri: Uri) {
         val fileLoadListener = context as FileLoadListener
-        val fileObservable = getLocalFileObservable(context, fileUri)
-        fileObservable.subscribeBy(
-                onSuccess = {
-                    localFile = it
-                    fileLoadListener.onFileLoad(it)
-                },
-                onError = {
-                    fileObservable.retry(1)
-                    Log.e(TAG, it.localizedMessage, it)
-                }
-        )
+        localFile = Utils.getLocalFile(context, fileUri)
+        fileLoadListener.onFileLoad(localFile)
     }
-
-    private fun getLocalFileObservable(context: Context, fileUri: Uri): Single<LocalFile> =
-            Single.fromCallable { (Utils.getLocalFile(context, fileUri)) }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-
 
     /**
      * Upload the file to server and save the response into the database.
@@ -57,7 +37,7 @@ class MainActivityViewModel : ViewModel() {
      * */
     fun uploadFile() {
         /* Enqueue file to be uploaded into WorkManager */
-        val workRequest = createWorkRequest(localFile)
+        val workRequest = createWorkRequest(localFile.uri.toString())
         WorkManager.getInstance().enqueue(workRequest)
         uploadWorkStatus = WorkManager.getInstance().getStatusById(workRequest.id)
     }

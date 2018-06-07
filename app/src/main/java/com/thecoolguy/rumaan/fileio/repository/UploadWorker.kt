@@ -1,15 +1,15 @@
 package com.thecoolguy.rumaan.fileio.repository
 
 import android.net.Uri
-import android.util.Log
 import androidx.work.Worker
 import com.thecoolguy.rumaan.fileio.data.db.DatabaseHelper
+import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
+import com.thecoolguy.rumaan.fileio.data.models.Response
 import com.thecoolguy.rumaan.fileio.network.Uploader
+import com.thecoolguy.rumaan.fileio.network.composeIntoFileEntity
 import com.thecoolguy.rumaan.fileio.ui.NotificationHelper
 import com.thecoolguy.rumaan.fileio.utils.Utils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
 
 class UploadWorker : Worker() {
 
@@ -19,49 +19,29 @@ class UploadWorker : Worker() {
     }
 
     private fun save(fileEntity: FileEntity) {
-        val disposable = DatabaseHelper.saveToDatabase(fileEntity, Repository.getDao())
-                .subscribeBy(
-                        onSuccess = {
-                            /* Post a notification after saving */
-                            NotificationHelper().create(applicationContext, fileEntity)
-                        },
-                        onError = {
-                            Log.e(TAG, it.localizedMessage, it)
-                        }
-                )
-        DisposableBucket.add(disposable)
+        DatabaseHelper.saveToDatabase(fileEntity, UploadHistoryRoomDatabase.getInstance(applicationContext).uploadItemDao())
     }
 
     override fun doWork(): WorkerResult {
-        // TODO: don't offload work to another thread
         val fileUri = inputData.getString(KEY_URI, null)
         fileUri?.let { it ->
             // get the local file object from the backing storage
             val localFile = Utils.getLocalFile(applicationContext, Uri.parse(it))
-            val uploaderObservable = Uploader
-                    .getUploadObservable(localFile)
-            val disposable = uploaderObservable
-                    .subscribeBy(
-                            onSuccess = {
-                                val fileEntity = Uploader.composeIntoFileEntity(it, localFile)
-                                // schedule this file object to be saved into the database
-                                fileEntity?.let {
-                                    save(it)
-                                }
-                            },
-                            onError = {
-                                uploaderObservable.retry(2)
-                                Log.e(TAG, "Error Uploading the file: ${it.localizedMessage}", it)
-                            }
-                    )
-            DisposableBucket.add(disposable)
+
+            // Upload the file
+            val (_, response, _) = Uploader.upload(localFile)
+
+            val fileEntity: FileEntity = composeIntoFileEntity(Response.Deserializer().deserialize(response), localFile)
+
+            /* Save the uploaded file details into the LocalDb */
+            save(fileEntity)
+
+            // post a notification
+            NotificationHelper().create(applicationContext, fileEntity)
+
             return WorkerResult.SUCCESS
         }
         return WorkerResult.FAILURE
     }
 
-    override fun onStopped() {
-        super.onStopped()
-        DisposableBucket.clearDisposableBucket()
-    }
 }

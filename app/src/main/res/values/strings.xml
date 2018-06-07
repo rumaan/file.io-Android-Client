@@ -27,6 +27,8 @@
   <string name="no_uploads">It seems like you haven\'t uploaded any fileEntities yet. Upload a fileEntity and check in here again.</string>
   <string name="no_uploads_sad_face_image">No uploads sad face image.</string>
   <string name="no_net_dialog_fragment_tag">no_net_dialog</string>
+  <string name="file_uploaded_soon">File added to upload queue.\nYou will be notified once the file is uploaded!
+  </string>
   <string name="weeks">Weeks</string>
   <string name="select">Select</string>
   <string name="choose_file_upload">Upload File</string>
