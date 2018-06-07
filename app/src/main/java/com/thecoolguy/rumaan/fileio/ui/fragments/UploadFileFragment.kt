@@ -9,12 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
-import com.thecoolguy.rumaan.fileio.utils.MaterialIn
 import kotlinx.android.synthetic.main.fragment_upload_file.*
 
-private const val ARG_FILENAME = "filename"
 
 class UploadFileFragment : Fragment() {
+
     private var listener: OnFragmentInteractionListener? = null
     private var fileName: String? = null
 
@@ -38,9 +37,6 @@ class UploadFileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        MaterialIn.animate(view)
-
-
         btn_upload_file.setOnClickListener {
             uploadFile()
         }
@@ -58,6 +54,7 @@ class UploadFileFragment : Fragment() {
     }
 
     companion object {
+        const val ARG_FILENAME = "filename"
         const val TAG = "UploadFileFragment"
 
         @JvmStatic

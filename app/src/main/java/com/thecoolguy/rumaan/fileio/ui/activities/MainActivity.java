@@ -28,9 +28,11 @@ import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener;
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener;
+import com.thecoolguy.rumaan.fileio.repository.UploadWorker;
 import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
+import com.thecoolguy.rumaan.fileio.ui.fragments.UploadResultFragment;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         .beginTransaction()
         .add(R.id.parent_fragment_container, ChooseFileFragment.newInstance(),
             ChooseFileFragment.TAG)
+        .addToBackStack(ChooseFileFragment.TAG)
         .commit();
 
     viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
@@ -148,19 +151,34 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @Override
   public void onUploadFileClick() {
     showSnackBar();
-
     viewModel.uploadFile();
-
     if (viewModel.getUploadWorkStatus() != null) {
       viewModel.getUploadWorkStatus().observe(this, new Observer<WorkStatus>() {
         @Override
         public void onChanged(WorkStatus workStatus) {
           if (workStatus.getState().isFinished()) {
-            Toast.makeText(MainActivity.this, "Upload Successful!", Toast.LENGTH_SHORT).show();
+            String url = workStatus.getOutputData().getString(UploadWorker.KEY_RESULT, "");
+
+            // switch to results fragment
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.parent_fragment_container, UploadResultFragment.newInstance(url),
+                    UploadResultFragment.TAG)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
+                    android.R.anim.fade_in, android.R.anim.fade_out)
+                .addToBackStack(UploadResultFragment.TAG)
+                .commit();
           }
         }
       });
     }
+  }
+
+  @Override
+  public void onClose() {
+    /* Pop all fragments till (Exclusive of) ChooseFileFragment from back stack */
+    getSupportFragmentManager()
+        .popBackStack(ChooseFileFragment.TAG, 0);
   }
 
   private void showSnackBar() {
@@ -183,6 +201,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     snackbar.show();
   }
 
+
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
     // change the current fragment to upload
@@ -193,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     transaction.replace(R.id.parent_fragment_container,
         UploadFileFragment.newInstance(localFile.getName()),
         UploadFileFragment.TAG);
-    transaction.addToBackStack(null);
+    transaction.addToBackStack(UploadFileFragment.TAG);
     transaction.commit();
 
   }

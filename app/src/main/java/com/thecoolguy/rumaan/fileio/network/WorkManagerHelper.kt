@@ -1,9 +1,6 @@
 package com.thecoolguy.rumaan.fileio.network
 
-import androidx.work.Constraints
-import androidx.work.Data
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
+import androidx.work.*
 import com.thecoolguy.rumaan.fileio.repository.UploadWorker
 
 
@@ -15,8 +12,9 @@ fun createWorkRequest(uri: String): OneTimeWorkRequest {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
-    return OneTimeWorkRequest.Builder(UploadWorker::class.java)
-            .setConstraints(constraints)
-            .setInputData(data)
-            .build()
+    return OneTimeWorkRequestBuilder<UploadWorker>()
+            .apply {
+                setConstraints(constraints)
+                setInputData(data)
+            }.build()
 }

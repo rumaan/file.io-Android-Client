@@ -1,7 +1,9 @@
 package com.thecoolguy.rumaan.fileio.repository
 
 import android.net.Uri
+import androidx.work.Data
 import androidx.work.Worker
+import androidx.work.toWorkData
 import com.thecoolguy.rumaan.fileio.data.db.DatabaseHelper
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
@@ -15,6 +17,7 @@ class UploadWorker : Worker() {
 
     companion object {
         const val KEY_URI = "file_uri"
+        const val KEY_RESULT = "file_url"
         private val TAG = UploadWorker::class.simpleName
     }
 
@@ -38,6 +41,9 @@ class UploadWorker : Worker() {
 
             // post a notification
             NotificationHelper().create(applicationContext, fileEntity)
+
+            val output: Data = mapOf(KEY_RESULT to fileEntity.url).toWorkData()
+            outputData = output
 
             return WorkerResult.SUCCESS
         }
