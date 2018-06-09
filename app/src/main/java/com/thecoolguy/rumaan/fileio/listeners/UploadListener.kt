@@ -7,3 +7,7 @@ interface UploadListener {
     fun progress(progress: Int)
     fun onComplete(fileEntity: FileEntity)
 }
+
+interface UploadProgressListener {
+    fun progress(progress: Int)
+}
