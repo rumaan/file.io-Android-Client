@@ -23,7 +23,7 @@ public interface UploadItemDao {
   void delete(FileEntity... fileEntity);
 
   @Query("DELETE FROM " + TABLE_NAME)
-  void deleteAll();
+  void clearAll();
 
   @Query("SELECT DISTINCT count(*) FROM " + TABLE_NAME)
   int numberOfItems();
@@ -31,6 +31,4 @@ public interface UploadItemDao {
   @Query("SELECT * FROM " + TABLE_NAME)
   LiveData<List<FileEntity>> getAllUploads();
 
-  @Query("SELECT * FROM " + TABLE_NAME)
-  List<FileEntity> allUploads();
 }

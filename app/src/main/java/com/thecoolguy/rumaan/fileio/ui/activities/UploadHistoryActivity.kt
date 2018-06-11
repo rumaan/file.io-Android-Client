@@ -3,13 +3,17 @@ package com.thecoolguy.rumaan.fileio.ui.activities
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.thecoolguy.rumaan.fileio.R
+import com.thecoolguy.rumaan.fileio.repository.ClearHistoryWorker
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryListAdapter
 import com.thecoolguy.rumaan.fileio.viewmodel.UploadHistoryViewModel
 import kotlinx.android.synthetic.main.activity_upload_history.*
@@ -27,8 +31,16 @@ class UploadHistoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
+            R.id.menu_clear_history -> clearHistory()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun clearHistory() {
+        val work = OneTimeWorkRequestBuilder<ClearHistoryWorker>()
+                .build()
+        WorkManager.getInstance()
+                .enqueue(work)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,16 +64,18 @@ class UploadHistoryActivity : AppCompatActivity() {
             layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_fall_down)
         }
 
-
         viewModel.uploadList.observe(this, Observer { list ->
+            TransitionManager.beginDelayedTransition(parent_history)
             list?.let {
                 progress.visibility = View.GONE
-                if (it.isEmpty())
+                if (it.isEmpty()) {
                     no_uploads_view.visibility = View.VISIBLE
-                else {
+                    upload_history_list.visibility = View.INVISIBLE
+                } else {
                     // set up recycler view and adapter
                     adapter.swapList(list)
                     upload_history_list.visibility = View.VISIBLE
+                    no_uploads_view.visibility = View.INVISIBLE
                 }
             }
         })

@@ -3,7 +3,6 @@ package com.thecoolguy.rumaan.fileio;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
@@ -108,7 +107,7 @@ public class FileEntityDaoTest {
 
     assertEquals(items, database.uploadItemDao().numberOfItems());
 
-    List<FileEntity> list = database.uploadItemDao().allUploads();
+    List<FileEntity> list = database.uploadItemDao().getAllUploads().getValue();
     assertNotNull(list);
     assertEquals(fileEntities, list);
   }

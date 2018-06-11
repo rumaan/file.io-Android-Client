@@ -113,14 +113,18 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     setSupportActionBar(toolbar);
 
     // set up initial fragment
+    setUpInitialFragment();
+
+    viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
+  }
+
+  private void setUpInitialFragment() {
     getSupportFragmentManager()
         .beginTransaction()
         .add(R.id.parent_fragment_container, ChooseFileFragment.newInstance(),
             ChooseFileFragment.TAG)
         .addToBackStack(ChooseFileFragment.TAG)
         .commit();
-
-    viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
   }
 
   @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -179,6 +183,8 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
                     UploadResultFragment.TAG)
                 .addToBackStack(UploadResultFragment.TAG)
                 .commit();
+          } else {
+            getSupportFragmentManager().popBackStack(ChooseFileFragment.TAG, 0);
           }
         }
       });
@@ -203,17 +209,13 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     });
     snackbar
         .setActionTextColor(ContextCompat.getColor(MainActivity.this, R.color.dark_yellow));
-
     View snackBarView = snackbar.getView();
-    View view = new View(this);
-
     TextView snackTextView = snackBarView
         .findViewById(android.support.design.R.id.snackbar_text);
     snackTextView.setMaxLines(3);
 
     snackbar.show();
   }
-
 
   @Override
   public void onFileLoad(@NotNull LocalFile localFile) {
@@ -227,6 +229,5 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         UploadFileFragment.TAG);
     transaction.addToBackStack(UploadFileFragment.TAG);
     transaction.commit();
-
   }
 }

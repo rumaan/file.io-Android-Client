@@ -3,14 +3,12 @@ package com.thecoolguy.rumaan.fileio.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
-import com.thecoolguy.rumaan.fileio.utils.MaterialIn
+import kotlinx.android.synthetic.main.fragment_choose_file.*
 
 class ChooseFileFragment : Fragment() {
     /**
@@ -23,19 +21,15 @@ class ChooseFileFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_choose_file, container, false)
-
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_choose_file, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        MaterialIn.animate(view)
-
-        view.findViewById<Button>(R.id.btn_choose_file)
-                .setOnClickListener {
-                    buttonChooseFileClick()
-                }
+        btn_choose_file.setOnClickListener {
+            buttonChooseFileClick()
+        }
     }
 
     override fun onAttach(context: Context) {
