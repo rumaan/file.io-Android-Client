@@ -4,9 +4,11 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryListAdapter
 import com.thecoolguy.rumaan.fileio.viewmodel.UploadHistoryViewModel
@@ -40,7 +42,16 @@ class UploadHistoryActivity : AppCompatActivity() {
                 .get(UploadHistoryViewModel::class.java)
 
         val adapter = UploadHistoryListAdapter(emptyList())
-        upload_history_list.adapter = adapter
+        upload_history_list.apply {
+            val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+                    .apply {
+                        setDrawable(getDrawable(R.drawable.divider_decor))
+                    }
+            addItemDecoration(dividerItemDecoration)
+            setAdapter(adapter)
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_fall_down)
+        }
+
 
         viewModel.uploadList.observe(this, Observer { list ->
             list?.let {
@@ -54,6 +65,5 @@ class UploadHistoryActivity : AppCompatActivity() {
                 }
             }
         })
-
     }
 }
