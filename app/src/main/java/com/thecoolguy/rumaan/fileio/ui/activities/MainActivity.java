@@ -205,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         .setActionTextColor(ContextCompat.getColor(MainActivity.this, R.color.dark_yellow));
 
     View snackBarView = snackbar.getView();
+    View view = new View(this);
+
     TextView snackTextView = snackBarView
         .findViewById(android.support.design.R.id.snackbar_text);
     snackTextView.setMaxLines(3);

@@ -1,6 +1,7 @@
 package com.thecoolguy.rumaan.fileio.repository
 
 import android.net.Uri
+import android.util.Log
 import androidx.work.Data
 import androidx.work.Worker
 import androidx.work.toWorkData
@@ -23,7 +24,9 @@ class UploadWorker : Worker() {
     }
 
     private fun save(fileEntity: FileEntity) {
-        DatabaseHelper.saveToDatabase(fileEntity, UploadHistoryRoomDatabase.getInstance(applicationContext).uploadItemDao())
+        val id = DatabaseHelper.saveToDatabase(fileEntity, UploadHistoryRoomDatabase.getInstance(applicationContext).uploadItemDao())
+        Log.d(TAG, "Insert Id: $id")
+
     }
 
     override fun doWork(): WorkerResult {

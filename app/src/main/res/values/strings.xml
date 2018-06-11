@@ -24,7 +24,7 @@
   <string name="okay">Okay!</string>
   <string name="upload_later">Upload Later</string>
   <string name="no_internet_description">Looks like you aren\'t connected to the network.\nWe will schedule this upload when you have a connection.</string>
-  <string name="no_uploads">It seems like you haven\'t uploaded any fileEntities yet. Upload a fileEntity and check in here again.</string>
+  <string name="no_uploads">It seems like you haven\'t uploaded any files yet. Upload a file and check in here again.</string>
   <string name="no_uploads_sad_face_image">No uploads sad face image.</string>
   <string name="no_net_dialog_fragment_tag">no_net_dialog</string>
   <string name="file_uploaded_soon">File added to upload queue.\nYou will be notified once the file is uploaded!
@@ -53,4 +53,5 @@
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="loading_upload_history">Loading upload history</string>
 </resources>

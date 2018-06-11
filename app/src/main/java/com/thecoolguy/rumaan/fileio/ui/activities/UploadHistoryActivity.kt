@@ -1,12 +1,21 @@
 package com.thecoolguy.rumaan.fileio.ui.activities
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.thecoolguy.rumaan.fileio.R
+import com.thecoolguy.rumaan.fileio.ui.UploadHistoryListAdapter
+import com.thecoolguy.rumaan.fileio.viewmodel.UploadHistoryViewModel
+import kotlinx.android.synthetic.main.activity_upload_history.*
 
 class UploadHistoryActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "UploadHistoryActivity"
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_history, menu)
@@ -26,14 +35,25 @@ class UploadHistoryActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.upload_history_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // TODO: get these details from DB using the id
-        val name = intent?.getStringExtra(getString(R.string.key_file_name))
-        val url = intent?.getStringExtra(getString(R.string.key_file_url))
+
+        val viewModel = ViewModelProviders.of(this)
+                .get(UploadHistoryViewModel::class.java)
+
+        val adapter = UploadHistoryListAdapter(emptyList())
+        upload_history_list.adapter = adapter
+
+        viewModel.uploadList.observe(this, Observer { list ->
+            list?.let {
+                progress.visibility = View.GONE
+                if (it.isEmpty())
+                    no_uploads_view.visibility = View.VISIBLE
+                else {
+                    // set up recycler view and adapter
+                    adapter.swapList(list)
+                    upload_history_list.visibility = View.VISIBLE
+                }
+            }
+        })
 
     }
-
-    companion object {
-        private val TAG = "UploadHistoryActivity"
-    }
-
 }
