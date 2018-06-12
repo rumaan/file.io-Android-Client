@@ -12,7 +12,6 @@
     android:layout_marginStart="8dp"
     android:padding="10dp"
     android:lineSpacingExtra="4sp"
-    android:text="TextView"
     android:textAlignment="textStart"
     android:textColor="@color/colorPrimaryDark"
     android:textSize="12sp"

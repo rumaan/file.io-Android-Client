@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="@android:color/transparent">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:animateLayoutChanges="true"
+  android:background="@android:color/transparent">
 
 
-    <android.support.v7.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1.01"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+  <android.support.v7.widget.CardView
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="6dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintDimensionRatio="1:1.01"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
-            android:text="@string/choose_the_expire_time_of_the_file"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="16dp"
+      android:layout_gravity="center_horizontal"
+      android:text="@string/choose_the_expire_time_of_the_file"
+      android:textAlignment="center"
+      android:textColor="@android:color/black"
+      android:textSize="18sp"/>
 
-
-
-        <Button
-            android:id="@+id/btn_select_days"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="34dp"
-            android:layout_marginStart="34dp"
-            android:background="@drawable/btn_blue_ripple_white"
-            android:text="@string/select"
-            android:textColor="@color/white" />
+    <Button
+      android:id="@+id/btn_select_days"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:layout_marginStart="34dp"
+      android:layout_marginEnd="34dp"
+      android:layout_gravity="bottom"
+      android:background="@drawable/btn_blue_ripple_white"
+      android:text="@string/select"
+      android:textColor="@color/white"/>
 
 
-    </android.support.v7.widget.CardView>
+  </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

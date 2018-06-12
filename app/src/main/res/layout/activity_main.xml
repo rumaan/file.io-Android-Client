@@ -15,8 +15,8 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:elevation="4dp"
-    android:minHeight="?attr/actionBarSize"
-    android:theme="?attr/actionBarTheme"
+    android:minHeight="?android:attr/actionBarSize"
+    android:theme="?android:attr/actionBarTheme"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
