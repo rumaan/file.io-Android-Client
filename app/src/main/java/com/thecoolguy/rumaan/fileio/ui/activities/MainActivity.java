@@ -32,6 +32,7 @@ import com.thecoolguy.rumaan.fileio.repository.UploadWorker;
 import com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
+import com.thecoolguy.rumaan.fileio.ui.fragments.UploadProgressFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadResultFragment;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
   private MainActivityViewModel viewModel;
   private ConstraintLayout rootView;
+  private UploadProgressFragment progressFragment;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         .beginTransaction()
         .add(R.id.parent_fragment_container, ChooseFileFragment.newInstance(),
             ChooseFileFragment.TAG)
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
         .addToBackStack(ChooseFileFragment.TAG)
         .commit();
   }
@@ -157,7 +160,8 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
     /* Pop until first fragment i.e (ChooseFileFragment) */
     if (backStackCount > 1) {
-      getSupportFragmentManager().popBackStack(ChooseFileFragment.TAG, 0);
+      getSupportFragmentManager()
+          .popBackStack(ChooseFileFragment.TAG, 0);
     } else {
       finish();
     }
@@ -165,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
   @Override
   public void onUploadFileClick() {
-    showSnackBar();
+    // showSnackBar();
     viewModel.uploadFile();
     if (viewModel.getUploadWorkStatus() != null) {
       viewModel.getUploadWorkStatus().observe(this, new Observer<WorkStatus>() {
@@ -177,14 +181,23 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
             // switch to results fragment
             getSupportFragmentManager()
                 .beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
-                    android.R.anim.fade_in, android.R.anim.fade_out)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.parent_fragment_container, UploadResultFragment.newInstance(url),
                     UploadResultFragment.TAG)
                 .addToBackStack(UploadResultFragment.TAG)
                 .commit();
+
           } else {
-            getSupportFragmentManager().popBackStack(ChooseFileFragment.TAG, 0);
+            // replace the fragment container with progress
+            if (progressFragment == null) {
+              progressFragment = UploadProgressFragment.newInstance();
+              getSupportFragmentManager()
+                  .beginTransaction()
+                  .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                  .replace(R.id.parent_fragment_container, progressFragment)
+                  .addToBackStack(null)
+                  .commit();
+            }
           }
         }
       });
@@ -222,8 +235,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
     // change the current fragment to upload
     FragmentManager fragmentManager = getSupportFragmentManager();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
-        android.R.anim.fade_in, android.R.anim.fade_out);
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.replace(R.id.parent_fragment_container,
         UploadFileFragment.newInstance(localFile.getName()),
         UploadFileFragment.TAG);

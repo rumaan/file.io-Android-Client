@@ -36,7 +36,7 @@ android {
             minifyEnabled false
             versionNameSuffix '-debug'
 
-            // avoid create Uid always
+            // avoid creating Uid every build
             ext.alwaysUpdateBuildId = false
         }
     }
