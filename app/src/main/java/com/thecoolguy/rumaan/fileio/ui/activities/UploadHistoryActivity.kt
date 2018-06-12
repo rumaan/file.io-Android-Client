@@ -65,33 +65,42 @@ class UploadHistoryActivity : AppCompatActivity() {
 
         viewModel.uploadList.observe(this, Observer { list ->
             TransitionManager.beginDelayedTransition(parent_history)
-            progress.visibility = View.INVISIBLE
+
             /* Group the list by Date and make a linear list out of map */
             val composedList = mutableListOf<Any?>()
+
             list?.let {
                 if (it.isEmpty()) {
+                    progress.visibility = View.INVISIBLE
                     no_uploads_view.visibility = View.VISIBLE
                     upload_history_list.visibility = View.INVISIBLE
                 } else {
                     upload_history_list.visibility = View.VISIBLE
                     no_uploads_view.visibility = View.INVISIBLE
 
+                    /* Group the list based on dates Map(Date, List<FileEntities>) */
                     it.groupBy {
                         it.date
                     }.flatMap {
+                        /* Transform the Map() into a linear List(String, List()) */
                         listOf(it.key, it.value)
                     }.forEach {
+                        /* Compose list based on the item type */
                         when (it) {
                             is String -> {
                                 composedList.add(it)
                             }
                             is List<*> -> {
+                                /* TODO: replace this with Kotlin Operator (alternate for forEach) */
                                 it.forEach { item ->
                                     composedList.add(item)
                                 }
                             }
                         }
                     }
+                    progress.visibility = View.INVISIBLE
+
+                    /* Swap the list in Adapter */
                     adapter.swapComposedList(composedList)
                 }
             }
