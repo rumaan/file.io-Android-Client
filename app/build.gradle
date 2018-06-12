@@ -8,6 +8,13 @@ def work_version = "1.0.0-alpha02"
 
 android {
 
+    /* Disable multi apk for dev builds */
+    if (project.hasProperty('devBuild')) {
+        splits.abi.enable = false
+        splits.density.enable = false
+        aaptOptions.cruncherEnabled = false
+    }
+
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.thecoolguy.rumaan.fileio"
@@ -17,16 +24,20 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        resConfig("en")
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            versionNameSuffix 'release'
+            versionNameSuffix '-release'
         }
         debug {
             minifyEnabled false
-            versionNameSuffix 'debug'
+            versionNameSuffix '-debug'
+
+            // avoid create Uid always
+            ext.alwaysUpdateBuildId = false
         }
     }
 
