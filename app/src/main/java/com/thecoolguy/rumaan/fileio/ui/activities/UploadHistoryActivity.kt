@@ -49,7 +49,6 @@ class UploadHistoryActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.upload_history_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
         val viewModel = ViewModelProviders.of(this)
                 .get(UploadHistoryViewModel::class.java)
 
@@ -66,16 +65,34 @@ class UploadHistoryActivity : AppCompatActivity() {
 
         viewModel.uploadList.observe(this, Observer { list ->
             TransitionManager.beginDelayedTransition(parent_history)
+            progress.visibility = View.INVISIBLE
+            /* Group the list by Date and make a linear list out of map */
+            val composedList = mutableListOf<Any?>()
             list?.let {
-                progress.visibility = View.GONE
                 if (it.isEmpty()) {
                     no_uploads_view.visibility = View.VISIBLE
                     upload_history_list.visibility = View.INVISIBLE
                 } else {
-                    // set up recycler view and adapter
-                    adapter.swapList(list)
                     upload_history_list.visibility = View.VISIBLE
                     no_uploads_view.visibility = View.INVISIBLE
+
+                    it.groupBy {
+                        it.date
+                    }.flatMap {
+                        listOf(it.key, it.value)
+                    }.forEach {
+                        when (it) {
+                            is String -> {
+                                composedList.add(it)
+                            }
+                            is List<*> -> {
+                                it.forEach { item ->
+                                    composedList.add(item)
+                                }
+                            }
+                        }
+                    }
+                    adapter.swapComposedList(composedList)
                 }
             }
         })
