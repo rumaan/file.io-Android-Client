@@ -49,7 +49,7 @@ public class UploadHistoryInstrumentedTest {
     // add five items into the database
     for (int i = 0; i < 5; i++) {
       FileEntity fileEntity = new FileEntity("test fileEntity name " + i, "test URL "
-          + i, Utils.Date.getCurrentDate(), Constants.DEFAULT_EXPIRE_WEEKS);
+          + i, Utils.Date.INSTANCE.getCurrentDate(), Constants.INSTANCE.getDEFAULT_EXPIRE_WEEKS());
       database.uploadItemDao().insert(fileEntity);
     }
   }
