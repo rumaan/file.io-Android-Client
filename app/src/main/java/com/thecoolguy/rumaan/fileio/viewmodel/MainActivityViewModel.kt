@@ -27,8 +27,10 @@ class MainActivityViewModel : ViewModel() {
      */
     fun chooseFileFromUri(context: Context, fileUri: Uri) {
         val fileLoadListener = context as FileLoadListener
-        localFile = Utils.getLocalFile(context, fileUri)
-        fileLoadListener.onFileLoad(localFile)
+        Utils.getLocalFile(context, fileUri)?.let {
+            localFile = it
+            fileLoadListener.onFileLoad(localFile)
+        }
     }
 
     /**

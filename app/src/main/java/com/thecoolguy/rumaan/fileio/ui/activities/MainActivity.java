@@ -35,6 +35,7 @@ import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadProgressFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadResultFragment;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
+import com.thecoolguy.rumaan.fileio.utils.Utils.Android;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
 import permissions.dispatcher.NeedsPermission;
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
   @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
   public void chooseFile() {
-    Intent intent = Utils.Android.getChooseFileIntent();
+    Intent intent = Android.INSTANCE.getChooseFileIntent();
     startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."),
         INTENT_FILE_REQUEST);
   }
@@ -140,13 +141,13 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
       Manifest.permission.WRITE_EXTERNAL_STORAGE})
   void showAppSettings() {
     Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_LONG).show();
-    Utils.Android.showAppDetailsSettings(this);
+    Android.INSTANCE.showAppDetailsSettings(this);
   }
 
   @Override
   public void onDialogPositiveClick(@NonNull Dialog dialog, @NonNull Fragment dialogFragment) {
     if (dialogFragment instanceof NoNetworkDialogFragment) {
-      Utils.Android.dismissDialog(dialog);
+      Android.INSTANCE.dismissDialog(dialog);
     }
   }
 

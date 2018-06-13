@@ -31,25 +31,25 @@ class UploadWorker : Worker() {
 
     override fun doWork(): WorkerResult {
         val fileUri = inputData.getString(KEY_URI, null)
-        fileUri?.let { it ->
+        fileUri?.let { uri ->
             // get the local file object from the backing storage
-            val localFile = Utils.getLocalFile(applicationContext, Uri.parse(it))
+            Utils.getLocalFile(applicationContext, Uri.parse(uri))?.let { localFile ->
+                // Upload the file
+                val (_, response, _) = Uploader.upload(localFile)
 
-            // Upload the file
-            val (_, response, _) = Uploader.upload(localFile)
+                val fileEntity = composeIntoFileEntity(Response.Deserializer().deserialize(response), localFile)
 
-            val fileEntity: FileEntity = composeIntoFileEntity(Response.Deserializer().deserialize(response), localFile)
+                /* Save the uploaded file details into the LocalDb */
+                save(fileEntity)
 
-            /* Save the uploaded file details into the LocalDb */
-            save(fileEntity)
+                // post a notification
+                NotificationHelper().create(applicationContext, fileEntity)
 
-            // post a notification
-            NotificationHelper().create(applicationContext, fileEntity)
+                val output: Data = mapOf(KEY_RESULT to fileEntity.url).toWorkData()
+                outputData = output
 
-            val output: Data = mapOf(KEY_RESULT to fileEntity.url).toWorkData()
-            outputData = output
-
-            return WorkerResult.SUCCESS
+                return WorkerResult.SUCCESS
+            }
         }
         return WorkerResult.FAILURE
     }

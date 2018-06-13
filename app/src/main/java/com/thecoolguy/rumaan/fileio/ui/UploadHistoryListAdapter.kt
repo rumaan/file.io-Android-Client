@@ -11,12 +11,12 @@ import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 class UploadHistoryListAdapter(private var uploadList: List<FileEntity>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var composedList = mutableListOf<Any?>()
 
-    private val DATE: Int = 0
-    private val LIST: Int = 1
+    private val date: Int = 0
+    private val list: Int = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            DATE -> {
+            date -> {
                 val itemView = LayoutInflater.from(parent.context).inflate(R.layout.upload_history_item_date, parent, false)
                 UploadHistoryListDateViewHolder(itemView)
             }
@@ -34,10 +34,10 @@ class UploadHistoryListAdapter(private var uploadList: List<FileEntity>) : Recyc
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.apply {
             when (this.itemViewType) {
-                DATE -> {
+                date -> {
                     (holder as UploadHistoryListDateViewHolder).date.text = composedList[position] as String
                 }
-                LIST -> {
+                list -> {
                     (holder as UploadHistoryListItemViewHolder).fileName.text = (composedList[position] as FileEntity).name
                     holder.fileUrl.text = (composedList[position] as FileEntity).url
                 }
@@ -47,8 +47,8 @@ class UploadHistoryListAdapter(private var uploadList: List<FileEntity>) : Recyc
 
     override fun getItemViewType(position: Int): Int {
         return when (composedList[position]) {
-            is String -> DATE
-            else -> LIST
+            is String -> date
+            else -> list
         }
     }
 

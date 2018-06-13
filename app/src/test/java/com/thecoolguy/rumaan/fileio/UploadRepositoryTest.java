@@ -5,6 +5,7 @@ import static junit.framework.Assert.assertNotNull;
 
 import com.thecoolguy.rumaan.fileio.utils.Constants;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
+import com.thecoolguy.rumaan.fileio.utils.Utils.URLParser;
 import org.junit.Test;
 
 public class UploadRepositoryTest {
@@ -13,8 +14,9 @@ public class UploadRepositoryTest {
   public void check_ExpireUrl() {
     String url = "https://file.io/?expires=2";
     String days = "2";
-    String withConstantsUrl = Constants.BASE_URL + Constants.QUERY + Constants.EXPIRE_PARAM + days;
-    String testUrl = Utils.URLParser.getExpireUrl(days);
+    String withConstantsUrl = Constants.BASE_URL + Constants.INSTANCE.getQUERY()
+        + Constants.INSTANCE.getEXPIRE_PARAM() + days;
+    String testUrl = URLParser.INSTANCE.getExpireUrl(days);
 
     assertNotNull(testUrl);
     assertEquals(url, testUrl);

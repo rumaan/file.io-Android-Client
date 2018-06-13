@@ -9,7 +9,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
-import com.thecoolguy.rumaan.fileio.utils.Utils;
+import com.thecoolguy.rumaan.fileio.utils.Utils.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 @LargeTest
 public class FileEntityDaoTest {
 
-  UploadHistoryRoomDatabase database;
+  private UploadHistoryRoomDatabase database;
 
   @Before
   public void initializeDb() {
@@ -51,7 +51,7 @@ public class FileEntityDaoTest {
 
     /* Create an empty file entity */
     FileEntity fileEntity = new FileEntity(
-        "testItem", "testUrl", Utils.Date.getCurrentDate(), 1);
+        "testItem", "testUrl", Date.INSTANCE.getCurrentDate(), 1);
     /* Insert an item into the database */
     database.uploadItemDao().insert(fileEntity);
 
@@ -64,7 +64,7 @@ public class FileEntityDaoTest {
 
   @Test
   public void check_InsertUploadItemSaves() {
-    FileEntity fileEntity = new FileEntity("test", "test", Utils.Date.getCurrentDate(), 2);
+    FileEntity fileEntity = new FileEntity("test", "test", Date.INSTANCE.getCurrentDate(), 2);
 
     // check for nulls in the upload item object
     assertNotNull(fileEntity);
@@ -89,7 +89,7 @@ public class FileEntityDaoTest {
   @Test
   public void check_saveMultipleItemsRetrieves() {
     List<FileEntity> fileEntities = new ArrayList<>();
-    FileEntity fileEntity = new FileEntity("test", "test", Utils.Date.getCurrentDate(), 2);
+    FileEntity fileEntity = new FileEntity("test", "test", Date.INSTANCE.getCurrentDate(), 2);
 
     int items = 10;
 

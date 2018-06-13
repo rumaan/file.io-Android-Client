@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -39,7 +40,8 @@ class UploadHistoryActivity : AppCompatActivity() {
     private fun clearHistory() {
         val work = OneTimeWorkRequestBuilder<ClearHistoryWorker>()
                 .build()
-        WorkManager.getInstance()
+        WorkManager
+                .getInstance()
                 .enqueue(work)
     }
 
@@ -58,6 +60,7 @@ class UploadHistoryActivity : AppCompatActivity() {
                     .apply {
                         setDrawable(getDrawable(R.drawable.divider_decor))
                     }
+            layoutManager = LinearLayoutManager(context)
             addItemDecoration(dividerItemDecoration)
             setAdapter(adapter)
             layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_fall_down)
@@ -81,23 +84,26 @@ class UploadHistoryActivity : AppCompatActivity() {
                     /* Group the list based on dates Map(Date, List<FileEntities>) */
                     it.groupBy {
                         it.date
-                    }.flatMap {
-                        /* Transform the Map() into a linear List(String, List()) */
-                        listOf(it.key, it.value)
-                    }.forEach {
-                        /* Compose list based on the item type */
-                        when (it) {
-                            is String -> {
-                                composedList.add(it)
-                            }
-                            is List<*> -> {
-                                /* TODO: replace this with Kotlin Operator (alternate for forEach) */
-                                it.forEach { item ->
-                                    composedList.add(item)
+                    }.toSortedMap() // Sort according to Chronological order
+                            .asIterable()
+                            .reversed()
+                            .flatMap {
+                                /* Transform the Map() into a linear List(String, List()) */
+                                listOf(it.key, it.value)
+                            }.forEach {
+                                /* Compose list based on the item type */
+                                when (it) {
+                                    is String -> {
+                                        composedList.add(it)
+                                    }
+                                    is List<*> -> {
+                                        /* TODO: replace this with Kotlin Operator (alternate for forEach) */
+                                        it.forEach { item ->
+                                            composedList.add(item)
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
                     progress.visibility = View.INVISIBLE
 
                     /* Swap the list in Adapter */

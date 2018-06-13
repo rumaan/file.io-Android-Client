@@ -29,6 +29,6 @@ object Uploader {
 
 fun composeIntoFileEntity(response: com.thecoolguy.rumaan.fileio.data.models.Response,
                           localFile: LocalFile): FileEntity =
-        FileEntity(localFile.name, response.link, Utils.Date.getCurrentDate(),
+        FileEntity(localFile.name, response.link, Utils.Date.currentDate,
                 getDaysFromExpireString(response.expiry))
 
