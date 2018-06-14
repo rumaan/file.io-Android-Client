@@ -18,6 +18,9 @@ interface UploadItemDao {
     @Query("SELECT DISTINCT * FROM " + DatabaseContract.TABLE_NAME + " where id = :id")
     fun getItem(id: Long): FileEntity
 
+    @Query("DELETE FROM ${DatabaseContract.TABLE_NAME}" + " WHERE id = :id")
+    fun deleteItemWithId(id: Long)
+
     @Delete
     fun delete(vararg fileEntity: FileEntity)
 

@@ -3,18 +3,27 @@ package com.thecoolguy.rumaan.fileio.ui.activities
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.transition.TransitionManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.repository.ClearHistoryWorker
+import com.thecoolguy.rumaan.fileio.repository.DELETE_TAG
+import com.thecoolguy.rumaan.fileio.repository.DeleteSingleItemWoker
+import com.thecoolguy.rumaan.fileio.repository.ID
+import com.thecoolguy.rumaan.fileio.ui.SwipeToDeleteCallBack
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryListAdapter
 import com.thecoolguy.rumaan.fileio.viewmodel.UploadHistoryViewModel
 import kotlinx.android.synthetic.main.activity_upload_history.*
@@ -45,6 +54,32 @@ class UploadHistoryActivity : AppCompatActivity() {
                 .enqueue(work)
     }
 
+
+    private fun removeHistoryItem(id: Long) {
+        val inputData = Data.Builder()
+                .putLong(ID, id)
+                .build()
+
+        val work = OneTimeWorkRequestBuilder<DeleteSingleItemWoker>()
+                .setInputData(inputData)
+                .addTag(DELETE_TAG)
+                .build()
+
+        WorkManager.getInstance()
+                .enqueue(work)
+
+        WorkManager
+                .getInstance()
+                .getStatusesByTag(DELETE_TAG)
+                .observe(this, Observer { listOfWorkStatuses ->
+                    listOfWorkStatuses?.let {
+                        if (it[0].state.isFinished)
+                            Snackbar.make(parent_history, "Item Removed Successfully!", Snackbar.LENGTH_SHORT).show()
+                    }
+                })
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload_history)
@@ -54,7 +89,28 @@ class UploadHistoryActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this)
                 .get(UploadHistoryViewModel::class.java)
 
-        val adapter = UploadHistoryListAdapter(emptyList())
+        val adapter = UploadHistoryListAdapter(this, emptyList())
+
+        // Handle swipe left to delete the item
+        val swipeHandler = object : SwipeToDeleteCallBack(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                viewHolder?.let {
+                    val itemId = adapter.getFileEntityIdAtPosition(viewHolder.adapterPosition)
+                    Log.d(TAG, "ItemId = $itemId")
+
+                    // remove item from db
+                    removeHistoryItem(itemId)
+
+                    // check if adapter is empty
+                    if (adapter.itemCount == 1) {
+                        toggleToEmpty()
+                    }
+                }
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(upload_history_list)
+
         upload_history_list.apply {
             val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
                     .apply {
@@ -74,9 +130,7 @@ class UploadHistoryActivity : AppCompatActivity() {
 
             list?.let {
                 if (it.isEmpty()) {
-                    progress.visibility = View.INVISIBLE
-                    no_uploads_view.visibility = View.VISIBLE
-                    upload_history_list.visibility = View.INVISIBLE
+                    toggleToEmpty()
                 } else {
                     upload_history_list.visibility = View.VISIBLE
                     no_uploads_view.visibility = View.INVISIBLE
@@ -111,5 +165,11 @@ class UploadHistoryActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun toggleToEmpty() {
+        progress.visibility = View.INVISIBLE
+        no_uploads_view.visibility = View.VISIBLE
+        upload_history_list.visibility = View.INVISIBLE
     }
 }

@@ -13,6 +13,7 @@
     android:layout_height="wrap_content"
     android:text="file.io"
     android:textAppearance="@style/TextAppearance.AppCompat.Title"
+    android:textSize="@dimen/title_text"
     app:layout_constraintBottom_toTopOf="@+id/textView4"
     app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintLeft_toLeftOf="parent"

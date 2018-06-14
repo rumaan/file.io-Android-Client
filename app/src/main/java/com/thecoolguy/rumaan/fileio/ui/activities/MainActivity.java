@@ -34,7 +34,6 @@ import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadFileFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadProgressFragment;
 import com.thecoolguy.rumaan.fileio.ui.fragments.UploadResultFragment;
-import com.thecoolguy.rumaan.fileio.utils.Utils;
 import com.thecoolguy.rumaan.fileio.utils.Utils.Android;
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -170,8 +169,19 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
   @Override
   public void onUploadFileClick() {
-    // showSnackBar();
     viewModel.uploadFile();
+
+    // showSnackBar();
+    // replace the fragment container with progress
+
+    progressFragment = UploadProgressFragment.newInstance();
+    getSupportFragmentManager()
+        .beginTransaction()
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        .replace(R.id.parent_fragment_container, progressFragment)
+        .addToBackStack(null)
+        .commit();
+
     if (viewModel.getUploadWorkStatus() != null) {
       viewModel.getUploadWorkStatus().observe(this, new Observer<WorkStatus>() {
         @Override
@@ -188,17 +198,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
                 .addToBackStack(UploadResultFragment.TAG)
                 .commit();
 
-          } else {
-            // replace the fragment container with progress
-            if (progressFragment == null) {
-              progressFragment = UploadProgressFragment.newInstance();
-              getSupportFragmentManager()
-                  .beginTransaction()
-                  .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                  .replace(R.id.parent_fragment_container, progressFragment)
-                  .addToBackStack(null)
-                  .commit();
-            }
           }
         }
       });

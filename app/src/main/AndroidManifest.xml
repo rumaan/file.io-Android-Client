@@ -42,9 +42,6 @@
     </activity>
 
 
-    <meta-data
-      android:name="preloaded_fonts"
-      android:resource="@array/preloaded_fonts"/>
 
     <activity
       android:name=".ui.activities.UploadHistoryActivity"
@@ -63,6 +60,10 @@
       android:name=".ui.activities.AboutActivity"
       android:parentActivityName=".ui.activities.MainActivity"
       android:theme="@style/NoActionBarTheme"/>
+
+    <meta-data
+      android:name="preloaded_fonts"
+      android:resource="@array/preloaded_fonts"/>
 
   </application>
 

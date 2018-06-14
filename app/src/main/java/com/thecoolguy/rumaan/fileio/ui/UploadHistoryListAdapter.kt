@@ -1,18 +1,23 @@
 package com.thecoolguy.rumaan.fileio.ui
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
+import com.thecoolguy.rumaan.fileio.utils.Utils
 
-class UploadHistoryListAdapter(private var uploadList: List<FileEntity>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UploadHistoryListAdapter(private var context: Context, private var uploadList: List<FileEntity>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var composedList = mutableListOf<Any?>()
 
     private val date: Int = 0
     private val list: Int = 1
+
+    // TODO: Implement swipe to delete an item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -40,6 +45,10 @@ class UploadHistoryListAdapter(private var uploadList: List<FileEntity>) : Recyc
                 list -> {
                     (holder as UploadHistoryListItemViewHolder).fileName.text = (composedList[position] as FileEntity).name
                     holder.fileUrl.text = (composedList[position] as FileEntity).url
+                    holder.rootView.setOnClickListener {
+                        Utils.Android.copyTextToClipboard(context, "link", (composedList[position] as FileEntity).url)
+                        Toast.makeText(context, context.getText(R.string.link_copy), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -62,12 +71,27 @@ class UploadHistoryListAdapter(private var uploadList: List<FileEntity>) : Recyc
         notifyDataSetChanged()
     }
 
+    fun getFileEntityIdAtPosition(position: Int): Long {
+        return when (composedList[position]) {
+            is FileEntity -> (composedList[position] as FileEntity).id
+            else -> -1
+        }
+    }
+
+    fun remoteAt(position: Int) {
+        composedList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     class UploadHistoryListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val fileName: TextView = itemView.findViewById(R.id.file_name)
         val fileUrl: TextView = itemView.findViewById(R.id.file_url)
+        val rootView: ViewGroup = itemView.findViewById(R.id.root_view)
     }
 
     class UploadHistoryListDateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val date: TextView = itemView.findViewById(R.id.upload_item_date)
     }
+
+
 }

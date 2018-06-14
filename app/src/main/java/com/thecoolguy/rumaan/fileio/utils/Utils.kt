@@ -164,10 +164,10 @@ object Utils {
         }
 
         /* Copy the given text into clipboard */
-        fun copyTextToClipboard(context: Context, label: String,
+        fun copyTextToClipboard(context: Context?, label: String,
                                 text: String) {
             val clipboardManager = context
-                    .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                    ?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
             val clipData = ClipData.newPlainText(label, text)
             clipboardManager?.primaryClip = clipData
         }
@@ -244,7 +244,7 @@ object Utils {
      */
     object Date {
 
-         const val TIME_STAMP_FORMAT = "dd MMMM, yyyy"
+        const val TIME_STAMP_FORMAT = "dd MMMM, yyyy"
 
         private val timeStamp: String
             get() = SimpleDateFormat(TIME_STAMP_FORMAT, Locale.US).format(java.util.Date())
