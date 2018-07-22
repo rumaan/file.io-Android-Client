@@ -96,8 +96,10 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         .onRequestPermissionsResult(MainActivity.this, requestCode, grantResults);
   }
 
-  @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE})
+  @NeedsPermission({
+      Manifest.permission.READ_EXTERNAL_STORAGE,
+      Manifest.permission.WRITE_EXTERNAL_STORAGE
+  })
   public void chooseFile() {
     Intent intent = Android.INSTANCE.getChooseFileIntent();
     startActivityForResult(Intent.createChooser(intent, "Choose the file to Upload.."),
@@ -130,14 +132,18 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         .commit();
   }
 
-  @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE})
+  @OnPermissionDenied({
+      Manifest.permission.READ_EXTERNAL_STORAGE,
+      Manifest.permission.WRITE_EXTERNAL_STORAGE
+  })
   void showPermissionDeniedForStorage() {
     Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_LONG).show();
   }
 
-  @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE})
+  @OnNeverAskAgain({
+      Manifest.permission.READ_EXTERNAL_STORAGE,
+      Manifest.permission.WRITE_EXTERNAL_STORAGE
+  })
   void showAppSettings() {
     Toast.makeText(this, getString(R.string.permission_deny), Toast.LENGTH_LONG).show();
     Android.INSTANCE.showAppDetailsSettings(this);
@@ -197,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
                     UploadResultFragment.TAG)
                 .addToBackStack(UploadResultFragment.TAG)
                 .commit();
-
           }
         }
       });

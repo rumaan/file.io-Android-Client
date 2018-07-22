@@ -9,25 +9,25 @@ import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 
 @Dao
 interface UploadItemDao {
-    @get:Query("SELECT * FROM " + DatabaseContract.TABLE_NAME)
-    val allUploads: LiveData<List<FileEntity>>
+  @get:Query("SELECT * FROM " + DatabaseContract.TABLE_NAME)
+  val allUploads: LiveData<List<FileEntity>>
 
-    @Insert
-    fun insert(fileEntity: FileEntity): Long
+  @Insert
+  fun insert(fileEntity: FileEntity): Long
 
-    @Query("SELECT DISTINCT * FROM " + DatabaseContract.TABLE_NAME + " where id = :id")
-    fun getItem(id: Long): FileEntity
+  @Query("SELECT DISTINCT * FROM " + DatabaseContract.TABLE_NAME + " where id = :id")
+  fun getItem(id: Long): FileEntity
 
-    @Query("DELETE FROM ${DatabaseContract.TABLE_NAME}" + " WHERE id = :id")
-    fun deleteItemWithId(id: Long)
+  @Query("DELETE FROM ${DatabaseContract.TABLE_NAME}" + " WHERE id = :id")
+  fun deleteItemWithId(id: Long)
 
-    @Delete
-    fun delete(vararg fileEntity: FileEntity)
+  @Delete
+  fun delete(vararg fileEntity: FileEntity)
 
-    @Query("DELETE FROM " + DatabaseContract.TABLE_NAME)
-    fun clearAll()
+  @Query("DELETE FROM " + DatabaseContract.TABLE_NAME)
+  fun clearAll()
 
-    @Query("SELECT DISTINCT count(*) FROM " + DatabaseContract.TABLE_NAME)
-    fun numberOfItems(): Int
+  @Query("SELECT DISTINCT count(*) FROM " + DatabaseContract.TABLE_NAME)
+  fun numberOfItems(): Int
 
 }

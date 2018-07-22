@@ -1,106 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:background="@drawable/background_launch_screen"
-  tools:context=".ui.fragments.UploadFileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@drawable/background_launch_screen"
+    tools:context=".ui.fragments.UploadFileFragment"
+    >
 
   <Button
-    android:id="@+id/btn_upload_file"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:background="@drawable/btn_upload_ripple"
-    android:text="Upload File"
-    android:textColor="@color/white"
-    android:textSize="@dimen/header_text"
-    app:layout_constraintBottom_toBottomOf="@id/card"
-    app:layout_constraintDimensionRatio="w,6:1"
-    app:layout_constraintEnd_toEndOf="@+id/card"
-    app:layout_constraintStart_toStartOf="@+id/card"/>
+      android:id="@+id/btn_upload_file"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:background="@drawable/btn_upload_ripple"
+      android:text="Upload File"
+      android:textColor="@color/white"
+      android:textSize="@dimen/header_text"
+      app:layout_constraintBottom_toBottomOf="@id/card"
+      app:layout_constraintDimensionRatio="w,6:1"
+      app:layout_constraintEnd_toEndOf="@+id/card"
+      app:layout_constraintStart_toStartOf="@+id/card"
+      />
 
   <android.support.v7.widget.CardView
-    android:id="@+id/card"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="6dp"
-    app:cardElevation="1dp"
-    app:cardUseCompatPadding="true"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/guideline">
-    <android.support.constraint.ConstraintLayout
+      android:id="@+id/card"
       android:layout_width="match_parent"
-      android:layout_height="match_parent">
+      android:layout_height="0dp"
+      android:layout_marginBottom="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      app:cardBackgroundColor="@color/white"
+      app:cardCornerRadius="6dp"
+      app:cardElevation="1dp"
+      app:cardUseCompatPadding="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/guideline"
+      >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
       <TextView
-        android:id="@+id/file_name_heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp"
-        android:background="@drawable/bg_text_green"
-        android:text="File Name"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-      <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/grey_box"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/file_name_heading">
-
-        <TextView
-          android:id="@+id/file_name"
-          android:textStyle="bold"
+          android:id="@+id/file_name_heading"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="8dp"
-          android:layout_marginEnd="8dp"
-          android:layout_gravity="center_vertical|start"
-          android:maxLines="1"
-          android:text="FileName here"
-          android:textSize="@dimen/content_text"/>
+          android:layout_marginTop="24dp"
+          android:background="@drawable/bg_text_green"
+          android:paddingBottom="2dp"
+          android:paddingEnd="6dp"
+          android:paddingStart="6dp"
+          android:paddingTop="2dp"
+          android:text="File Name"
+          android:textColor="@color/white"
+          android:textSize="14sp"
+          app:layout_constraintStart_toStartOf="@+id/linearLayout"
+          app:layout_constraintTop_toTopOf="parent"
+          />
+
+      <LinearLayout
+          android:id="@+id/linearLayout"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_marginBottom="16dp"
+          android:layout_marginEnd="24dp"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="8dp"
+          android:background="@drawable/grey_box"
+          android:orientation="horizontal"
+          app:layout_constraintBottom_toTopOf="@+id/guideline3"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/file_name_heading"
+          >
+
+        <TextView
+            android:id="@+id/file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:maxLines="1"
+            android:text="FileName here"
+            android:textSize="@dimen/content_text"
+            android:textStyle="bold"
+            />
 
       </LinearLayout>
       <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36"/>
+          android:id="@+id/guideline3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_percent="0.36"
+          />
     </android.support.constraint.ConstraintLayout>
   </android.support.v7.widget.CardView>
 
   <android.support.constraint.Guideline
-    android:id="@+id/guideline"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    app:layout_constraintGuide_percent="0.45"/>
+      android:id="@+id/guideline"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.45"
+      />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,77 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/parent_history"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context="com.thecoolguy.rumaan.fileio.ui.activities.UploadHistoryActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_history"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.thecoolguy.rumaan.fileio.ui.activities.UploadHistoryActivity"
+    >
 
 
   <ProgressBar
-    android:id="@+id/progress"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:indeterminate="true"
-    android:indeterminateOnly="true"
-    android:indeterminateTint="@color/dark_yellow"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
-
-  <LinearLayout
-    android:id="@+id/no_uploads_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="24dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:orientation="vertical"
-    android:visibility="invisible"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintDimensionRatio=""
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:visibility="invisible">
-
-    <ImageView
-      android:layout_width="100dp"
-      android:layout_height="100dp"
-      android:layout_margin="2dp"
-      android:layout_gravity="center_horizontal"
-      android:padding="8dp"
-      android:background="?android:attr/selectableItemBackgroundBorderless"
-      android:clickable="true"
-      android:contentDescription="@string/no_uploads_sad_face_image"
-      android:focusable="true"
-      android:scaleType="centerCrop"
-      app:srcCompat="@drawable/ic_sad"/>
-
-    <TextView
+      android:id="@+id/progress"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_margin="2dp"
-      android:layout_gravity="center_horizontal"
-      android:padding="4dp"
-      android:text="@string/no_uploads"
-      android:textAlignment="center"
-      android:textSize="@dimen/content_text"/>
+      android:indeterminate="true"
+      android:indeterminateOnly="true"
+      android:indeterminateTint="@color/dark_yellow"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <LinearLayout
+      android:id="@+id/no_uploads_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="24dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
+      android:orientation="vertical"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintDimensionRatio=""
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:visibility="invisible"
+      >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="2dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/no_uploads_sad_face_image"
+        android:focusable="true"
+        android:padding="8dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_sad"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="2dp"
+        android:padding="4dp"
+        android:text="@string/no_uploads"
+        android:textAlignment="center"
+        android:textSize="@dimen/content_text"
+        />
 
   </LinearLayout>
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/upload_history_list"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:listitem="@layout/upload_history_item_content"
-    tools:visibility="invisible"/>
+      android:id="@+id/upload_history_list"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:clipChildren="false"
+      android:clipToPadding="false"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:listitem="@layout/upload_history_item_content"
+      tools:visibility="invisible"
+      />
 
 
 </android.support.constraint.ConstraintLayout>

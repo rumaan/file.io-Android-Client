@@ -8,7 +8,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 import com.thecoolguy.rumaan.fileio.ui.activities.UploadHistoryActivity;
-import com.thecoolguy.rumaan.fileio.utils.Constants;
+import com.thecoolguy.rumaan.fileio.utils.ConstantsKt;
 import com.thecoolguy.rumaan.fileio.utils.Utils;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -49,7 +49,7 @@ public class UploadHistoryInstrumentedTest {
     // add five items into the database
     for (int i = 0; i < 5; i++) {
       FileEntity fileEntity = new FileEntity("test fileEntity name " + i, "test URL "
-          + i, Utils.Date.INSTANCE.getCurrentDate(), Constants.INSTANCE.getDEFAULT_EXPIRE_WEEKS());
+          + i, Utils.Date.INSTANCE.getCurrentDate(), ConstantsKt.DEFAULT_EXPIRE_WEEKS);
       database.uploadItemDao().insert(fileEntity);
     }
   }

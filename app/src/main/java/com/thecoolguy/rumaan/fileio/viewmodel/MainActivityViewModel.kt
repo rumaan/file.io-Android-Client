@@ -16,36 +16,42 @@ import com.thecoolguy.rumaan.fileio.utils.Utils
  */
 
 class MainActivityViewModel : ViewModel() {
-    /* Store the current chosen file instance */
-    private lateinit var localFile: LocalFile
+  /* Store the current chosen file instance */
+  private lateinit var localFile: LocalFile
 
-    /* Upload Work status */
-    var uploadWorkStatus: LiveData<WorkStatus>? = null
+  /* Upload Work status */
+  var uploadWorkStatus: LiveData<WorkStatus>? = null
 
-    /**
-     * Get the file from the database and save in the current view model state.
-     */
-    fun chooseFileFromUri(context: Context, fileUri: Uri) {
-        val fileLoadListener = context as FileLoadListener
-        Utils.getLocalFile(context, fileUri)?.let {
-            localFile = it
-            fileLoadListener.onFileLoad(localFile)
+  /**
+   * Get the file from the database and save in the current view model state.
+   */
+  fun chooseFileFromUri(
+    context: Context,
+    fileUri: Uri
+  ) {
+    val fileLoadListener = context as FileLoadListener
+    Utils.getLocalFile(context, fileUri)
+        ?.let {
+          localFile = it
+          fileLoadListener.onFileLoad(localFile)
         }
-    }
+  }
 
-    /**
-     * Upload the file to server and save the response into the database.
-     *
-     * */
-    fun uploadFile() {
-        /* Enqueue file to be uploaded into WorkManager */
-        val workRequest = createWorkRequest(localFile.uri.toString())
-        WorkManager.getInstance().enqueue(workRequest)
-        uploadWorkStatus = WorkManager.getInstance().getStatusById(workRequest.id)
-    }
+  /**
+   * Upload the file to server and save the response into the database.
+   *
+   * */
+  fun uploadFile() {
+    /* Enqueue file to be uploaded into WorkManager */
+    val workRequest = createWorkRequest(localFile.uri.toString())
+    WorkManager.getInstance()
+        .enqueue(workRequest)
+    uploadWorkStatus = WorkManager.getInstance()
+        .getStatusById(workRequest.id)
+  }
 
-    companion object {
-        private const val TAG = "MainActivityViewModel"
-    }
+  companion object {
+    private const val TAG = "MainActivityViewModel"
+  }
 
 }

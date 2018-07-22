@@ -14,45 +14,47 @@ import com.thecoolguy.rumaan.fileio.network.composeIntoFileEntity
 import com.thecoolguy.rumaan.fileio.ui.NotificationHelper
 import com.thecoolguy.rumaan.fileio.utils.Utils
 
-
 class UploadWorker : Worker() {
 
-    companion object {
-        const val KEY_URI = "file_uri"
-        const val KEY_RESULT = "file_url"
-        private val TAG = UploadWorker::class.simpleName
+  companion object {
+    const val KEY_URI = "file_uri"
+    const val KEY_RESULT = "file_url"
+    private val TAG = UploadWorker::class.simpleName
+
+  }
+
+  private fun save(fileEntity: FileEntity) {
+    val id = DatabaseHelper.saveToDatabase(
+        fileEntity, UploadHistoryRoomDatabase.getInstance(applicationContext).uploadItemDao()
+    )
+    Log.d(TAG, "Insert Id: $id")
+  }
+
+  override fun doWork(): WorkerResult {
+    val fileUri = inputData.getString(KEY_URI, null)
+    fileUri?.let { uri ->
+      // get the local file object from the backing storage
+      Utils.getLocalFile(applicationContext, Uri.parse(uri))
+          ?.let { localFile ->
+            // Upload the file
+            val (_, response, _) = Uploader.upload(localFile)
+
+            val fileEntity =
+              composeIntoFileEntity(Response.Deserializer().deserialize(response), localFile)
+
+            /* Save the uploaded file details into the LocalDb */
+            save(fileEntity)
+
+            // post a notification
+            NotificationHelper().create(applicationContext, fileEntity)
+
+            val output: Data = mapOf(KEY_RESULT to fileEntity.url).toWorkData()
+            outputData = output
+
+            return WorkerResult.SUCCESS
+          }
     }
-
-    private fun save(fileEntity: FileEntity) {
-        val id = DatabaseHelper.saveToDatabase(fileEntity, UploadHistoryRoomDatabase.getInstance(applicationContext).uploadItemDao())
-        Log.d(TAG, "Insert Id: $id")
-
-    }
-
-    override fun doWork(): WorkerResult {
-        val fileUri = inputData.getString(KEY_URI, null)
-        fileUri?.let { uri ->
-            // get the local file object from the backing storage
-            Utils.getLocalFile(applicationContext, Uri.parse(uri))?.let { localFile ->
-                // Upload the file
-                val (_, response, _) = Uploader.upload(localFile)
-
-                val fileEntity = composeIntoFileEntity(Response.Deserializer().deserialize(response), localFile)
-
-                /* Save the uploaded file details into the LocalDb */
-                save(fileEntity)
-
-                // post a notification
-                NotificationHelper().create(applicationContext, fileEntity)
-
-                val output: Data = mapOf(KEY_RESULT to fileEntity.url).toWorkData()
-                outputData = output
-
-                return WorkerResult.SUCCESS
-            }
-        }
-        return WorkerResult.FAILURE
-    }
-
+    return WorkerResult.FAILURE
+  }
 
 }

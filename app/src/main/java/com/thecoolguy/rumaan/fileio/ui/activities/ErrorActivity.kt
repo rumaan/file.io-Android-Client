@@ -10,13 +10,13 @@ import com.thecoolguy.rumaan.fileio.R
 
 class ErrorActivity : AppCompatActivity() {
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
-    }
+  override fun onBackPressed() {
+    super.onBackPressed()
+    finishAffinity()
+  }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_error)
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_error)
+  }
 }

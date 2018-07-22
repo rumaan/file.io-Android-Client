@@ -8,9 +8,11 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 
 class UploadHistoryViewModel(application: Application) : AndroidViewModel(application) {
-    var uploadList: LiveData<List<FileEntity>> = MutableLiveData<List<FileEntity>>()
+  var uploadList: LiveData<List<FileEntity>> = MutableLiveData<List<FileEntity>>()
 
-    init {
-        uploadList = UploadHistoryRoomDatabase.getInstance(application).uploadItemDao().allUploads
-    }
+  init {
+    uploadList = UploadHistoryRoomDatabase.getInstance(application)
+        .uploadItemDao()
+        .allUploads
+  }
 }

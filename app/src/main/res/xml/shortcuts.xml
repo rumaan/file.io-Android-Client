@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
   <shortcut
-    android:enabled="true"
-    android:icon="@drawable/ic_upload_to_cloud"
-    android:shortcutLongLabel="@string/choose_file_upload_large"
-    android:shortcutShortLabel="@string/choose_file_upload">
+      android:enabled="true"
+      android:icon="@drawable/ic_upload_to_cloud"
+      android:shortcutLongLabel="@string/choose_file_upload_large"
+      android:shortcutShortLabel="@string/choose_file_upload">
     <intent
-      android:action="android.intent.action.OPEN_DOCUMENT"
-      android:targetClass="com.thecoolguy.rumaan.fileio.ui.activities.MainActivity"
-      android:targetPackage="com.thecoolguy.rumaan.fileio.ui"
-      />
+        android:action="android.intent.action.OPEN_DOCUMENT"
+        android:targetClass="com.thecoolguy.rumaan.fileio.ui.activities.MainActivity"
+        android:targetPackage="com.thecoolguy.rumaan.fileio.ui"
+        />
     <categories android:name="android.intent.category.OPENABLE"/>
   </shortcut>
 </shortcuts>

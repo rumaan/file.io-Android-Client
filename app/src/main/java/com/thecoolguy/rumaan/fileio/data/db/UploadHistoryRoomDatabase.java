@@ -6,8 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import com.thecoolguy.rumaan.fileio.data.models.FileEntity;
 
-
-@Database(entities = {FileEntity.class}, version = 1)
+@Database(entities = { FileEntity.class }, version = 1)
 public abstract class UploadHistoryRoomDatabase extends RoomDatabase {
 
   private static UploadHistoryRoomDatabase sINSTANCE;
