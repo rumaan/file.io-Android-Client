@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         @Override
         public void onChanged(WorkStatus workStatus) {
           if (workStatus.getState().isFinished()) {
-            String url = workStatus.getOutputData().getString(UploadWorker.KEY_RESULT, "");
+            String url = workStatus.getOutputData().getString(UploadWorker.KEY_RESULT);
 
             // switch to results fragment
             getSupportFragmentManager()
