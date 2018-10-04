@@ -15,7 +15,9 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
-    tools:ignore="GoogleAppIndexingWarning">
+    tools:ignore="GoogleAppIndexingWarning"
+    android:allowBackup="true"
+    android:fullBackupContent="true">
     <activity
       android:launchMode="singleTop"
       android:name=".ui.activities.MainActivity"
@@ -64,6 +66,10 @@
     <meta-data
       android:name="preloaded_fonts"
       android:resource="@array/preloaded_fonts"/>
+
+    <activity android:name=".ui.activities.LicenseActivity"
+        android:parentActivityName=".ui.activities.AboutActivity"
+        android:theme="@style/AppTheme.MaterialAboutActivity"/>
 
   </application>
 
