@@ -22,6 +22,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
 - [CustomActivityOnCrash](https://github.com/Ereza/CustomActivityOnCrash)
+- [MaterialAboutLibrary](https://github.com/daniel-stoneuk/material-about-library)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
 

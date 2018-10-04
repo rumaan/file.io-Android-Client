@@ -13,7 +13,6 @@ class ClearHistoryWorker : Worker() {
                 .uploadItemDao()
                 .clearAll()
 
-
         return Result.SUCCESS
     }
 }
@@ -26,6 +25,6 @@ class DeleteSingleItemWorker : Worker() {
         UploadHistoryRoomDatabase.getInstance(applicationContext)
                 .uploadItemDao()
                 .deleteItemWithId(id)
-        return Result.FAILURE
+        return Result.SUCCESS
     }
 }

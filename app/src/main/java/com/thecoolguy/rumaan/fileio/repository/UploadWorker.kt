@@ -48,8 +48,8 @@ class UploadWorker : Worker() {
 
                         // post a notification
                         NotificationHelper().create(applicationContext, fileEntity)
-                        val output: Data = workDataOf(KEY_RESULT to fileEntity.url)
-                        outputData = output
+
+                        outputData = workDataOf(KEY_RESULT to fileEntity.url)
 
                         return Result.SUCCESS
                     }
