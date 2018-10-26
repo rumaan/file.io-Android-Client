@@ -8,8 +8,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.thecoolguy.rumaan.fileio.R
 
 /**
@@ -30,8 +30,8 @@ abstract class SwipeToDeleteCallBack(context: Context) : ItemTouchHelper.SimpleC
   private val clearPaint = Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
 
   override fun getMovementFlags(
-    recyclerView: RecyclerView?,
-    viewHolder: RecyclerView.ViewHolder?
+          recyclerView: androidx.recyclerview.widget.RecyclerView?,
+          viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder?
   ): Int {
     // Disable swipes for date view
     if (viewHolder is UploadHistoryListAdapter.UploadHistoryListDateViewHolder) {
@@ -41,21 +41,21 @@ abstract class SwipeToDeleteCallBack(context: Context) : ItemTouchHelper.SimpleC
   }
 
   override fun onMove(
-    recyclerView: RecyclerView?,
-    viewHolder: RecyclerView.ViewHolder?,
-    target: RecyclerView.ViewHolder?
+          recyclerView: androidx.recyclerview.widget.RecyclerView?,
+          viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder?,
+          target: androidx.recyclerview.widget.RecyclerView.ViewHolder?
   ): Boolean {
     return false
   }
 
   override fun onChildDraw(
-    c: Canvas?,
-    recyclerView: RecyclerView?,
-    viewHolder: RecyclerView.ViewHolder,
-    dX: Float,
-    dY: Float,
-    actionState: Int,
-    isCurrentlyActive: Boolean
+          c: Canvas?,
+          recyclerView: androidx.recyclerview.widget.RecyclerView?,
+          viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+          dX: Float,
+          dY: Float,
+          actionState: Int,
+          isCurrentlyActive: Boolean
   ) {
     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
 

@@ -1,7 +1,7 @@
 package com.thecoolguy.rumaan.fileio.ui.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.thecoolguy.rumaan.fileio.R
 
 /**

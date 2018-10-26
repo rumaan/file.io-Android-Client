@@ -1,15 +1,15 @@
 package com.thecoolguy.rumaan.fileio.ui.activities
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.transition.TransitionManager
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
+import androidx.transition.TransitionManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -74,12 +74,12 @@ class UploadHistoryActivity : AppCompatActivity() {
         .getInstance()
         .getStatusesByTag(DELETE_TAG)
         .observe(this, Observer { listOfWorkStatuses ->
-          listOfWorkStatuses?.let {
-            if (it[0].state.isFinished)
-              Snackbar.make(
-                  parent_history, "Item Removed Successfully!", Snackbar.LENGTH_SHORT
-              ).show()
-          }
+            listOfWorkStatuses.let {
+                if (it[0].state.isFinished)
+                    Snackbar.make(
+                            parent_history, "Item Removed Successfully!", Snackbar.LENGTH_SHORT
+                    ).show()
+            }
         })
 
   }
@@ -98,8 +98,8 @@ class UploadHistoryActivity : AppCompatActivity() {
     // Handle swipe left to delete the item
     val swipeHandler = object : SwipeToDeleteCallBack(this) {
       override fun onSwiped(
-        viewHolder: RecyclerView.ViewHolder?,
-        direction: Int
+              viewHolder: androidx.recyclerview.widget.RecyclerView.ViewHolder?,
+              direction: Int
       ) {
         viewHolder?.let {
           val itemId = adapter.getFileEntityIdAtPosition(viewHolder.adapterPosition)
@@ -119,11 +119,11 @@ class UploadHistoryActivity : AppCompatActivity() {
     itemTouchHelper.attachToRecyclerView(upload_history_list)
 
     upload_history_list.apply {
-      val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+      val dividerItemDecoration = androidx.recyclerview.widget.DividerItemDecoration(context, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)
           .apply {
             setDrawable(getDrawable(R.drawable.divider_decor))
           }
-      layoutManager = LinearLayoutManager(context)
+      layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
       addItemDecoration(dividerItemDecoration)
       setAdapter(adapter)
       layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_anim_fall_down)

@@ -2,7 +2,7 @@ package com.thecoolguy.rumaan.fileio.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
 import kotlinx.android.synthetic.main.fragment_choose_file.btn_choose_file
 
-class ChooseFileFragment : Fragment() {
+class ChooseFileFragment : androidx.fragment.app.Fragment() {
   /**
    *  Callback when a file is chosen and is stored in the local file object cache.
    * */

@@ -14,26 +14,25 @@ import com.thecoolguy.rumaan.fileio.utils.Utils.JSONParser.getDaysFromExpireStri
 
 object Uploader {
 
-  private val TAG = Uploader::class.simpleName
+    private val TAG = Uploader::class.simpleName
 
-  fun upload(localFile: LocalFile): Triple<Request, Response, Result<String, FuelError>> =
-    "https://file.io"
-        .httpUpload()
-        .name { "file" }
-        .blob { _, _ -> Blob(localFile.name, localFile.size, { localFile.inputStream }) }
-        .progress { readBytes, totalBytes ->
-          val progress = readBytes.toFloat() / totalBytes.toFloat()
-          Log.d(TAG, "Progress: $progress")
-        }
-        .responseString()
+    fun upload(localFile: LocalFile): Triple<Request, Response, Result<String, FuelError>> =
+            "https://file.io"
+                    .httpUpload()
+                    .name { "file" }
+                    .blob { _, _ -> Blob(localFile.name, localFile.size) { localFile.inputStream } }
+                    .progress { readBytes, totalBytes ->
+                        val progress = readBytes.toFloat() / totalBytes.toFloat()
+                        Log.d(TAG, "Progress: $progress")
+                    }
+                    .responseString()
 }
 
 fun composeIntoFileEntity(
-  response: com.thecoolguy.rumaan.fileio.data.models.Response,
-  localFile: LocalFile
-): FileEntity =
-  FileEntity(
-      localFile.name, response.link, Utils.Date.currentDate,
-      getDaysFromExpireString(response.expiry)
-  )
+        response: com.thecoolguy.rumaan.fileio.data.models.Response,
+        localFile: LocalFile): FileEntity =
+        FileEntity(
+                localFile.name, response.link, Utils.Date.currentDate,
+                getDaysFromExpireString(response.expiry)
+        )
 

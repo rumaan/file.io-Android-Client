@@ -14,9 +14,9 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import android.util.Log
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import org.json.JSONException
@@ -153,11 +153,11 @@ object Utils {
 
     /* Show the fragment with the provided fragment manager */
     fun showDialogFragment(
-      fragment: Fragment,
-      fragmentManager: FragmentManager,
-      tag: String
+            fragment: androidx.fragment.app.Fragment,
+            fragmentManager: androidx.fragment.app.FragmentManager,
+            tag: String
     ) {
-      (fragment as DialogFragment).show(fragmentManager, tag)
+      (fragment as androidx.fragment.app.DialogFragment).show(fragmentManager, tag)
     }
 
     /* Dismisses the given dialog */

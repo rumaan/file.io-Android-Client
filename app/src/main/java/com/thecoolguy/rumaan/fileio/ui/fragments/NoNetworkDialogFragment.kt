@@ -3,14 +3,14 @@ package com.thecoolguy.rumaan.fileio.ui.fragments
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AlertDialog
 import android.view.View
 import android.widget.Button
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener
 
-class NoNetworkDialogFragment : DialogFragment(), View.OnClickListener {
+class NoNetworkDialogFragment : androidx.fragment.app.DialogFragment(), View.OnClickListener {
 
   private var mListener: DialogClickListener? = null
 

@@ -1,9 +1,9 @@
 package com.thecoolguy.rumaan.fileio
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.filters.SmallTest
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.InstrumentationRegistry
+import androidx.test.filters.SmallTest
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
 import com.thecoolguy.rumaan.fileio.ui.activities.MainActivity
 import org.junit.Assert.assertEquals
 import org.junit.Rule

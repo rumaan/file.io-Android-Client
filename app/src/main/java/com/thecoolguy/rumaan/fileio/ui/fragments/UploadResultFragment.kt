@@ -2,7 +2,7 @@ package com.thecoolguy.rumaan.fileio.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_upload_result.btn_close
 import kotlinx.android.synthetic.main.fragment_upload_result.copy
 import kotlinx.android.synthetic.main.fragment_upload_result.link
 
-class UploadResultFragment : Fragment() {
+class UploadResultFragment : androidx.fragment.app.Fragment() {
   private var fileUrl: String? = null
   private var listener: OnFragmentInteractionListener? = null
   override fun onCreate(savedInstanceState: Bundle?) {

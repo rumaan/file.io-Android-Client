@@ -2,7 +2,7 @@ package com.thecoolguy.rumaan.fileio.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
 import kotlinx.android.synthetic.main.fragment_upload_progress.btn_close
 
-class UploadProgressFragment : Fragment() {
+class UploadProgressFragment : androidx.fragment.app.Fragment() {
 
   private var listener: OnFragmentInteractionListener? = null
 

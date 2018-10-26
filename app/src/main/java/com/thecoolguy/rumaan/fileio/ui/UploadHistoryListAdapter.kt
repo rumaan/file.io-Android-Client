@@ -1,7 +1,7 @@
 package com.thecoolguy.rumaan.fileio.ui
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import com.thecoolguy.rumaan.fileio.utils.Utils
 class UploadHistoryListAdapter(
   private var context: Context,
   private var uploadList: List<FileEntity>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
   private var composedList = mutableListOf<Any?>()
 
   private val date: Int = 0
@@ -23,7 +23,7 @@ class UploadHistoryListAdapter(
   override fun onCreateViewHolder(
     parent: ViewGroup,
     viewType: Int
-  ): RecyclerView.ViewHolder {
+  ): androidx.recyclerview.widget.RecyclerView.ViewHolder {
     return when (viewType) {
       date -> {
         val itemView = LayoutInflater.from(parent.context)
@@ -42,8 +42,8 @@ class UploadHistoryListAdapter(
   override fun getItemCount(): Int = composedList.size
 
   override fun onBindViewHolder(
-    holder: RecyclerView.ViewHolder,
-    position: Int
+          holder: androidx.recyclerview.widget.RecyclerView.ViewHolder,
+          position: Int
   ) {
     holder.apply {
       when (this.itemViewType) {
@@ -95,13 +95,13 @@ class UploadHistoryListAdapter(
     notifyItemRemoved(position)
   }
 
-  class UploadHistoryListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  class UploadHistoryListItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     val fileName: TextView = itemView.findViewById(R.id.file_name)
     val fileUrl: TextView = itemView.findViewById(R.id.file_url)
     val rootView: ViewGroup = itemView.findViewById(R.id.root_view)
   }
 
-  class UploadHistoryListDateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+  class UploadHistoryListDateViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
     val date: TextView = itemView.findViewById(R.id.upload_item_date)
   }
 
