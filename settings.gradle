@@ -1,1 +1,1 @@
-include ':app', ':fileioclient'
+include ':app'

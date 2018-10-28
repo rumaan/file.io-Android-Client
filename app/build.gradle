@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def work_version = "1.0.0-alpha08"
+def work_version = "1.0.0-alpha10"
 
 android {
 

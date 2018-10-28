@@ -1,11 +1,9 @@
 package com.thecoolguy.rumaan.fileio.ui.activities
 
 import android.content.Context
-import android.net.Uri
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import com.danielstone.materialaboutlibrary.ConvenienceBuilder
 import com.danielstone.materialaboutlibrary.MaterialAboutActivity
-import com.danielstone.materialaboutlibrary.items.MaterialAboutActionItem
-import com.danielstone.materialaboutlibrary.model.MaterialAboutCard
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList
 import com.danielstone.materialaboutlibrary.util.OpenSourceLicense
 import com.thecoolguy.rumaan.fileio.R
@@ -15,7 +13,7 @@ class LicenseActivity : MaterialAboutActivity() {
     override fun getActivityTitle(): CharSequence? = "Open Source Licenses"
 
     override fun getMaterialAboutList(context: Context): MaterialAboutList {
-        val icon = getDrawable(R.drawable.ic_library)
+        val icon = getDrawable(context, R.drawable.ic_library)
         val apache = OpenSourceLicense.APACHE_2
         val mit = OpenSourceLicense.MIT
 

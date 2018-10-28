@@ -7,12 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.thecoolguy.rumaan.fileio.R;
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile;
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener;
@@ -33,7 +29,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -219,24 +214,6 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
                 .popBackStack(ChooseFileFragment.TAG, 0);
     }
 
-    private void showSnackBar() {
-        final Snackbar snackbar = Snackbar
-                .make(rootView, getString(R.string.file_uploaded_soon), Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction(getString(R.string.okay), new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar
-                .setActionTextColor(ContextCompat.getColor(MainActivity.this, R.color.dark_yellow));
-        View snackBarView = snackbar.getView();
-        TextView snackTextView = snackBarView
-                .findViewById(android.support.design.R.id.snackbar_text);
-        snackTextView.setMaxLines(3);
-
-        snackbar.show();
-    }
 
     @Override
     public void onFileLoad(@NotNull LocalFile localFile) {
