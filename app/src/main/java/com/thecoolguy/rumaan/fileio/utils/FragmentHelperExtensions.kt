@@ -1,29 +1,29 @@
 package com.thecoolguy.rumaan.fileio.utils
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
-fun FragmentManager.addFragment(
-  containerId: Int,
-  fragment: Fragment,
-  tag: String? = null
+fun androidx.fragment.app.FragmentManager.addFragment(
+        containerId: Int,
+        fragment: androidx.fragment.app.Fragment,
+        tag: String? = null
 ) {
-  beginTransaction()
-      .add(containerId, fragment, tag)
-      .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-      .addToBackStack(tag)
-      .commit()
+    beginTransaction()
+            .add(containerId, fragment, tag)
+            .setTransition(androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            .addToBackStack(tag)
+            .commit()
 }
 
-fun FragmentManager.replaceFragment(
-  containerId: Int,
-  fragment: Fragment,
-  tag: String? = null
+fun androidx.fragment.app.FragmentManager.replaceFragment(
+        containerId: Int,
+        fragment: androidx.fragment.app.Fragment,
+        tag: String? = null
 ) {
-  beginTransaction()
-      .replace(containerId, fragment, tag)
-      .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-      .addToBackStack(tag)
-      .commit()
+    beginTransaction()
+            .replace(containerId, fragment, tag)
+            .setTransition(androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .addToBackStack(tag)
+            .commit()
 }

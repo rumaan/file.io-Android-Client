@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.room:room-migration:2.1.0-alpha01@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.room/room-migration/2.1.0-alpha01/34efbd41393940f1a2684c34cb8c8195f18a7f47/room-migration-2.1.0-alpha01.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.room/room-migration/2.1.0-alpha01/a48a9cfbb59e2a6bd15f283cd9880a7bc27d1d62/room-migration-2.1.0-alpha01-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

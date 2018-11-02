@@ -20,7 +20,6 @@ class FileioApplication : Application() {
   }
 
   companion object {
-
     private val TAG = "FileioApplication"
   }
 }

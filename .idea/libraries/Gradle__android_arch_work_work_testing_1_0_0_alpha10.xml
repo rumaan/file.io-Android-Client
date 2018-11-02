@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: android.arch.work:work-testing-1.0.0-alpha10">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-work-testing-1.0.0-alpha10.aar/e379606fd20b0afa5b6bf63af3d487bf/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-work-testing-1.0.0-alpha10.aar/e379606fd20b0afa5b6bf63af3d487bf/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/android.arch.work/work-testing/1.0.0-alpha10/12dc396a6e50861c304c2be838653dcc348b551c/work-testing-1.0.0-alpha10-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
