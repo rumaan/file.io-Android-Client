@@ -54,9 +54,11 @@ class UploadHistoryListAdapter(
                             (composedList[position] as FileEntity).name
                     holder.fileUrl.text = (composedList[position] as FileEntity).url
                     holder.rootView.setOnClickListener {
-                        Utils.Android.copyTextToClipboard(
-                                context, "link", (composedList[position] as FileEntity).url
-                        )
+                        (composedList[position] as FileEntity).url.let { it1 ->
+                            Utils.Android.copyTextToClipboard(
+                                    context, "link", it1
+                            )
+                        }
                         Toast.makeText(context, context.getText(R.string.link_copy), Toast.LENGTH_SHORT)
                                 .show()
                     }

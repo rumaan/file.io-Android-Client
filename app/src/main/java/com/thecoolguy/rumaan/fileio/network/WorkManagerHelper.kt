@@ -13,6 +13,7 @@ fun createWorkRequest(uri: String): OneTimeWorkRequest {
     val data = Data.Builder()
             .putString(UploadWorker.KEY_URI, uri)
             .build()
+
     val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
