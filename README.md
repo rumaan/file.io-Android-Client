@@ -9,7 +9,7 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 ## Screenshots 📸
 <p float="left">
-<img src="/screenshots/screenshot.png" alt="Home Screen" height="600"/>
+<img src="/screenshots/todo-ui.png" alt="Home Screen" />
 
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
