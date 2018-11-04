@@ -31,9 +31,9 @@ import permissions.dispatcher.RuntimePermissions
 @RuntimePermissions
 class MainActivity : AppCompatActivity(), DialogClickListener, OnFragmentInteractionListener, FileLoadListener {
 
-    private var viewModel: MainActivityViewModel? = null
-    private var rootView: ConstraintLayout? = null
-    private var progressFragment: UploadProgressFragment? = null
+    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var rootView: ConstraintLayout
+    private lateinit var progressFragment: UploadProgressFragment
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,9 +58,9 @@ class MainActivity : AppCompatActivity(), DialogClickListener, OnFragmentInterac
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == INTENT_FILE_REQUEST && resultCode == RESULT_OK) {
-            val fileUri = data!!.data
+            val fileUri = data?.data
             if (fileUri != null) {
-                viewModel?.chooseFileFromUri(this, fileUri)
+                viewModel.chooseFileFromUri(this, fileUri)
             } else {
                 Toast.makeText(this, getString(R.string.oops_some_error_occurred), Toast.LENGTH_SHORT)
                         .show()
@@ -86,9 +86,10 @@ class MainActivity : AppCompatActivity(), DialogClickListener, OnFragmentInterac
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         rootView = findViewById(R.id.root_view)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = ""
-        setSupportActionBar(toolbar)
+        findViewById<Toolbar>(R.id.toolbar).apply {
+            title = ""
+            setSupportActionBar(this)
+        }
 
         // set up initial fragment
         setUpInitialFragment()
@@ -139,16 +140,16 @@ class MainActivity : AppCompatActivity(), DialogClickListener, OnFragmentInterac
     }
 
     override fun onUploadFileClick() {
-        viewModel?.uploadFile()
+        viewModel.uploadFile()
         progressFragment = UploadProgressFragment.newInstance()
         supportFragmentManager
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .replace(R.id.parent_fragment_container, progressFragment!!)
+                .replace(R.id.parent_fragment_container, progressFragment)
                 .addToBackStack(null)
                 .commit()
 
-        viewModel?.uploadWorkStatus?.observe(this, Observer { workStatus ->
+        viewModel.uploadWorkStatus?.observe(this, Observer { workStatus ->
             if (workStatus.state.isFinished) {
                 val url = workStatus.outputData.getString(UploadWorker.KEY_RESULT)
                 // switch to results fragment

@@ -1,5 +1,6 @@
 package com.thecoolguy.rumaan.fileio.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -44,10 +45,18 @@ class UploadHistoryActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        if (callingActivity?.className != MainActivity::javaClass.name) {
+            finish()
+            startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun clearHistory() {
         val work = OneTimeWorkRequest.Builder(ClearHistoryWorker::class.java)
                 .build()
-
         WorkManager
                 .getInstance()
                 .enqueue(work)

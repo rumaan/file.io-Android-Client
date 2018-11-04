@@ -8,7 +8,7 @@ import com.thecoolguy.rumaan.fileio.data.db.UploadHistoryRoomDatabase
 const val DELETE_TAG = "delete_single_item"
 const val ID = "id"
 
-/* TODO: repace this with generic Async call */
+/* TODO: replace this with generic Async call */
 
 class ClearHistoryWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
