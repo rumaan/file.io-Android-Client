@@ -8,21 +8,38 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProviders
 import com.thecoolguy.rumaan.fileio.R
+import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
+import com.thecoolguy.rumaan.fileio.ui.fragments.HomeFragment
 import com.thecoolguy.rumaan.fileio.utils.Utils.Android
+import com.thecoolguy.rumaan.fileio.utils.toast
 import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
 
 @RuntimePermissions
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
+    override fun onChooseFileClick() {
+        "Choose File Clicked" toast this
+        chooseFileWithPermissionCheck()
+    }
+
+    override fun onUploadFileClick() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onClose() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private lateinit var viewModel: MainActivityViewModel
-    private lateinit var rootView: ConstraintLayout
+
+    private val fragmentManager by lazy { supportFragmentManager }
+    private val fragmentTransaction by lazy { fragmentManager.beginTransaction() }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_main, menu)
@@ -61,13 +78,25 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.NoActionBarTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        rootView = findViewById(R.id.root_view)
         findViewById<Toolbar>(R.id.toolbar).apply {
             title = ""
             setSupportActionBar(this)
         }
 
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+
+        initFragment()
+    }
+
+    private fun initFragment() {
+        /* Initialize the Main Fragment layout here */
+        val homeFragment = HomeFragment.newInstance()
+
+        fragmentTransaction.apply {
+            add(container.id, homeFragment, HomeFragment.TAG)
+            commit()
+        }
+
     }
 
 

@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.thecoolguy.rumaan.fileio.ui.fragments.ChooseFileFragment"
+        android:name="com.thecoolguy.rumaan.fileio.ui.fragments.HomeFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
