@@ -8,7 +8,7 @@ import com.thecoolguy.rumaan.fileio.repository.UploadWorker
 
 const val UPLOAD_WORK_TAG = "UploadWork"
 
-fun createWorkRequest(uri: String): OneTimeWorkRequest {
+fun createUploadWork(uri: String): OneTimeWorkRequest {
 
     val data = Data.Builder()
             .putString(UploadWorker.KEY_URI, uri)

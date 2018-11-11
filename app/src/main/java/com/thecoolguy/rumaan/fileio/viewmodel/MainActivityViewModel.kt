@@ -8,7 +8,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkStatus
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.listeners.FileLoadListener
-import com.thecoolguy.rumaan.fileio.network.createWorkRequest
+import com.thecoolguy.rumaan.fileio.network.createUploadWork
 import com.thecoolguy.rumaan.fileio.utils.Utils
 
 /**
@@ -40,7 +40,7 @@ class MainActivityViewModel : ViewModel() {
      * */
     fun uploadFile() {
         /* Enqueue file to be uploaded into WorkManager */
-        val workRequest = createWorkRequest(localFile.uri.toString())
+        val workRequest = createUploadWork(localFile.uri.toString())
         WorkManager.getInstance()
                 .enqueue(workRequest)
         uploadWorkStatus = WorkManager.getInstance().getStatusByIdLiveData(workRequest.id)

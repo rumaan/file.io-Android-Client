@@ -1,6 +1,5 @@
 package com.thecoolguy.rumaan.fileio.network
 
-import android.util.Log
 import com.github.kittinunf.fuel.core.Blob
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
@@ -11,6 +10,7 @@ import com.thecoolguy.rumaan.fileio.data.models.FileEntity
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import com.thecoolguy.rumaan.fileio.utils.Utils.JSONParser.getDaysFromExpireString
+import timber.log.Timber
 
 object Uploader {
 
@@ -23,7 +23,7 @@ object Uploader {
                     .blob { _, _ -> Blob(localFile.name, localFile.size) { localFile.inputStream } }
                     .progress { readBytes, totalBytes ->
                         val progress = readBytes.toFloat() / totalBytes.toFloat()
-                        Log.d(TAG, "Progress: $progress")
+                        Timber.d("Progress: $progress")
                     }
                     .responseString()
 }

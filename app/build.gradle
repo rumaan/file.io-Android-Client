@@ -89,6 +89,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
 
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
 }
 

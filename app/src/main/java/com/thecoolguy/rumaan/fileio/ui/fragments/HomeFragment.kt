@@ -15,7 +15,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
      *  Callback when a file is chosen and is stored in the local file object cache.
      * */
     private fun buttonChooseFileClick() {
-        listener?.onChooseFileClick()
+        listener?.onUploadFileClick()
     }
 
     private var listener: OnFragmentInteractionListener? = null

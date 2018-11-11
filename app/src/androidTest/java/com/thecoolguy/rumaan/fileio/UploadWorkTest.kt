@@ -7,7 +7,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.test.TestDriver
 import androidx.work.test.WorkManagerTestInitHelper
-import com.thecoolguy.rumaan.fileio.network.createWorkRequest
+import com.thecoolguy.rumaan.fileio.network.createUploadWork
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -22,7 +22,7 @@ class UploadWorkTest {
         val context = InstrumentationRegistry.getTargetContext()
         WorkManagerTestInitHelper.initializeTestWorkManager(context)
         val testDriver: TestDriver = WorkManagerTestInitHelper.getTestDriver()
-        val constrainedWork: OneTimeWorkRequest = createWorkRequest("https://file.io/tEsT")
+        val constrainedWork: OneTimeWorkRequest = createUploadWork("https://file.io/tEsT")
         WorkManager.getInstance().enqueue(constrainedWork)
         testDriver.setAllConstraintsMet(constrainedWork.id)
 

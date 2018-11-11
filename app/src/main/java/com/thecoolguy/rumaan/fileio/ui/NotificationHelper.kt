@@ -20,10 +20,7 @@ class NotificationHelper {
         const val GROUP_KEY = "com.thecoolguy.rumaan.fileio.GROUP_NOTIFICATIONS"
     }
 
-    fun create(
-            context: Context,
-            fileEntity: FileEntity
-    ) {
+    fun create(context: Context, fileEntity: FileEntity) {
 
         val intent = Intent(context, UploadHistoryActivity::class.java)
 
@@ -47,6 +44,7 @@ class NotificationHelper {
                     setContentIntent(pendingIntent)
                     setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                     setGroup(GROUP_KEY)
+                    setGroupSummary(true)
                 }
 
         // for O and up create a notification channel before posting the notification

@@ -9,3 +9,5 @@ data class LocalFile(
         val uri: Uri,
         val inputStream: InputStream
 )
+
+data class File(val name: String, val size: String, val uri: Uri)

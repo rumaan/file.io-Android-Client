@@ -6,9 +6,5 @@ object DatabaseHelper {
 
     private val TAG = DatabaseHelper.javaClass.simpleName
 
-    fun saveToDatabase(
-            fileEntity: FileEntity,
-            mUploadItemDao: UploadItemDao) =
-            mUploadItemDao.insert(fileEntity)
-
+    fun saveToDatabase(fileEntity: FileEntity, mUploadItemDao: UploadItemDao) = mUploadItemDao.insert(fileEntity)
 }

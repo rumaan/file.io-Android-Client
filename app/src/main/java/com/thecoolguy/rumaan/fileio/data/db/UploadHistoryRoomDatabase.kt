@@ -19,6 +19,7 @@ abstract class UploadHistoryRoomDatabase : RoomDatabase() {
                 INSTANCE = Room.databaseBuilder(context.applicationContext,
                         UploadHistoryRoomDatabase::class.java,
                         "upload_history")
+                        .allowMainThreadQueries()
                         .build()
             }
             return INSTANCE
