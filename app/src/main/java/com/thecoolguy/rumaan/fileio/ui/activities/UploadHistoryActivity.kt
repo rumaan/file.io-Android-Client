@@ -77,7 +77,7 @@ class UploadHistoryActivity : AppCompatActivity() {
 
         WorkManager
                 .getInstance()
-                .getStatusesByTagLiveData(DELETE_TAG)
+                .getWorkInfosByTagLiveData(DELETE_TAG)
                 .observe(this, Observer { listOfWorkStatuses ->
                     listOfWorkStatuses.let {
                         if (it[0].state.isFinished)

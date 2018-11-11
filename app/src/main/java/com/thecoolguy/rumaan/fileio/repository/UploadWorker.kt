@@ -17,15 +17,13 @@ import com.thecoolguy.rumaan.fileio.utils.Utils.Date.currentDate
 import com.thecoolguy.rumaan.fileio.utils.Utils.JSONParser.getDaysFromExpireString
 import com.thecoolguy.rumaan.fileio.utils.getFile
 import timber.log.Timber
-import java.io.IOException
 
 class UploadWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     companion object {
         const val KEY_URI = "file_uri"
-        const val KEY_RESULT = "file_url"
-        private val TAG = UploadWorker::class.simpleName
-
+        const val KEY_RESULT_URL = "file_url"
+        const val KEY_RESULT_DAYS = "days"
     }
 
     private fun save(fileEntity: FileEntity) {
@@ -38,34 +36,42 @@ class UploadWorker(context: Context, params: WorkerParameters) : Worker(context,
         NotificationHelper().create(applicationContext, fileEntity)
     }
 
-
-    @Throws(IOException::class)
-    fun upload(file: File) {
+    fun upload(file: File): Result {
         val inputStream = applicationContext.contentResolver.openInputStream(file.uri)
         inputStream?.let {
-            "https://file.io"
-                    .httpUpload()
-                    .name { "file" }
-                    .blob { _, _ -> Blob(file.name, file.size.toLong()) { it } }
-                    .progress { readBytes, totalBytes ->
-                        val progress = readBytes.toFloat() / totalBytes.toFloat()
-                        //  Timber.d("Progress: %f", progress)
-                    }
-                    .responseObject(Response.Deserializer()) { _, _, result ->
-                        // TODO: handle FuelError
-                        Timber.d("Response: %s", result)
-                        val (res, err) = result
-                        res?.let {
-                            val fileEntity = FileEntity(file.name, res.link, currentDate, getDaysFromExpireString(res.expiry))
-                            outputData = workDataOf(KEY_RESULT to fileEntity.url)
-                            /* Insert the result into DB */
-                            save(fileEntity)
-                            /* Send a notification about the upload */
-                            postNotification(fileEntity)
-                        }
-                    }
-        }
+            /*
+             * Make sure the request the request is Synchronous, since WorkManager will run this in a Worker Thread.
+             * */
+            val (request, response, result) =
+                    "https://file.io"
+                            .httpUpload()
+                            .name { "file" }
+                            .blob { _, _ -> Blob(file.name, file.size.toLong()) { it } }
+                            .progress { readBytes, totalBytes ->
+                                val progress = readBytes.toFloat() / totalBytes.toFloat()
+                                //  Timber.d("Progress: %f", progress)
+                            }
+                            .responseObject(Response.Deserializer())
 
+            // TODO: handle FuelError
+            Timber.d("Response: %s", result)
+            val (res, _) = result
+            res?.let {
+                val days = getDaysFromExpireString(res.expiry)
+                val fileEntity = FileEntity(file.name, res.link, currentDate, days)
+                val output = workDataOf(KEY_RESULT_URL to res.link, KEY_RESULT_DAYS to days)
+                /* Set output data */
+                outputData = output
+
+                /* Insert the result into DB */
+                save(fileEntity)
+                /* Send a notification about the upload */
+                postNotification(fileEntity)
+
+                return@let Result.SUCCESS
+            }
+        }
+        return Result.FAILURE
     }
 
     override fun doWork(): Result {
@@ -75,11 +81,10 @@ class UploadWorker(context: Context, params: WorkerParameters) : Worker(context,
         uri?.let {
             val file: File? = getFile(applicationContext, it)
             if (file != null) {
-                upload(file)
-                return Result.SUCCESS
+                return upload(file)
             }
         }
 
-        return Result.RETRY
+        return Result.FAILURE
     }
 }

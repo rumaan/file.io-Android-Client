@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,24 +12,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import androidx.work.WorkManager
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
 import com.thecoolguy.rumaan.fileio.network.createUploadWork
+import com.thecoolguy.rumaan.fileio.repository.UploadWorker
 import com.thecoolguy.rumaan.fileio.ui.fragments.HomeFragment
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import com.thecoolguy.rumaan.fileio.utils.Utils.Android
 import com.thecoolguy.rumaan.fileio.utils.toggleClickable
-import com.thecoolguy.rumaan.fileio.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_main.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
+import timber.log.Timber
 
 @RuntimePermissions
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogClickListener {
@@ -45,9 +47,6 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
                     .show(supportFragmentManager, getString(R.string.no_net_dialog_fragment_tag))
         }
     }
-
-
-    private lateinit var viewModel: MainActivityViewModel
 
     private val fragmentManager by lazy { supportFragmentManager }
     private val fragmentTransaction by lazy { fragmentManager.beginTransaction() }
@@ -71,15 +70,30 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun setUpWork(uri: Uri) {
+        val work = createUploadWork(uri.toString())
+        WorkManager.getInstance().enqueue(work)
+
+        val workId = work.id
+        WorkManager.getInstance().getWorkInfoByIdLiveData(workId)
+                .observe(this@MainActivity, Observer { workInfo ->
+                    if (workInfo != null && workInfo.state.isFinished) {
+                        val outputData = workInfo.outputData
+                        val url = outputData.getString(UploadWorker.KEY_RESULT_URL)
+                        val days = outputData.getInt(UploadWorker.KEY_RESULT_DAYS, 14)
+                        Timber.d("Url: $url, Days: $days")
+                    }
+                })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == FILE_REQUEST) {
             btn_choose_file toggleClickable true
             /* Check the returned URI */
             if (resultCode == Activity.RESULT_OK) {
-                data?.data?.also { it ->
-                    val work = createUploadWork(it.toString())
-                    WorkManager.getInstance().enqueue(work)
+                intent?.data?.let { it ->
+                    setUpWork(it)
                 }
             }
         }
@@ -105,7 +119,6 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
             title = ""
             setSupportActionBar(this)
         }
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
 
         initFragment()
     }
@@ -118,9 +131,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
             add(container.id, homeFragment, HomeFragment.TAG)
             commit()
         }
-
     }
-
 
     @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun showPermissionDeniedForStorage() {

@@ -4,9 +4,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def work_version = "1.0.0-alpha10"
+def work_version = "1.0.0-alpha11"
 def permission_dispatcher_version = "4.0.0"
-def nav_version = "1.0.0-alpha06"
+def nav_version = "1.0.0-alpha07"
 
 android {
 
@@ -41,7 +41,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -50,10 +50,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
-    androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0-beta02'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.1.0'
 
     // permission dispatcher
     implementation "com.github.hotchemi:permissionsdispatcher:${permission_dispatcher_version}"
@@ -64,21 +64,22 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
-    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-core:16.0.5'
     /* Room */
-    implementation 'androidx.room:room-rxjava2:2.1.0-alpha01'
+    implementation 'androidx.room:room-runtime:2.1.0-alpha02'
+    kapt "androidx.room:room-compiler:2.1.0-alpha02"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    kapt "androidx.room:room-compiler:2.1.0-alpha01"
     // Test helpers for arch components
     testImplementation 'androidx.arch.core:core-testing:2.0.0'
     // Test helpers for Room
-    testImplementation 'androidx.room:room-testing:2.1.0-alpha01'
+    testImplementation 'androidx.room:room-testing:2.1.0-alpha02'
     implementation 'cat.ereza:customactivityoncrash:2.2.0'
     // Fuel android service
     implementation 'com.github.kittinunf.fuel:fuel-android:1.15.1'
 
     // Gson Deserializer
     implementation 'com.google.code.gson:gson:2.8.2'
+
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     implementation "android.arch.work:work-runtime-ktx:$work_version"
