@@ -7,13 +7,15 @@ This simple app allows you to upload any file and get a _sharable_ link with a s
 The file will be **Deleted** after its downloaded or after expiration time (regardless of whether its downloaded or not).
 This app is made with the help of [file.io](https://file.io) which is an **_Anonymous_, _Secure_** file sharing platform by [Humbly](http://humbly.com/).
 
+*Grab the latest debug build from the __[release](https://github.com/rumaan/file.io-Android-Client/releases)__ section.*
+
 ## Screenshots 📸
 <p float="left">
 <img src="/screenshots/screen1.png" alt="File.io App Screenshot One" width="400"/>
 <img src="/screenshots/screen2.png" alt="File.io App Screenshot Two" width="400"/>
 </p>     
 <br>
-                                         
+                                        
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 - [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
