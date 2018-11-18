@@ -1,58 +1,60 @@
 <resources>
-  <string name="app_name">File.io</string>
-  <string name="link_here">Link Here</string>
-  <string name="file_io">File.io</string>
-  <string name="upload_a_file_and_get_a_sharable_link_for_that_file">Upload any fileEntity and get a sharable link for that fileEntity.</string>
-  <string name="file_icon">File Icon</string>
-  <string name="choose_file">Pick a fileEntity</string>
-  <string name="upload">Upload</string>
-  <string name="permission_deny">App requires certain permissions to function properly.</string>
-  <string name="app_wont_work">App Can\'t work without the permission. You have to manually enable those permissions from App settings.</string>
-  <string name="cancel_file_choose_msg">Action canceled by the user.</string>
-  <string name="storage_permission_rationale_title">Storage Permission</string>
-  <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access fileEntities.</string>
-  <string name="link_copy">Link Copied to Clipboard!</string>
-  <string name="no_internet">No internet connection!. Please try again.</string>
-  <string name="upload_history_title">Upload History</string>
-  <string name="upload_history">Upload History</string>
-  <string name="about">About</string>
-  <string name="options">options</string>
-  <string name="error_description">Looks like something bad happened. We are taking a look at what really happened. Meanwhile, you can try restarting the app.</string>
-  <string name="okay_cool">Okay! Cool!</string>
-  <string name="oops_some_error_occurred">Oops! Some Error Occurred!</string>
-  <string name="no_internet_connection">No Internet connection!</string>
-  <string name="okay">Okay!</string>
-  <string name="upload_later">Upload Later</string>
-  <string name="no_internet_description">Looks like you aren\'t connected to the network.\nWe will schedule this upload when you have a connection.</string>
-  <string name="no_uploads">It seems like you haven\'t uploaded any files yet. Upload a file and check in here again.</string>
-  <string name="no_uploads_sad_face_image">No uploads sad face image.</string>
-  <string name="no_net_dialog_fragment_tag">no_net_dialog</string>
-  <string name="file_uploaded_soon">File added to upload queue.\nYou will be notified once the file is uploaded!
+    <string name="app_name">File.io</string>
+    <string name="link_here">Link Here</string>
+    <string name="file_io">file.io</string>
+    <string name="upload_a_file_and_get_a_sharable_link_for_that_file">Upload any fileEntity and get a sharable link for that fileEntity.</string>
+    <string name="file_icon">File Icon</string>
+    <string name="choose_file">Pick a file</string>
+    <string name="upload">Upload File</string>
+    <string name="permission_deny">App requires certain permissions to function properly.</string>
+    <string name="app_wont_work">App Can\'t work without the permission. You have to manually enable those permissions from App settings.</string>
+    <string name="cancel_file_choose_msg">Action canceled by the user.</string>
+    <string name="storage_permission_rationale_title">Storage Permission</string>
+    <string name="storage_permission_rationale_message">This app needs your permission to read Phones storage to access fileEntities.</string>
+    <string name="link_copy">Link Copied to Clipboard!</string>
+    <string name="no_internet">No internet connection!. Please try again.</string>
+    <string name="upload_history_title">Upload History</string>
+    <string name="upload_history">Upload History</string>
+    <string name="about">About</string>
+    <string name="options">options</string>
+    <string name="about_file_io">Ephemeral file sharing\nConvenient, anonymous\n and secure</string>
+    <string name="error_description">Looks like something bad happened. We are taking a look at what really happened. Meanwhile, you can try restarting the app.</string>
+    <string name="okay_cool">Okay! Cool!</string>
+    <string name="oops_some_error_occurred">Oops! Some Error Occurred!</string>
+    <string name="no_internet_connection">No Internet connection!</string>
+    <string name="okay">Okay!</string>
+    <string name="upload_later">Upload Later</string>
+    <string name="no_internet_description">Looks like you aren\'t connected to the network.\nPlease Check your internet connection and try again.</string>
+    <string name="no_uploads">It seems like you haven\'t uploaded any files yet. Upload a file and check in here again.</string>
+    <string name="no_uploads_sad_face_image">No uploads sad face image.</string>
+    <string name="no_net_dialog_fragment_tag">no_net_dialog</string>
+    <string name="file_uploaded_soon">File added to upload queue.\nYou will be notified once the file is uploaded!
   </string>
-  <string name="weeks">Weeks</string>
-  <string name="select">Select</string>
-  <string name="choose_file_upload">Upload File</string>
-  <string name="choose_file_upload_large">Choose a file to upload</string>
-  <string name="choose_the_expire_time_of_the_file">Choose the expire time of the fileEntity.</string>
-  <string name="days">Days</string>
-  <string name="open_source_licenses">Open-Source Licenses</string>
-  <string name="license">Licenses</string>
-  <string name="file_io_desc">Ephemeral file sharing\n Convenient, anonymous and secure</string>
-  <string name="me_handle" translatable="false">\@TheCoolGuy</string>
-  <string name="rumaan" translatable="false">Rumaan</string>
-  <string name="profile_image">Profile Image</string>
-  <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
-  <string name="filter_view_fileio_download">Download from File.io</string>
-  <string name="error_no_app_on_device">Sorry, There\'s no app on your phone to do this task!</string>
-  <string name="no_internet_icon">No Internet Icon</string>
-  <string name="days_rem">days remaining.</string>
-  <string name="clear_history">Clear History</string>
-  <string name="copy_link">Copy link icon</string>
-  <string name="key_file_name">file_name</string>
-  <string name="key_file_url">file_url</string>
+    <string name="link_expiry_info">The link will be invalid once visited or when the set time expires. The file associated with it will be deleted permanently.</string>
+    <string name="weeks">Weeks</string>
+    <string name="select">Select</string>
+    <string name="choose_file_upload">Upload File</string>
+    <string name="choose_file_upload_large">Choose a file to upload</string>
+    <string name="choose_the_expire_time_of_the_file">Choose the expire time of the fileEntity.</string>
+    <string name="days">Days</string>
+    <string name="open_source_licenses">Open-Source Licenses</string>
+    <string name="license">Licenses</string>
+    <string name="file_io_desc">Ephemeral file sharing\n Convenient, anonymous and secure</string>
+    <string name="me_handle" translatable="false">\@TheCoolGuy</string>
+    <string name="rumaan" translatable="false">Rumaan</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
+    <string name="filter_view_fileio_download">Download from File.io</string>
+    <string name="error_no_app_on_device">Sorry, There\'s no app on your phone to do this task!</string>
+    <string name="no_internet_icon">No Internet Icon</string>
+    <string name="days_rem">days remaining.</string>
+    <string name="clear_history">Clear History</string>
+    <string name="copy_link">Copy link icon</string>
+    <string name="key_file_name">file_name</string>
+    <string name="key_file_url">file_url</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
-  <string name="loading_upload_history">Loading upload history</string>
-  <string name="upload_progress_info_text">You can dismiss this dialog and carry on with your work. File will be uploaded in the background and you will be notified once its done.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_upload_history">Loading upload history</string>
+    <string name="upload_progress_info_text">You can dismiss this dialog and carry on with your work. File will be uploaded in the background and you will be notified once its done.</string>
 </resources>

@@ -53,5 +53,11 @@
         <item name="autoSizeMaxTextSize">64sp</item>
     </style>
 
+    <style name="AppTheme.TextRoundedCorners" parent="TextAppearance.AppCompat">
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
 
 </resources>

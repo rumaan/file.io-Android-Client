@@ -9,10 +9,10 @@ import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.provider.OpenableColumns
 import android.provider.Settings
-import android.util.Log
 import com.thecoolguy.rumaan.fileio.data.models.LocalFile
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -101,7 +101,7 @@ object Utils {
             }
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
-            Log.e(TAG, "File Not Found!", e)
+            Timber.e(e, "File Not Found!")
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -263,7 +263,7 @@ object Utils {
      */
     object Date {
 
-        const val TIME_STAMP_FORMAT = "dd MMMM, yyyy"
+        private const val TIME_STAMP_FORMAT = "dd MMMM, yyyy"
 
         private val timeStamp: String
             get() = SimpleDateFormat(TIME_STAMP_FORMAT, Locale.US).format(java.util.Date())

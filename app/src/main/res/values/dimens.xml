@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <dimen name="material_in_anim_slide_offset">16dp</dimen>
-  <dimen name="material_in_delay_denominator">1.35dp</dimen>
-  <dimen name="header_text_l">18sp</dimen>
-  <dimen name="header_text">16sp</dimen>
-  <dimen name="content_text">16sp</dimen>
-  <dimen name="title_text">22sp</dimen>
+    <dimen name="material_in_anim_slide_offset">16dp</dimen>
+    <dimen name="material_in_delay_denominator">1.35dp</dimen>
+    <dimen name="header_text_l">18sp</dimen>
+    <dimen name="header_text">16sp</dimen>
+    <dimen name="content_text">16sp</dimen>
+    <dimen name="title_text">22sp</dimen>
+    <dimen name="card_corner_radius">6dp</dimen>
+    <dimen name="card_horizontal_margin">12dp</dimen>
+    <dimen name="card_heading_logo">64dp</dimen>
+    <dimen name="card_vertical_margin">12dp</dimen>
+    <dimen name="default_corner_radius">4dp</dimen>
+    <dimen name="text_bg_shape_white_padding">6dp</dimen>
 </resources>
