@@ -9,9 +9,11 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 
 ## Screenshots 📸
 <p float="left">
-<img src="/screenshots/screen1.png" alt="File.io App Screenshot One" />
-<img src="/screenshots/screen2.png" alt="File.io App Screenshot Two>
-
+<img src="/screenshots/screen1.png" alt="File.io App Screenshot One" width="400"/>
+<img src="/screenshots/screen2.png" alt="File.io App Screenshot Two" width="400"/>
+</p>     
+<br>
+                                         
 ## Libraries Used ❤️
 - [Android Support Library](https://developer.android.com/topic/libraries/support-library/index.html)
 - [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
@@ -20,20 +22,8 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Permission Dispatcher](https://permissions-dispatcher.github.io/PermissionsDispatcher/)
 - [Fuel](https://github.com/kittinunf/Fuel)
-- [NumberProgressBar](https://github.com/daimajia/NumberProgressBar)
 - [FirebaseCrashlytics](https://firebase.google.com/docs/crashlytics)
 - [CustomActivityOnCrash](https://github.com/Ereza/CustomActivityOnCrash)
 - [MaterialAboutLibrary](https://github.com/daniel-stoneuk/material-about-library)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
-
-## TODO List ✅:
-- [ ] Set Expiration Time
-- [X] Handle different use cases for storage on the device.
-- [ ] Progress Bar for File Upload Progress
-- [X] Custom Error Dialog
-- [X] Kotlinize the project 🎳
-- [ ] Support for *Multiple* File Upload (Create a List)
-- [ ] App Icon
-- [X] Offline Case (using WorkManager)
-- [ ] Complete rest of the UI
