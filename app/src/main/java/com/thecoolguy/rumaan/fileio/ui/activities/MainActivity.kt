@@ -14,10 +14,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.work.WorkManager
+import com.google.android.material.snackbar.Snackbar
 import com.thecoolguy.rumaan.fileio.R
 import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
-import com.thecoolguy.rumaan.fileio.network.createUploadWork
+import com.thecoolguy.rumaan.fileio.utils.createUploadWork
 import com.thecoolguy.rumaan.fileio.repository.UploadWorker
 import com.thecoolguy.rumaan.fileio.ui.fragments.HomeFragment
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
     private fun setUpWork(uri: Uri) {
         val work = createUploadWork(uri.toString())
         WorkManager.getInstance().enqueue(work)
+
+        Toast.makeText(this, "Uploading..", Snackbar.LENGTH_SHORT).show()
 
         val workId = work.id
         WorkManager.getInstance().getWorkInfoByIdLiveData(workId)

@@ -1,4 +1,4 @@
-package com.thecoolguy.rumaan.fileio.network
+package com.thecoolguy.rumaan.fileio.utils
 
 import androidx.work.Constraints
 import androidx.work.NetworkType

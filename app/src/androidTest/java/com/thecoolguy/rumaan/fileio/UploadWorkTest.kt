@@ -7,7 +7,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.test.TestDriver
 import androidx.work.test.WorkManagerTestInitHelper
-import com.thecoolguy.rumaan.fileio.network.createUploadWork
+import com.thecoolguy.rumaan.fileio.utils.createUploadWork
 import org.junit.Test
 import org.junit.runner.RunWith
 
