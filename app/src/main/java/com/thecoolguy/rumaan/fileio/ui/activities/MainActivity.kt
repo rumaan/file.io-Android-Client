@@ -19,6 +19,7 @@ import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
 import com.thecoolguy.rumaan.fileio.network.createUploadWork
 import com.thecoolguy.rumaan.fileio.repository.UploadWorker
+import com.thecoolguy.rumaan.fileio.ui.fragments.HomeFragment
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment
 import com.thecoolguy.rumaan.fileio.ui.fragments.ResultFragment
 import com.thecoolguy.rumaan.fileio.utils.Utils
@@ -30,11 +31,16 @@ import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
+import timber.log.Timber
 
 @RuntimePermissions
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogClickListener {
     override fun onDialogPositiveClick(dialog: Dialog, dialogFragment: Fragment) {
         dialog.dismiss()
+    }
+
+    override fun onDone() {
+        this.onBackPressed()
     }
 
     override fun onUploadFileClick() {
@@ -46,9 +52,6 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
                     .show(supportFragmentManager, getString(R.string.no_net_dialog_fragment_tag))
         }
     }
-
-    private val fragmentManager by lazy { supportFragmentManager }
-    private val fragmentTransaction by lazy { fragmentManager.beginTransaction() }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.options_main, menu)
@@ -78,9 +81,9 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
                 .observe(this@MainActivity, Observer { workInfo ->
                     if (workInfo != null && workInfo.state.isFinished) {
                         val outputData = workInfo.outputData
-                        val url = outputData.getString(UploadWorker.KEY_RESULT_URL)
+                        val url = outputData.getString(UploadWorker.KEY_RESULT_URL) ?: ""
                         val days = outputData.getInt(UploadWorker.KEY_RESULT_DAYS, 14)
-                        /* TODO: pass the data onto the result fragment if the activity is alive. */
+                        showResult(url, days)
                     }
                 })
     }
@@ -123,18 +126,30 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
     }
 
     private fun initFragment() {
-        /* Initialize the Main Fragment layout here *//*
+        // Initialize the Main Fragment layout here
         val homeFragment = HomeFragment.newInstance()
 
-        fragmentTransaction.apply {
-            add(container.id, homeFragment, HomeFragment.TAG)
-            commit()
-        }*/
+        supportFragmentManager.beginTransaction()
+                .addToBackStack(HomeFragment.TAG)
+                .add(container.id, homeFragment)
+                .commit()
 
-        val resultFragment = ResultFragment.newInstance("https://file.io/kH9sdg", 33)
-        fragmentTransaction.apply {
-            add(container.id, resultFragment, ResultFragment.TAG)
-            commit()
+    }
+
+    private fun showResult(url: String, days: Int) {
+        val resultFragment = ResultFragment.newInstance(url, days)
+        supportFragmentManager.beginTransaction()
+                .addToBackStack(ResultFragment.TAG)
+                .add(container.id, resultFragment)
+                .commit()
+    }
+
+    override fun onBackPressed() {
+        Timber.d("Back Stack count: ${supportFragmentManager.backStackEntryCount}")
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack(HomeFragment.TAG, 0)
+        } else {
+            finishAffinity()
         }
     }
 

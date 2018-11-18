@@ -104,14 +104,14 @@
             android:text="@string/link_expiry_info"
             android:textColor="@color/dark_grey_op186"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/btn_done"
             app:layout_constraintEnd_toEndOf="@+id/text_link"
             app:layout_constraintStart_toStartOf="@+id/text_link"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_done"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
