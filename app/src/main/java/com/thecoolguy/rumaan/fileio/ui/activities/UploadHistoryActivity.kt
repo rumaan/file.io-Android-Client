@@ -2,7 +2,6 @@ package com.thecoolguy.rumaan.fileio.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -26,6 +25,7 @@ import com.thecoolguy.rumaan.fileio.ui.SwipeToDeleteCallBack
 import com.thecoolguy.rumaan.fileio.ui.UploadHistoryListAdapter
 import com.thecoolguy.rumaan.fileio.viewmodel.UploadHistoryViewModel
 import kotlinx.android.synthetic.main.activity_upload_history.*
+import timber.log.Timber
 
 class UploadHistoryActivity : AppCompatActivity() {
     companion object {
@@ -108,7 +108,7 @@ class UploadHistoryActivity : AppCompatActivity() {
             ) {
                 viewHolder.let {
                     val itemId = adapter.getFileEntityIdAtPosition(viewHolder.adapterPosition)
-                    Log.d(TAG, "ItemId = $itemId")
+                    Timber.d("ItemId = $itemId")
 
                     // remove item from db
                     removeHistoryItem(itemId)

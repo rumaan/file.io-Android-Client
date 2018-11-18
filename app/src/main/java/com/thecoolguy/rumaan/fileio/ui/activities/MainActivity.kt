@@ -19,8 +19,8 @@ import com.thecoolguy.rumaan.fileio.listeners.DialogClickListener
 import com.thecoolguy.rumaan.fileio.listeners.OnFragmentInteractionListener
 import com.thecoolguy.rumaan.fileio.network.createUploadWork
 import com.thecoolguy.rumaan.fileio.repository.UploadWorker
-import com.thecoolguy.rumaan.fileio.ui.fragments.HomeFragment
 import com.thecoolguy.rumaan.fileio.ui.fragments.NoNetworkDialogFragment
+import com.thecoolguy.rumaan.fileio.ui.fragments.ResultFragment
 import com.thecoolguy.rumaan.fileio.utils.Utils
 import com.thecoolguy.rumaan.fileio.utils.Utils.Android
 import com.thecoolguy.rumaan.fileio.utils.toggleClickable
@@ -30,7 +30,6 @@ import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
 import permissions.dispatcher.OnPermissionDenied
 import permissions.dispatcher.RuntimePermissions
-import timber.log.Timber
 
 @RuntimePermissions
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogClickListener {
@@ -81,7 +80,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
                         val outputData = workInfo.outputData
                         val url = outputData.getString(UploadWorker.KEY_RESULT_URL)
                         val days = outputData.getInt(UploadWorker.KEY_RESULT_DAYS, 14)
-                        Timber.d("Url: $url, Days: $days")
+                        /* TODO: pass the data onto the result fragment if the activity is alive. */
                     }
                 })
     }
@@ -124,11 +123,17 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener, DialogC
     }
 
     private fun initFragment() {
-        /* Initialize the Main Fragment layout here */
+        /* Initialize the Main Fragment layout here *//*
         val homeFragment = HomeFragment.newInstance()
 
         fragmentTransaction.apply {
             add(container.id, homeFragment, HomeFragment.TAG)
+            commit()
+        }*/
+
+        val resultFragment = ResultFragment.newInstance("https://file.io/kH9sdg", 33)
+        fragmentTransaction.apply {
+            add(container.id, resultFragment, ResultFragment.TAG)
             commit()
         }
     }

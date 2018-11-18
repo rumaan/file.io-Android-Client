@@ -11,4 +11,5 @@
     <dimen name="card_heading_logo">64dp</dimen>
     <dimen name="card_vertical_margin">12dp</dimen>
     <dimen name="default_corner_radius">4dp</dimen>
+    <dimen name="text_bg_shape_white_padding">6dp</dimen>
 </resources>
