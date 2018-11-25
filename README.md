@@ -29,3 +29,18 @@ This app is made with the help of [file.io](https://file.io) which is an **_Anon
 - [MaterialAboutLibrary](https://github.com/daniel-stoneuk/material-about-library)
 
 Vector Images from [FlatIcon](https://www.flaticon.com/).
+
+## Building Project  👩‍💻👨‍💻
+If this is your first time contribution to a repo, then check out [Gitme](https://gitme.js.org/).
+
+1. Fork and Download the Project: 
+```shell
+git clone https://github.com/rumaan/file.io-Android-Client.git
+```
+2. Import/Open the project in Android Studio or command line to build: 
+```shell
+./gradlew clean app:assembleDebug
+```
+<br>
+
+Check out the **_issues_** section to get started with something. Feel free to hit me up for any ideas or discussions! 🍀
